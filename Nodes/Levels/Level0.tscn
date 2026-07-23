@@ -2,9 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bm5p467vge23y" path="res://Scripts/TestScript.gd" id="1_b7041"]
 [ext_resource type="MeshLibrary" uid="uid://c4gmbr4o2ffdk" path="res://Assets/3d/MeshLibrary.tres" id="2_fv5df"]
+[ext_resource type="PackedScene" uid="uid://bp4a0plv22ewb" path="res://Nodes/Objects/player.tscn" id="2_k4g51"]
 
 [node name="Node3D" type="Node3D" unique_id=2124627221]
 script = ExtResource("1_b7041")
+
+[node name="Player" parent="." unique_id=1191405411 instance=ExtResource("2_k4g51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.703124, 3.578415)
 
 [node name="GridMap" type="GridMap" parent="." unique_id=1808813112]
 mesh_library = ExtResource("2_fv5df")
