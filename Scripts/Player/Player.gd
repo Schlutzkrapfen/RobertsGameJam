@@ -105,7 +105,7 @@ func shoot(delta):
 			curShootTimer = burstCooldown
 	
 	camera_shake.emit(SHOOT_SHAKE_AMOUNT)
-	# await Slowmo.slow_motion(1)
+	await SlowMotion.slow_motion(5)
 	
 
 func shootProjectile():

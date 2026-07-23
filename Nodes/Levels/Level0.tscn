@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://2gwrmy354ye6"]
 
+[ext_resource type="PackedScene" uid="uid://duc6rybo6ab0m" path="res://Nodes/Objects/enemy.tscn" id="2_dxclx"]
 [ext_resource type="PackedScene" uid="uid://bp4a0plv22ewb" path="res://Nodes/Objects/player.tscn" id="2_k4g51"]
 [ext_resource type="Script" uid="uid://bqr8qoil4755e" path="res://Scripts/Misc/SceneManager.gd" id="4_4ys6t"]
 [ext_resource type="Script" uid="uid://bfh60xxx62h60" path="res://Scripts/Misc/PauseMenu.gd" id="5_dxclx"]
 [ext_resource type="PackedScene" uid="uid://et8hvvm1wu1e" path="res://Nodes/Objects/box.tscn" id="6_v1h2x"]
-
-[sub_resource type="NavigationMesh" id="NavigationMesh_nacyp"]
-geometry_parsed_geometry_type = 0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_xeka7"]
 top_radius = 100.0
@@ -34,6 +32,9 @@ radius = 100.0
 
 [node name="Player" parent="." unique_id=1191405411 instance=ExtResource("2_k4g51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.1194544, 3.578415)
+
+[node name="CharacterBody3D" parent="." unique_id=969598575 node_paths=PackedStringArray("target") instance=ExtResource("2_dxclx")]
+target = NodePath("../Player")
 
 [node name="SceneManager" type="Node3D" parent="." unique_id=1758454766 node_paths=PackedStringArray("pauseMenu")]
 script = ExtResource("4_4ys6t")
@@ -83,18 +84,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4219503, 5.0114613, -2.523
 [node name="Box3" parent="Arena" unique_id=1495860071 instance=ExtResource("6_v1h2x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.48102093, 6.4473114, 5.3890734)
 
-[node name="Navmesh" type="NavigationRegion3D" parent="Arena" unique_id=787568873]
-navigation_mesh = SubResource("NavigationMesh_nacyp")
-
-[node name="Ground" type="MeshInstance3D" parent="Arena/Navmesh" unique_id=232500043]
+[node name="Ground" type="MeshInstance3D" parent="Arena" unique_id=232500043]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.4107494, 0)
 mesh = SubResource("CylinderMesh_xeka7")
 surface_material_override/0 = SubResource("StandardMaterial3D_dxclx")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Arena/Navmesh/Ground" unique_id=681971485]
+[node name="StaticBody3D" type="StaticBody3D" parent="Arena/Ground" unique_id=681971485]
 physics_material_override = SubResource("PhysicsMaterial_jn3sf")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Navmesh/Ground/StaticBody3D" unique_id=1807222277]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Ground/StaticBody3D" unique_id=1807222277]
 shape = SubResource("CylinderShape3D_nacyp")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=307039512]
