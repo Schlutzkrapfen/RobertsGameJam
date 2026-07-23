@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://2gwrmy354ye6"]
 
+[ext_resource type="MeshLibrary" uid="uid://c4gmbr4o2ffdk" path="res://Assets/3d/MeshLibrary.tres" id="2_fv5df"]
 [ext_resource type="PackedScene" uid="uid://bp4a0plv22ewb" path="res://Nodes/Objects/player.tscn" id="2_k4g51"]
 [ext_resource type="Script" uid="uid://bqr8qoil4755e" path="res://Scripts/Misc/SceneManager.gd" id="4_4ys6t"]
 [ext_resource type="Script" uid="uid://bfh60xxx62h60" path="res://Scripts/Misc/PauseMenu.gd" id="5_dxclx"]
@@ -61,6 +62,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.48102093, 2.7656238, 5.389
 
 [node name="StaticBox" parent="Arena" unique_id=1749309345 instance=ExtResource("7_xn8ur")]
 transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, -0.5, 0)
+
+[node name="GridMap" type="GridMap" parent="Arena" unique_id=258669150]
+mesh_library = ExtResource("2_fv5df")
+data = {
+"cells": PackedInt32Array(0, 0, 16, 0, 65535, 16, 0, 65534, 16, 65535, 65535, 16, 65535, 0, 16, 1, 0, 16, 1, 65535, 16, 1, 65534, 16, 1, 65533, 16, 1, 1, 16, 0, 1, 16, 65535, 1, 16, 65534, 1, 16, 65534, 0, 16, 65534, 65535, 16, 65534, 65534, 16)
+}
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=307039512]
 transform = Transform3D(0.6716906, -0.4790095, 0.56513864, 0, 0.76284343, 0.6465833, -0.7408318, -0.43430397, 0.5123947, 0, 4.198007, 0)
