@@ -3,7 +3,7 @@ extends CharacterBody3D
 
 const SPEED:float = 5.0
 const JUMP_VELOCITY:float = 4.5
-const SHOOT_SHAKE_AMOUNT:float = 100.0
+const SHOOT_SHAKE_AMOUNT:float = 0.01
 signal camera_shake(amount:float)
 
 
@@ -28,9 +28,12 @@ var vel : Vector3 = Vector3()
 var mouseDelta : Vector2 = Vector2()
 
 #Normal Weapon
-var bulletsPerBurst : int = 3
-var burstSpeed : float = 0.05
-var burstCooldown : float = 0.5
+@export var bullet: PackedScene
+@export var muzzle : Node3D 
+@export var bulletsPerBurst : int = 3
+@export var burstSpeed : float = 0.05
+@export var burstCooldown : float = 0.5
+@export var tracerSpeed : float = 0.1
 var isShooting : bool = false
 var curShootTimer : float = 0
 var curBurstCountdown : int = bulletsPerBurst - 1
@@ -89,7 +92,9 @@ func shoot(delta):
 	curShootTimer -= delta
 	
 	if(curShootTimer <= 0):
-		print("Pew")
+		
+		shootProjectile()
+		
 		if(curBurstCountdown > 0):
 			curBurstCountdown = curBurstCountdown - 1
 			curShootTimer = burstSpeed
@@ -100,3 +105,29 @@ func shoot(delta):
 	camera_shake.emit(SHOOT_SHAKE_AMOUNT)
 	# await Slowmo.slow_motion(1)
 	
+
+func shootProjectile():
+	var space_state = get_world_3d().direct_space_state
+	
+	var from = muzzle.global_position
+	var to = from + -camera.global_transform.basis.z * 1000.0
+
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	var result = space_state.intersect_ray(query)
+
+	if result:
+		# Damage the target
+		# if result.collider.has_method("take_damage"):
+		# 	result.collider.take_damage(20)
+		
+		spawn_tracer(from, result.position)
+	else:
+		spawn_tracer(from, to)
+
+func spawn_tracer(from: Vector3, to: Vector3):
+	if bullet == null:
+		return
+	print("Bullet")
+	var tracer = bullet.instantiate()
+	get_tree().current_scene.add_child(tracer)
+	tracer.initialize(from, to, tracerSpeed)

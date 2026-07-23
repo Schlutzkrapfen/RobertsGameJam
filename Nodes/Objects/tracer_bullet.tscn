@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b7316rr1p55wc"]
+
+[ext_resource type="Script" uid="uid://ufmq1huafejl" path="res://Scripts/Player/tracer_bullet.gd" id="1_x3j57"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mq0dr"]
+
+[node name="TracerBullet" type="MeshInstance3D" unique_id=74696044]
+transform = Transform3D(0.05, 0, 0, 0, 0.2, 0, 0, 0, 0.05, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_mq0dr")
+script = ExtResource("1_x3j57")
