@@ -10,6 +10,10 @@ func initialize(from: Vector3, to: Vector3, speed: float):
 	
 	var distance = global_position.distance_to(_target)
 	
+	if from != to:
+		look_at(to, Vector3.UP)
+		rotate_object_local(Vector3.FORWARD, PI / 2) #correct for starting rotation
+	
 	# Prevent division by zero
 	if _speed <= 0.0:
 		_speed = 1.0

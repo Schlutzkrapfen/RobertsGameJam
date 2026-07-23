@@ -60,7 +60,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+	
 	move_and_slide()
 	
 func _input(event):
@@ -70,6 +70,8 @@ func _input(event):
 		isShooting = true
 	if event.is_action_released("shoot"):
 		isShooting = false
+		curShootTimer = 0
+		curBurstCountdown = bulletsPerBurst - 1
 
 func controll_camera(delta:float):
 	# rotate camera along X axis
