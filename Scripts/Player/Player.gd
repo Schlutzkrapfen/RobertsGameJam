@@ -26,6 +26,15 @@ var lookSensitivity : float = 0.5
 # vectors
 var vel : Vector3 = Vector3()
 var mouseDelta : Vector2 = Vector2()
+
+#Normal Weapon
+var bulletsPerBurst : int = 3
+var burstSpeed : float = 0.05
+var burstCooldown : float = 0.5
+var isShooting : bool = false
+var curShootTimer : float = 0
+var curBurstCountdown : int = bulletsPerBurst - 1
+
 # player components
 @onready var camera: Camera3D= get_node("Camera3D")
 
@@ -54,8 +63,10 @@ func _physics_process(delta: float) -> void:
 func _input(event):
 	if event is InputEventMouseMotion:
 		mouseDelta = event.relative
+	if event.is_action_pressed("shoot"):
+		isShooting = true
 	if event.is_action_released("shoot"):
-		shoot()
+		isShooting = false
 
 func controll_camera(delta:float):
 	# rotate camera along X axis
@@ -71,8 +82,21 @@ func controll_camera(delta:float):
 
 func _process(delta):
 	controll_camera(delta)
+	if(isShooting):
+		shoot(delta)
 
-func shoot():
+func shoot(delta):
+	curShootTimer -= delta
+	
+	if(curShootTimer <= 0):
+		print("Pew")
+		if(curBurstCountdown > 0):
+			curBurstCountdown = curBurstCountdown - 1
+			curShootTimer = burstSpeed
+		else:
+			curBurstCountdown = bulletsPerBurst - 1
+			curShootTimer = burstCooldown
+	
 	camera_shake.emit(SHOOT_SHAKE_AMOUNT)
-	await Slowmo.slow_motion(1)
+	# await Slowmo.slow_motion(1)
 	
