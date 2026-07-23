@@ -9,19 +9,23 @@ var curHp : int = 10
 var maxHp : int = 10
 
 var score : int = 0
+
 # physics
 var moveSpeed : float = 5.0
 var jumpForce : float = 5.0
 var gravity : float = 12.0
+
 # cam look
 var minLookAngle : float = -90.0
 var maxLookAngle : float = 90.0
 var lookSensitivity : float = 0.5
+
 # vectors
 var vel : Vector3 = Vector3()
 var mouseDelta : Vector2 = Vector2()
 # player components
 @onready var camera: Camera3D= get_node("Camera3D")
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
@@ -43,9 +47,11 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+	
 func _input(event):
 	if event is InputEventMouseMotion:
 		mouseDelta = event.relative
+		
 func _process (delta):
 	print(mouseDelta.y)
 	# rotate camera along X axis
