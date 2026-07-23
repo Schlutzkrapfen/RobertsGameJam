@@ -1,8 +1,10 @@
 extends CharacterBody3D
 
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+const SPEED:float = 5.0
+const JUMP_VELOCITY:float = 4.5
+const SHOOT_SHAKE_AMOUNT:float = 100.0
+signal Camerashake(amount:float)
 
 # stats
 var curHp : int = 10
@@ -51,16 +53,23 @@ func _physics_process(delta: float) -> void:
 func _input(event):
 	if event is InputEventMouseMotion:
 		mouseDelta = event.relative
-		
-func _process (delta):
-	print(mouseDelta.y)
+	if event.is_action_released("shoot"):
+		shoot()
+
+func controll_camera(delta:float):
 	# rotate camera along X axis
 	camera.rotation_degrees -= Vector3(rad_to_deg(mouseDelta.y), 0, 0) * lookSensitivity * delta
 	# clamp the vertical camera rotation
 	camera.rotation_degrees.x = clamp(camera.rotation_degrees.x, minLookAngle, maxLookAngle)
-  
+
 	# rotate player along Y axis
 	rotation_degrees -= Vector3(0, rad_to_deg(mouseDelta.x), 0) * lookSensitivity * delta
-  
+
 	# reset the mouse delta vector
 	mouseDelta = Vector2()
+
+func _process(delta):
+	controll_camera(delta)
+
+func shoot():
+	Camerashake.emit(SHOOT_SHAKE_AMOUNT)
