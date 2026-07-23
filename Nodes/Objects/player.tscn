@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bp4a0plv22ewb"]
 
-[ext_resource type="Script" uid="uid://y8p1gyuac0x" path="res://Scripts/Player/Camerashakre.gd" id="2_qyaxr"]
+[ext_resource type="Script" uid="uid://y8p1gyuac0x" path="res://Scripts/Player/CameraShaker.gd" id="2_qyaxr"]
 
 [sub_resource type="GDScript" id="GDScript_7mn6y"]
 script/source = "extends CharacterBody3D

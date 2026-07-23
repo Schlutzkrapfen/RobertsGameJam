@@ -36,8 +36,5 @@ func shake():
 	self.position.x = max_offset.x * amount * noise.get_noise_2d(1000*2, noise_y)
 	self.position.y = max_offset.y * amount * noise.get_noise_2d(2000*3, noise_y)
 
-	
-
-
 func _on_player_camera_shake(amount: float) -> void:
 	add_trauma(amount)
