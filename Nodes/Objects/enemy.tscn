@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://duc6rybo6ab0m"]
+
+[ext_resource type="Script" uid="uid://lxfsfd104pl7" path="res://Scripts/Enemy/enemy.gd" id="1_hbvj2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_nacyp"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=969598575]
+script = ExtResource("1_hbvj2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1947596448]
+shape = SubResource("CapsuleShape3D_nacyp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=1072187092]
+mesh = SubResource("CapsuleMesh_nacyp")
