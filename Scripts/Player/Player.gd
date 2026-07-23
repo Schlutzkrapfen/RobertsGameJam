@@ -1,12 +1,7 @@
 extends CharacterBody3D
 
-var curJumps = 2
-
-const SPEED:float = 5.0
-const JUMP_VELOCITY:float = 4.5
 const SHOOT_SHAKE_AMOUNT:float = 0.01
 signal camera_shake(amount:float)
-
 
 # stats
 var curHp : int = 10
@@ -15,9 +10,16 @@ var maxHp : int = 10
 var score : int = 0
 
 # physics
-var moveSpeed : float = 5.0
-var jumpForce : float = 5.0
 var gravity : float = 12.0
+
+# movement
+@export var moveSpeed : float = 5.0
+@export var sprintSpeed : float = 12.0
+var curSpeed : float = moveSpeed
+
+# jump
+@export var jumpForce : float = 5.0
+@export var curJumps = 2
 
 # cam look
 var minLookAngle : float = -90.0
@@ -68,19 +70,25 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if curJumpBuffered >= 0 and curJumps > 0:
 		curJumpBuffered = -1
-		velocity.y = JUMP_VELOCITY
+		velocity.y = jumpForce
 		curJumps -= 1
-
+	
+	#Handle Sprinting
+	if(!Input.is_action_pressed("sprint")):
+		curSpeed = moveSpeed
+	else:
+		curSpeed = sprintSpeed
+	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * curSpeed
+		velocity.z = direction.z * curSpeed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, curSpeed)
+		velocity.z = move_toward(velocity.z, 0, curSpeed)
 	
 	move_and_slide()
 	
