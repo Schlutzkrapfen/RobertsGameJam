@@ -4,7 +4,8 @@ extends CharacterBody3D
 const SPEED:float = 5.0
 const JUMP_VELOCITY:float = 4.5
 const SHOOT_SHAKE_AMOUNT:float = 100.0
-signal Camerashake(amount:float)
+signal camera_shake(amount:float)
+
 
 # stats
 var curHp : int = 10
@@ -72,4 +73,6 @@ func _process(delta):
 	controll_camera(delta)
 
 func shoot():
-	Camerashake.emit(SHOOT_SHAKE_AMOUNT)
+	camera_shake.emit(SHOOT_SHAKE_AMOUNT)
+	await Slowmo.slow_motion(1)
+	

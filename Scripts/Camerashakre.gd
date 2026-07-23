@@ -39,5 +39,5 @@ func shake():
 	
 
 
-func _on_player_camerashake(amount: float) -> void:
+func _on_player_camera_shake(amount: float) -> void:
 	add_trauma(amount)
