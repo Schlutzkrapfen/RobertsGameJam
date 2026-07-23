@@ -74,9 +74,8 @@ func _physics_process(delta: float) -> void:
 		curJumps -= 1
 	
 	#Handle Sprinting
-	if(!Input.is_action_pressed("sprint")):
-		curSpeed = moveSpeed
-	else:
+	curSpeed = moveSpeed
+	if(Input.is_action_pressed("sprint")):
 		curSpeed = sprintSpeed
 	
 	# Get the input direction and handle the movement/deceleration.
