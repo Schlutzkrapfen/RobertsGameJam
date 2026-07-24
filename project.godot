@@ -76,6 +76,11 @@ dash={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Default"
+3d_physics/layer_2="Solid"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

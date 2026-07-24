@@ -112,6 +112,12 @@ transform = Transform3D(32.97906, 0, 0, 0, 32.97906, 0, 0, 0, 32.97906, -4.21129
 [node name="StaticBox" parent="." unique_id=1749309345 instance=ExtResource("8_xn8ur")]
 transform = Transform3D(1.2071052, 0, 0, 0, 2.8371818, 0, 0, 0, 11.718562, 32.62336, -3.5626156, -0.5714543)
 
+[node name="StaticBox2" parent="." unique_id=1760308515 instance=ExtResource("8_xn8ur")]
+transform = Transform3D(1.2071052, 0, 0, 0, 13.669592, 0, 0, 0, 11.718562, 70.89845, 2.1301851, -2.6369565)
+
+[node name="StaticBox3" parent="." unique_id=439605779 instance=ExtResource("8_xn8ur")]
+transform = Transform3D(1.2071052, 0, 0, 0, 13.669592, 0, 0, 0, 11.718562, 61.88147, 6.768127, -2.6369565)
+
 [connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_quit_button_pressed"]
 [connection signal="spawn_enemies" from="Boss" to="EnemySpawner" method="_on_boss_spawn_enemies"]
