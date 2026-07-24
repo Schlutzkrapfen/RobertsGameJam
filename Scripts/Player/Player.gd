@@ -63,6 +63,16 @@ var curShootTimer : float = 0
 var curBurstCountdown : int = bulletsPerBurst - 1
 var isShooting : bool = false
 
+#Ultimate Weapon
+@export_category("Ultimate Weapon")
+@export var chargeSpeed : float = 0.15
+@export var dischargeSpeed : float = 0.3
+@export var overChargeThreshhold : float = 10
+@export var mainChargeDischargeSpeed : float = 0.1
+@export var fireLength : float = 10
+var isChargingUlt : bool = false
+var ultimateReady : bool = false
+
 # player components
 var camera : Camera3D
 var standingCollider : CollisionShape3D
@@ -80,16 +90,25 @@ func _enter_tree() -> void:
 
 func _process(delta):
 	controll_camera(delta)
-	if(isShooting):
+	
+	#Shooting
+	if(isShooting and !isChargingUlt):
 		shoot(delta)
 	
+	#Ultimate
+	if(isChargingUlt):
+		pass
+	
+	#Jump Buffer
 	curJumpBuffered -= delta
 	if(Input.is_action_just_pressed("jump")):
 		curJumpBuffered = jumpBuffer
 	
+	#Reset Jumps
 	if(is_on_floor()):
 		curJumps = NumberOfJumps
 	
+	# Dash Buffer
 	curDashBuffered -= delta
 	if(Input.is_action_just_pressed("dash")):
 		curDashBuffered = dashBuffer
@@ -177,6 +196,10 @@ func _input(event):
 		isShooting = false
 		curShootTimer = 0
 		curBurstCountdown = bulletsPerBurst - 1
+	if event.is_action_pressed("ChargeUltimate"):
+		isChargingUlt = true
+	if event.is_action_released("ChargeUltimate"):
+		isChargingUlt = false
 
 func controll_camera(delta:float):
 	# rotate camera along X axis

@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://ddx0a67g2f1lt"]
 
+[ext_resource type="Script" uid="uid://b3kpms4g0etsd" path="res://Nodes/Objects/static_box.gd" id="1_oswtc"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_dxclx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7n3k6"]
 
-[node name="StaticBox" type="StaticBody3D" unique_id=1749309345]
+[node name="StaticBox" type="StaticBody3D" unique_id=1872007656]
+script = ExtResource("1_oswtc")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1265346999]
 mesh = SubResource("BoxMesh_dxclx")

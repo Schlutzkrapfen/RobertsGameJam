@@ -39,19 +39,7 @@ radius = 100.0
 [node name="Level" type="Node3D" unique_id=2124627221]
 
 [node name="Player" parent="." unique_id=1191405411 instance=ExtResource("2_k4g51")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.266053, 2.5188031, 1.1690521)
-NumberOfJumps = 2
-jumpBuffer = 0.05
-dashBuffer = 0.05
-dashCooldown = 0.5
-dashTransitionTimer = 0.1
-bulletsPerBurst = 3
-burstSpeed = 0.05
-chargeSpeed = 0.15
-dischargeSpeed = 0.3
-overChargeThreshhold = 10.0
-mainChargeDischargeSpeed = 0.1
-fireLength = 10.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.266053, -5.3775926, 1.1690521)
 
 [node name="SceneManager" type="Node3D" parent="." unique_id=1758454766 node_paths=PackedStringArray("pauseMenu")]
 script = ExtResource("4_4ys6t")
@@ -93,15 +81,16 @@ text = "Exit"
 [node name="Arena" type="Node3D" parent="." unique_id=342273739]
 
 [node name="Box" parent="Arena" unique_id=970064558 instance=ExtResource("6_v1h2x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.09604, 4.1741714, -28.67553)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.09604, -5.7500687, -28.67553)
 
 [node name="Box2" parent="Arena" unique_id=1012599661 instance=ExtResource("6_v1h2x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5536966, 4.1741714, -34.595528)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5536966, -5.7500687, -34.595528)
 
 [node name="Box3" parent="Arena" unique_id=1495860071 instance=ExtResource("6_v1h2x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.519375, 5.6100254, 35.223503)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.519375, -4.3142147, 35.223503)
 
 [node name="Ground" type="MeshInstance3D" parent="Arena" unique_id=232500043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.4107494, 0)
 material_override = SubResource("StandardMaterial3D_v1h2x")
 mesh = SubResource("CylinderMesh_xeka7")
 surface_material_override/0 = SubResource("StandardMaterial3D_dxclx")
@@ -123,16 +112,13 @@ player = NodePath("../Player")
 transform = Transform3D(32.97906, 0, 0, 0, 32.97906, 0, 0, 0, 32.97906, -4.211296, 17.440899, 1.4877701)
 
 [node name="StaticBox" parent="." unique_id=1749309345 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.62336, 3.9388473, -0.5714543)
-size = Vector3(1.2071052, 2.8371818, 11.718562)
+transform = Transform3D(1.2071052, 0, 0, 0, 2.8371818, 0, 0, 0, 11.718562, 32.62336, -3.5626156, -0.5714543)
 
 [node name="StaticBox2" parent="." unique_id=1760308515 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.89845, 8.899489, -2.6369565)
-size = Vector3(1.2071052, 13.669592, 11.718562)
+transform = Transform3D(1.2071052, 0, 0, 0, 13.669592, 0, 0, 0, 11.718562, 70.89845, 2.1301851, -2.6369565)
 
 [node name="StaticBox3" parent="." unique_id=439605779 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.88147, 14.0932255, -2.6369565)
-size = Vector3(1.2071052, 13.669592, 11.718562)
+transform = Transform3D(1.2071052, 0, 0, 0, 13.669592, 0, 0, 0, 11.718562, 61.88147, 6.768127, -2.6369565)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1949058835]
 

@@ -25,14 +25,26 @@ moveSpeed = 10.0
 sprintSpeed = 20.0
 jumpForce = 6.0
 hyperJumpForce = 12.0
+NumberOfJumps = null
+jumpBuffer = null
+dashBuffer = null
 dashSpeed = 30.0
 dashDuration = 0.3
+dashCooldown = null
+dashTransitionTimer = null
 camDipYHeight = 0.0
 camDipTransitionStrength = 10.0
 bullet = ExtResource("2_re438")
 muzzle = NodePath("Camera3D/GunMesh/Muzzle")
+bulletsPerBurst = null
+burstSpeed = null
 burstCooldown = 0.3
 tracerSpeed = 100.0
+chargeSpeed = null
+dischargeSpeed = null
+overChargeThreshhold = null
+mainChargeDischargeSpeed = null
+fireLength = null
 
 [node name="NormalCollider" type="CollisionShape3D" parent="." unique_id=1421454333]
 shape = SubResource("CapsuleShape3D_nacyp")
