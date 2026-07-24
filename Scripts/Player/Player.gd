@@ -35,7 +35,7 @@ var curDashBuffered : float = dashBuffer
 @export var dashCooldown : float = 0.5
 @export var dashTransitionTimer : float = 0.1
 @export var camDipYHeight : float = 0.5
-@export var camDipTransition : float = 0.03
+@export var camDipTransitionStrength : float = 1
 var curDashTimer : float = 0
 var curDashTransitionTimer : float = 0
 var curCamDipTransition : float = 0
@@ -65,10 +65,18 @@ var isShooting : bool = false
 
 # player components
 var camera : Camera3D
+var standingCollider : CollisionShape3D
+var standingMesh : MeshInstance3D
+var slidingCollider : CollisionShape3D
+var slidingMesh : MeshInstance3D
 
 func _enter_tree() -> void:
 	camera = get_node("Camera3D")
 	normalCamYHeight = camera.transform.origin.y
+	standingCollider = get_node("NormalCollider")
+	standingMesh = get_node("NormalCollider/NormalMesh")
+	slidingCollider = get_node("SlidingCollider")
+	slidingMesh = get_node("SlidingCollider/SlidingMesh")
 
 func _process(delta):
 	controll_camera(delta)
@@ -104,6 +112,11 @@ func _physics_process(delta: float) -> void:
 		curDashBuffered = 0
 		curDashTimer = dashDuration
 		isDashing = true
+		
+		standingCollider.disabled = true
+		standingMesh.visible = false
+		slidingCollider.disabled = false
+		slidingMesh.visible = true
 		print("DASH START")
 	
 	if(isDashing):
@@ -115,6 +128,11 @@ func _physics_process(delta: float) -> void:
 	if(isDashing && curDashTimer < 0):
 		isDashing = false
 		curDashTransitionTimer = dashTransitionTimer
+		
+		standingCollider.disabled = false
+		standingMesh.visible = true
+		slidingCollider.disabled = true
+		slidingMesh.visible = false
 		print("DASH END")
 	
 	curDashTransitionTimer -= delta
@@ -128,7 +146,7 @@ func _physics_process(delta: float) -> void:
 		target_height = camDipYHeight
 	else:
 		target_height = normalCamYHeight
-	camera.set_base_y(move_toward(camera.get_base_y(), target_height, 40.0 * delta))
+	camera.set_base_y(move_toward(camera.get_base_y(), target_height, camDipTransitionStrength * delta))
 	
 	# Handle Movement
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
