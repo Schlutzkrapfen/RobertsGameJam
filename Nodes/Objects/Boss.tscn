@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://wxdr8jqglnre"]
+
+[ext_resource type="Script" uid="uid://cv5tdt6gyv4xp" path="res://Scripts/Enemy/boss.gd" id="1_supnr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_nacyp"]
+
+[sub_resource type="Animation" id="Animation_supnr"]
+resource_name = "Attack 1"
+
+[sub_resource type="Animation" id="Animation_sk1an"]
+resource_name = "Attack 2"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sk1an"]
+_data = {
+&"Attack 1": SubResource("Animation_supnr"),
+&"Attack 2": SubResource("Animation_sk1an")
+}
+
+[node name="Boss" type="CharacterBody3D" unique_id=419995261 node_paths=PackedStringArray("anim")]
+script = ExtResource("1_supnr")
+anim = NodePath("AnimationPlayer")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=812541396]
+shape = SubResource("CapsuleShape3D_nacyp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=2145810816]
+mesh = SubResource("CapsuleMesh_nacyp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1622313294]
+libraries/ = SubResource("AnimationLibrary_sk1an")

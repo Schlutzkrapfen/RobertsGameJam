@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bwu3srmgjopj0"]
+
+[ext_resource type="Script" uid="uid://xtq8j2ogtpe1" path="res://Scripts/Enemy/enemy_spawner.gd" id="1_ifpc4"]
+[ext_resource type="PackedScene" uid="uid://duc6rybo6ab0m" path="res://Nodes/Objects/enemy.tscn" id="2_ra4sa"]
+
+[sub_resource type="Curve3D" id="Curve3D_ifpc4"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, -100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -100),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[node name="EnemySpawner" type="Node" unique_id=7471250]
+script = ExtResource("1_ifpc4")
+mob_scene = ExtResource("2_ra4sa")
+
+[node name="SpawnPath" type="Path3D" parent="." unique_id=1642875889]
+curve = SubResource("Curve3D_ifpc4")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath" unique_id=1583308996]
+transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, 100, 0, 0)
