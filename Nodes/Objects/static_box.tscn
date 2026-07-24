@@ -5,6 +5,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_7n3k6"]
 
 [node name="StaticBox" type="StaticBody3D" unique_id=1749309345]
+collision_layer = 3
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1265346999]
 mesh = SubResource("BoxMesh_dxclx")

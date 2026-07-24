@@ -26,6 +26,14 @@ var curJumps = 0
 @export var jumpBuffer : float = 0.05
 var curJumpBuffered : float = jumpBuffer
 
+# wall kick
+@export_subgroup("Wall Kick")
+@export var wallCheckDistance: float = 1.0
+@export var wallKickForce: float = 8.0
+@export var wallKickUpForce: float = 10.0
+@export var wallRayCount: int = 16
+@export_flags_3d_physics var wallCollisionMask: int = 1 << 1
+
 # dash
 @export_subgroup("Dash")
 @export var dashBuffer : float = 0.05
@@ -87,8 +95,7 @@ func _process(delta):
 	if(Input.is_action_just_pressed("jump")):
 		curJumpBuffered = jumpBuffer
 	
-	if(is_on_floor()):
-		curJumps = NumberOfJumps
+
 	
 	curDashBuffered -= delta
 	if(Input.is_action_just_pressed("dash")):
@@ -98,6 +105,9 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	
+	if(is_on_floor()):
+		curJumps = NumberOfJumps
 	
 	# Handle Speed
 	curSpeed = moveSpeed
@@ -117,11 +127,8 @@ func _physics_process(delta: float) -> void:
 		standingMesh.visible = false
 		slidingCollider.disabled = false
 		slidingMesh.visible = true
-		print("DASH START")
 	
 	if(isDashing):
-		print("dashDuration =", dashDuration)
-		print("DASH " + str(curDashTimer))
 		curSpeed = dashSpeed
 		#curCamDipTransition -= delta
 	
@@ -133,11 +140,9 @@ func _physics_process(delta: float) -> void:
 		standingMesh.visible = true
 		slidingCollider.disabled = true
 		slidingMesh.visible = false
-		print("DASH END")
 	
 	curDashTransitionTimer -= delta
 	if(curDashTransitionTimer > 0 and !isDashing):
-		print("DASH TRANSITION")
 		curSpeed = lerpf(dashSpeed, sprintSpeed, curDashTransitionTimer / dashTransitionTimer)
 	
 	# Cam Dip
@@ -158,12 +163,23 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, curSpeed)
 		velocity.z = move_toward(velocity.z, 0, curSpeed)
 	
-	# Handle Jump
-	if curJumpBuffered >= 0 and curJumps > 0:
-		curJumpBuffered = -1
+	# Wall kick
+	var wallNormal = get_wall_normal()
+	if (curJumpBuffered >= 0 and !is_on_floor() and wallNormal != Vector3.ZERO):
+		curJumpBuffered = -1 #consume jump input
+		velocity.y = wallKickUpForce
+		velocity.x = wallNormal.x * wallKickForce
+		velocity.z = wallNormal.z * wallKickForce
+	
+	# Jump
+	if (curJumpBuffered >= 0 and curJumps > 0):
+		curJumpBuffered = -1 #consume jump input
 		velocity.y = jumpForce
+		
+		# Hyper jump
 		if (isDashing and curJumps == NumberOfJumps):
 			velocity.y = hyperJumpForce
+		
 		curJumps -= 1
 	
 	move_and_slide()
@@ -231,3 +247,31 @@ func spawn_tracer(from: Vector3, to: Vector3):
 	var tracer = bullet.instantiate()
 	get_tree().current_scene.add_child(tracer)
 	tracer.initialize(from, to, tracerSpeed)
+
+func find_nearby_wall_normal() -> Vector3:
+	var space_state = get_world_3d().direct_space_state
+	var origin = global_transform.origin
+	origin.y = camera.global_transform.origin.y  # cast at camera's height, not the feet
+
+	var closest_normal := Vector3.ZERO
+	var closest_dist := wallCheckDistance + 1.0
+
+	for i in range(wallRayCount):
+		var angle = (TAU / wallRayCount) * i
+		var dir = Vector3(cos(angle), 0, sin(angle))
+		var to = origin + dir * wallCheckDistance
+
+		var query = PhysicsRayQueryParameters3D.create(origin, to)
+		query.collision_mask = wallCollisionMask
+		query.exclude = [get_rid()]  # don't hit your own body
+
+		var result = space_state.intersect_ray(query)
+		if result:
+			# optional: ignore shallow ramps/floors that slipped onto this layer
+			if abs(result.normal.y) < 0.3:
+				var dist = origin.distance_to(result.position)
+				if dist < closest_dist:
+					closest_dist = dist
+					closest_normal = result.normal
+
+	return closest_normal

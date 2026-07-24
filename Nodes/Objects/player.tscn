@@ -25,6 +25,7 @@ moveSpeed = 10.0
 sprintSpeed = 20.0
 jumpForce = 6.0
 hyperJumpForce = 12.0
+wallKickForce = 500.0
 dashSpeed = 30.0
 dashDuration = 0.3
 camDipYHeight = 0.0
