@@ -2,15 +2,31 @@
 
 [ext_resource type="Script" uid="uid://c605qqb5bbuyn" path="res://Scripts/Enemy/spehere_attack.gd" id="1_qu04t"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_nacyp"]
+[sub_resource type="SphereMesh" id="SphereMesh_vrnwp"]
 height = 0.001
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2t1ig"]
 albedo_color = Color(1, 0, 0, 0.47843137)
 
+[sub_resource type="PackedScene" id="PackedScene_lylff"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("MeshInstance3D", "mesh", "surface_material_override/0"),
+"node_count": 1,
+"node_ids": PackedInt32Array(2037751059),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 0, 0, -1, 2, 1, 0, 2, 1, 0),
+"variants": [SubResource("SphereMesh_vrnwp"), SubResource("StandardMaterial3D_2t1ig")],
+"version": 3
+}
+
 [node name="Spehere attack" type="Node3D" unique_id=1580442940]
 script = ExtResource("1_qu04t")
+sphere_attack = SubResource("PackedScene_lylff")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1808658821]
-mesh = SubResource("SphereMesh_nacyp")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2037751059]
+mesh = SubResource("SphereMesh_vrnwp")
 surface_material_override/0 = SubResource("StandardMaterial3D_2t1ig")

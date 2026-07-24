@@ -2,6 +2,7 @@ extends CharacterBody3D
 @export var wait_idle_time: float = 1
 @export var wait_for_spawning:float = 1
 @export var sphere_attack: PackedScene
+@export var sphere_attack_size:float = 20
 @export var anim:AnimationPlayer
 @export var spawn_radius_sphere_attacl:int = 100
 signal spawn_enemies()
@@ -49,6 +50,6 @@ func spawn_simple_attacks():
 	# And give it a random offset.
 	
 	attack.position = Vector3(randi_range(-spawn_radius_sphere_attacl,spawn_radius_sphere_attacl),2,randi_range(-spawn_radius_sphere_attacl,spawn_radius_sphere_attacl))
-	attack.attack_size = 4
+	attack.attack_size = 8
 	# Spawn the mob by adding it to the Main scene.
 	get_parent().add_child(attack)
