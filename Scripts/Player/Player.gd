@@ -67,15 +67,15 @@ var isShooting : bool = false
 @export_category("Ultimate Weapon")
 var overchargeUI : TextureProgressBar
 var ultChargeUI : TextureProgressBar
-@export var chargeSpeed : float = 20
-@export var dischargeSpeed : float = 40
-@export var overChargeThreshhold : float = 10
-@export var ultChargeSpeed : float = 0.01
-@export var ultDischargeSpeed : float = 0.1
+# @export var chargeSpeed : float = 20
+# @export var dischargeSpeed : float = 40
+# @export var overChargeThreshhold : float = 10
+@export var ultChargeSpeed : float = 3
+@export var ultDischargeSpeed : float = 2
 @export var fireLength : float = 10
 var isChargingUlt : bool = false
 var ultimateReady : bool = false
-var curOverheatCharge : float = 0
+#var curOverheatCharge : float = 0
 var curUltimateCharge : float = 0
 
 # player components
@@ -104,16 +104,16 @@ func _process(delta):
 	
 	#Ultimate
 	if(isChargingUlt):
-		curOverheatCharge += chargeSpeed * delta
-		curUltimateCharge += curOverheatCharge * ultChargeSpeed * delta
+		#curOverheatCharge += chargeSpeed * delta
+		curUltimateCharge += ultChargeSpeed * delta
 	else:
-		curOverheatCharge -= dischargeSpeed * delta
+		#curOverheatCharge -= dischargeSpeed * delta
 		curUltimateCharge -= ultDischargeSpeed * delta
 		
-	if(curOverheatCharge < 1):
-		curOverheatCharge = 1
+	if(curUltimateCharge < 0):
+		curUltimateCharge = 0
 		
-	overchargeUI.value = curOverheatCharge
+	#overchargeUI.value = curOverheatCharge
 	ultChargeUI.value = curUltimateCharge
 	
 	#Jump Buffer
