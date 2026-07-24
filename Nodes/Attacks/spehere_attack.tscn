@@ -23,10 +23,13 @@ _bundled = {
 "version": 3
 }
 
+[sub_resource type="SphereMesh" id="SphereMesh_xeka7"]
+height = 0.001
+
 [node name="Spehere attack" type="Node3D" unique_id=1580442940]
 script = ExtResource("1_qu04t")
 sphere_attack = SubResource("PackedScene_lylff")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2037751059]
-mesh = SubResource("SphereMesh_vrnwp")
+mesh = SubResource("SphereMesh_xeka7")
 surface_material_override/0 = SubResource("StandardMaterial3D_2t1ig")
