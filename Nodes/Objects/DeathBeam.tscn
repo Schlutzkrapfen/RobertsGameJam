@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://ffs1ota5sgyh"]
+
+[ext_resource type="ArrayMesh" uid="uid://dd35l8u8wpb7w" path="res://Assets/3D/InnerBeam.tres" id="1_gyix5"]
+[ext_resource type="Shader" uid="uid://88dd0bx52wrp" path="res://Assets/Shader/s_InnerBeam.tres" id="1_qgbpu"]
+[ext_resource type="Texture2D" uid="uid://c4hmo0u2fjkdv" path="res://Assets/Textures/T_VFX_Noise_4.PNG" id="2_26p7i"]
+[ext_resource type="ArrayMesh" uid="uid://cdm6j0ui1vr8c" path="res://Assets/3D/OuterBeam.tres" id="4_0avsh"]
+[ext_resource type="Texture2D" uid="uid://brpynycfoi6pi" path="res://Assets/Textures/Noise1_tiled.png" id="4_4ltxa"]
+[ext_resource type="Shader" uid="uid://c32fxkprtvkag" path="res://Assets/Shader/SimpleParticles.tres" id="6_xb5n7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qgbpu"]
+render_priority = 0
+shader = ExtResource("1_qgbpu")
+shader_parameter/Texture_Offset_Speed = Vector2(2, 1)
+shader_parameter/Texture = ExtResource("2_26p7i")
+shader_parameter/Texture_Power = 1.5
+shader_parameter/GradientStrength = 1.0
+
+[sub_resource type="Curve" id="Curve_26p7i"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_0avsh"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_4ltxa"]
+_limits = [0.0, 8.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 8), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_gyix5"]
+curve_x = SubResource("Curve_26p7i")
+curve_y = SubResource("Curve_0avsh")
+curve_z = SubResource("Curve_4ltxa")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qgbpu"]
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveXYZTexture_gyix5")
+color = Color(3.1823645, 0.5055704, 3.2944162, 1)
+
+[sub_resource type="Curve" id="Curve_xb5n7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_qj7l2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_v07x3"]
+_limits = [0.0, 25.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 25), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_lm0dt"]
+curve_x = SubResource("Curve_xb5n7")
+curve_y = SubResource("Curve_qj7l2")
+curve_z = SubResource("Curve_v07x3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xb5n7"]
+gravity = Vector3(0, 0, 0)
+scale_min = 0.29999998
+scale_max = 0.29999998
+scale_curve = SubResource("CurveXYZTexture_lm0dt")
+color = Color(2.8330288, 1.0899111, 3.730998, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gli08"]
+render_priority = 0
+shader = ExtResource("1_qgbpu")
+shader_parameter/Texture_Offset_Speed = Vector2(1.5, 2)
+shader_parameter/Texture = ExtResource("4_4ltxa")
+shader_parameter/Texture_Power = 2.0
+shader_parameter/GradientStrength = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mq0dr"]
+gravity = Vector3(0, 0, 0)
+color = Color(1.0644869, 1.2790107, 2.3143203, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ltxa"]
+render_priority = 0
+shader = ExtResource("6_xb5n7")
+
+[sub_resource type="Curve" id="Curve_lm0dt"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.76094276, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_xb5n7"]
+curve = SubResource("Curve_lm0dt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uagv5"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 0, 1)
+spread = 0.0
+initial_velocity_min = 5.0
+initial_velocity_max = 8.0
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = 1.9999776
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 3.5
+color = Color(2.1723652, 0.7098908, 3.3190784, 1)
+alpha_curve = SubResource("CurveTexture_xb5n7")
+
+[sub_resource type="QuadMesh" id="QuadMesh_p3wno"]
+size = Vector2(0.1, 0.1)
+
+[node name="DeathBeam" type="Node3D" unique_id=1480504779]
+
+[node name="MainEnergyCylinder" type="GPUParticles3D" parent="." unique_id=1786671165]
+material_override = SubResource("ShaderMaterial_qgbpu")
+emitting = false
+amount = 1
+lifetime = 10.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_qgbpu")
+draw_pass_1 = ExtResource("1_gyix5")
+
+[node name="LittleCylinder" type="GPUParticles3D" parent="." unique_id=518206289]
+material_override = SubResource("ShaderMaterial_qgbpu")
+emitting = false
+amount = 1
+lifetime = 10.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_xb5n7")
+draw_pass_1 = ExtResource("1_gyix5")
+
+[node name="SplashEnergy" type="GPUParticles3D" parent="." unique_id=883409547]
+material_override = SubResource("ShaderMaterial_gli08")
+emitting = false
+amount = 1
+lifetime = 10.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_mq0dr")
+draw_pass_1 = ExtResource("4_0avsh")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1873402974]
+material_override = SubResource("ShaderMaterial_4ltxa")
+emitting = false
+amount = 200
+lifetime = 10.0
+one_shot = true
+explosiveness = 0.2
+process_material = SubResource("ParticleProcessMaterial_uagv5")
+draw_pass_1 = SubResource("QuadMesh_p3wno")
