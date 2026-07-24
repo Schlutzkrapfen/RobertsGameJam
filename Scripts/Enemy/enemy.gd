@@ -1,4 +1,4 @@
-class_name Enemy
+class_name Enemy 
 extends CharacterBody3D
 
 const SPEED = 15.0
@@ -11,10 +11,10 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
 	move_to_point(target.global_position, delta)
-
 	move_and_slide()
+
+
 
 
 func move_to_point(point: Vector3, _delta: float) -> void:

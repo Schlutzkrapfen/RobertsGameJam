@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bwu3srmgjopj0" path="res://Nodes/Objects/enemy_spawner.tscn" id="6_xn8ur"]
 [ext_resource type="PackedScene" uid="uid://wxdr8jqglnre" path="res://Nodes/Objects/Boss.tscn" id="7_v1h2x"]
 [ext_resource type="PackedScene" uid="uid://ddx0a67g2f1lt" path="res://Nodes/Objects/static_box.tscn" id="8_xn8ur"]
+[ext_resource type="PackedScene" uid="uid://qjhhyf82w5n3" path="res://Nodes/Attacks/spehere_attack.tscn" id="9_akprg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v1h2x"]
 albedo_texture = ExtResource("6_7n3k6")
@@ -111,6 +112,9 @@ transform = Transform3D(32.97906, 0, 0, 0, 32.97906, 0, 0, 0, 32.97906, -4.21129
 
 [node name="StaticBox" parent="." unique_id=1749309345 instance=ExtResource("8_xn8ur")]
 transform = Transform3D(1.2071052, 0, 0, 0, 2.8371818, 0, 0, 0, 11.718562, 32.62336, -3.5626156, -0.5714543)
+
+[node name="Spehere attack" parent="." unique_id=1580442940 instance=ExtResource("9_akprg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.426826, -6.410251, -0.64653397)
 
 [connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_quit_button_pressed"]

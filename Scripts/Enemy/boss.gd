@@ -40,3 +40,5 @@ func choose_state():
 			await get_tree().create_timer(wait_for_spawning).timeout 
 	choose_state()
 			
+func spawn_simple_attacks():
+	pass

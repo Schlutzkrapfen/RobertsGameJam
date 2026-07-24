@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://qjhhyf82w5n3"]
+
+[ext_resource type="Script" uid="uid://c605qqb5bbuyn" path="res://Scripts/Enemy/spehere_attack.gd" id="1_qu04t"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_nacyp"]
+height = 0.001
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2t1ig"]
+albedo_color = Color(1, 0, 0, 0.47843137)
+
+[node name="Spehere attack" type="Node3D" unique_id=1580442940]
+script = ExtResource("1_qu04t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1808658821]
+mesh = SubResource("SphereMesh_nacyp")
+surface_material_override/0 = SubResource("StandardMaterial3D_2t1ig")
