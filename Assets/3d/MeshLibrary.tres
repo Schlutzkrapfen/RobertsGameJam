@@ -1,6 +1,6 @@
 [gd_resource type="MeshLibrary" format=4 uid="uid://c4gmbr4o2ffdk"]
 
-[ext_resource type="Material" uid="uid://chdrcnup3vyj7" path="res://Assets/3d/Matirial/golf.material" id="1"]
+[ext_resource type="Material" uid="uid://chdrcnup3vyj7" path="res://Assets/3D/Matirial/golf.material" id="1"]
 
 [sub_resource type="ArrayMesh" id="1"]
 resource_name = "Plane"

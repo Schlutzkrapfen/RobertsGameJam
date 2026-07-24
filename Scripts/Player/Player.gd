@@ -20,7 +20,9 @@ var curSpeed : float = moveSpeed
 # jump
 @export_subgroup("Jump")
 @export var jumpForce : float = 5.0
-@export var curJumps = 2
+@export var hyperJumpForce : float = 15.0
+@export var NumberOfJumps = 2
+var curJumps = 0
 @export var jumpBuffer : float = 0.05
 var curJumpBuffered : float = jumpBuffer
 
@@ -28,9 +30,16 @@ var curJumpBuffered : float = jumpBuffer
 @export_subgroup("Dash")
 @export var dashBuffer : float = 0.05
 var curDashBuffered : float = dashBuffer
+@export var dashSpeed : float = 15
 @export var dashDuration : float = 0.2
 @export var dashCooldown : float = 0.5
+@export var dashTransitionTimer : float = 0.1
+@export var camDipYHeight : float = 0.5
+@export var camDipTransition : float = 0.03
 var curDashTimer : float = 0
+var curDashTransitionTimer : float = 0
+var curCamDipTransition : float = 0
+var normalCamYHeight : float = 0
 var isDashing : bool = true
 
 # cam look
@@ -54,9 +63,12 @@ var curShootTimer : float = 0
 var curBurstCountdown : int = bulletsPerBurst - 1
 var isShooting : bool = false
 
-
 # player components
-@onready var camera: Camera3D = get_node("Camera3D")
+var camera : Camera3D
+
+func _enter_tree() -> void:
+	camera = get_node("Camera3D")
+	normalCamYHeight = camera.transform.origin.y
 
 func _process(delta):
 	controll_camera(delta)
@@ -68,7 +80,7 @@ func _process(delta):
 		curJumpBuffered = jumpBuffer
 	
 	if(is_on_floor()):
-		curJumps = 2
+		curJumps = NumberOfJumps
 	
 	curDashBuffered -= delta
 	if(Input.is_action_just_pressed("dash")):
@@ -78,23 +90,45 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-		
-	# Handle Jump
-	if curJumpBuffered >= 0 and curJumps > 0:
-		curJumpBuffered = -1
-		velocity.y = jumpForce
-		curJumps -= 1
+	
+	# Handle Speed
+	curSpeed = moveSpeed
+	
+	# Handle Sprinting
+	if(Input.is_action_pressed("sprint")):
+		curSpeed = sprintSpeed
 	
 	# Handle Dashing
 	curDashTimer -= delta
 	if(curDashBuffered >= 0 and curDashTimer <= 0 and !isDashing):
+		curDashBuffered = 0
 		curDashTimer = dashDuration
-		#Dash here
+		isDashing = true
+		print("DASH START")
 	
-	# Handle Sprinting
-	curSpeed = moveSpeed
-	if(Input.is_action_pressed("sprint")):
-		curSpeed = sprintSpeed
+	if(isDashing):
+		print("dashDuration =", dashDuration)
+		print("DASH " + str(curDashTimer))
+		curSpeed = dashSpeed
+		#curCamDipTransition -= delta
+	
+	if(isDashing && curDashTimer < 0):
+		isDashing = false
+		curDashTransitionTimer = dashTransitionTimer
+		print("DASH END")
+	
+	curDashTransitionTimer -= delta
+	if(curDashTransitionTimer > 0 and !isDashing):
+		print("DASH TRANSITION")
+		curSpeed = lerpf(dashSpeed, sprintSpeed, curDashTransitionTimer / dashTransitionTimer)
+	
+	# Cam Dip
+	var target_height
+	if isDashing:
+		target_height = camDipYHeight
+	else:
+		target_height = normalCamYHeight
+	camera.set_base_y(move_toward(camera.get_base_y(), target_height, 40.0 * delta))
 	
 	# Handle Movement
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
@@ -105,6 +139,14 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, curSpeed)
 		velocity.z = move_toward(velocity.z, 0, curSpeed)
+	
+	# Handle Jump
+	if curJumpBuffered >= 0 and curJumps > 0:
+		curJumpBuffered = -1
+		velocity.y = jumpForce
+		if (isDashing and curJumps == NumberOfJumps):
+			velocity.y = hyperJumpForce
+		curJumps -= 1
 	
 	move_and_slide()
 	
@@ -153,15 +195,16 @@ func shootProjectile():
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 	var result = space_state.intersect_ray(query)
 
-	if result:
+	if !result.is_empty():
 		# Damage the target
+		if result.collider is Enemy:
+			await SlowMotion.slow_motion(0.5)
 		
 		spawn_tracer(from, result.position)
 	else:
 		spawn_tracer(from, to)
 	
 	camera_shake.emit(SHOOT_SHAKE_AMOUNT)
-	await SlowMotion.slow_motion(5)
 
 func spawn_tracer(from: Vector3, to: Vector3):
 	if bullet == null:

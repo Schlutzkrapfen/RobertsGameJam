@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c821w5ibwm2dl" path="res://Scripts/Player/Player.gd" id="1_7mn6y"]
 [ext_resource type="Script" uid="uid://y8p1gyuac0x" path="res://Scripts/Player/CameraShaker.gd" id="2_qyaxr"]
 [ext_resource type="PackedScene" uid="uid://b7316rr1p55wc" path="res://Nodes/Objects/tracer_bullet.tscn" id="2_re438"]
-[ext_resource type="Texture2D" uid="uid://x8xjsb3m7vuw" path="res://Assets/Crosshair.png" id="3_0thus"]
+[ext_resource type="Texture2D" uid="uid://x8xjsb3m7vuw" path="res://Assets/2D/Crosshair.png" id="3_0thus"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
 
@@ -15,6 +15,13 @@
 
 [node name="Player" type="CharacterBody3D" unique_id=1191405411 node_paths=PackedStringArray("muzzle")]
 script = ExtResource("1_7mn6y")
+moveSpeed = 10.0
+sprintSpeed = 20.0
+jumpForce = 6.0
+hyperJumpForce = 12.0
+dashSpeed = 30.0
+dashDuration = 0.3
+camDipYHeight = 0.0
 bullet = ExtResource("2_re438")
 muzzle = NodePath("Camera3D/GunMesh/Muzzle")
 burstCooldown = 0.3
