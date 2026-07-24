@@ -7,3 +7,5 @@ func _ready() -> void:
 	tween.tween_property($MeshInstance3D.mesh, "height", 400, 0.2).set_trans(Tween.TRANS_BOUNCE)
 	await tween.finished
 	visible = false
+	queue_free()
+	

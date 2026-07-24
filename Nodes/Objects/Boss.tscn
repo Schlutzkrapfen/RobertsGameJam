@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://wxdr8jqglnre"]
 
 [ext_resource type="Script" uid="uid://cv5tdt6gyv4xp" path="res://Scripts/Enemy/boss.gd" id="1_supnr"]
+[ext_resource type="PackedScene" uid="uid://qjhhyf82w5n3" path="res://Nodes/Attacks/spehere_attack.tscn" id="2_sk1an"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
 
@@ -20,6 +21,7 @@ _data = {
 
 [node name="Boss" type="CharacterBody3D" unique_id=419995261 node_paths=PackedStringArray("anim")]
 script = ExtResource("1_supnr")
+sphere_attack = ExtResource("2_sk1an")
 anim = NodePath("AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=812541396]

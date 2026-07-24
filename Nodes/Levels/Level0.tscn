@@ -120,7 +120,7 @@ shadow_enabled = true
 player = NodePath("../Player")
 
 [node name="Boss" parent="." unique_id=419995261 instance=ExtResource("7_v1h2x")]
-transform = Transform3D(32.97906, 0, 0, 0, 32.97906, 0, 0, 0, 32.97906, -4.211296, 17.440899, 1.4877701)
+transform = Transform3D(32.97906, 0, 0, 0, 32.97906, 0, 0, 0, 32.97906, 0, 20, 0)
 
 [node name="StaticBox" parent="." unique_id=1749309345 instance=ExtResource("8_xn8ur")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.62336, 3.9388473, -0.5714543)
