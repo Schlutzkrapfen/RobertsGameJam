@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bv4okb01rqln0"]
+
+[ext_resource type="Texture2D" uid="uid://c2osueug7m8ao" path="res://Assets/2D/EmptyOverheatCharge.png" id="1_0qrth"]
+[ext_resource type="Texture2D" uid="uid://hlnkogeklxke" path="res://Assets/2D/FilledOverheatCharge.png" id="2_hyvhu"]
+[ext_resource type="Texture2D" uid="uid://blehx2colo1qj" path="res://Assets/2D/EmptyCharge.png" id="3_xusk0"]
+[ext_resource type="Texture2D" uid="uid://o2rj0dfw6mxv" path="res://Assets/2D/FilledCharge.png" id="4_6ko5j"]
+
+[node name="UI" type="CanvasLayer" unique_id=1886491923]
+
+[node name="OverheatCharge" type="TextureProgressBar" parent="." unique_id=1421066584]
+anchors_preset = -1
+anchor_left = 0.4157986
+anchor_top = 0.89506173
+anchor_right = 0.5985638
+anchor_bottom = 0.93209875
+nine_patch_stretch = true
+texture_under = ExtResource("1_0qrth")
+texture_progress = ExtResource("2_hyvhu")
+metadata/_edit_use_anchors_ = true
+
+[node name="UltimateCharge" type="TextureProgressBar" parent="." unique_id=153671744]
+anchors_preset = -1
+anchor_left = 0.07204861
+anchor_top = 0.9444444
+anchor_right = 0.94752204
+anchor_bottom = 0.9814815
+grow_horizontal = 2
+grow_vertical = 0
+nine_patch_stretch = true
+texture_under = ExtResource("3_xusk0")
+texture_progress = ExtResource("4_6ko5j")
+metadata/_edit_use_anchors_ = true

@@ -65,13 +65,18 @@ var isShooting : bool = false
 
 #Ultimate Weapon
 @export_category("Ultimate Weapon")
-@export var chargeSpeed : float = 0.15
-@export var dischargeSpeed : float = 0.3
+var overchargeUI : TextureProgressBar
+var ultChargeUI : TextureProgressBar
+@export var chargeSpeed : float = 20
+@export var dischargeSpeed : float = 40
 @export var overChargeThreshhold : float = 10
-@export var mainChargeDischargeSpeed : float = 0.1
+@export var ultChargeSpeed : float = 0.01
+@export var ultDischargeSpeed : float = 0.1
 @export var fireLength : float = 10
 var isChargingUlt : bool = false
 var ultimateReady : bool = false
+var curOverheatCharge : float = 0
+var curUltimateCharge : float = 0
 
 # player components
 var camera : Camera3D
@@ -87,6 +92,8 @@ func _enter_tree() -> void:
 	standingMesh = get_node("NormalCollider/NormalMesh")
 	slidingCollider = get_node("SlidingCollider")
 	slidingMesh = get_node("SlidingCollider/SlidingMesh")
+	overchargeUI = get_node("/root/Level/UI/OverheatCharge")
+	ultChargeUI = get_node("/root/Level/UI/UltimateCharge")
 
 func _process(delta):
 	controll_camera(delta)
@@ -97,7 +104,17 @@ func _process(delta):
 	
 	#Ultimate
 	if(isChargingUlt):
-		pass
+		curOverheatCharge += chargeSpeed * delta
+		curUltimateCharge += curOverheatCharge * ultChargeSpeed * delta
+	else:
+		curOverheatCharge -= dischargeSpeed * delta
+		curUltimateCharge -= ultDischargeSpeed * delta
+		
+	if(curOverheatCharge < 1):
+		curOverheatCharge = 1
+		
+	overchargeUI.value = curOverheatCharge
+	ultChargeUI.value = curUltimateCharge
 	
 	#Jump Buffer
 	curJumpBuffered -= delta
@@ -136,11 +153,8 @@ func _physics_process(delta: float) -> void:
 		standingMesh.visible = false
 		slidingCollider.disabled = false
 		slidingMesh.visible = true
-		print("DASH START")
 	
 	if(isDashing):
-		print("dashDuration =", dashDuration)
-		print("DASH " + str(curDashTimer))
 		curSpeed = dashSpeed
 		#curCamDipTransition -= delta
 	
@@ -152,11 +166,9 @@ func _physics_process(delta: float) -> void:
 		standingMesh.visible = true
 		slidingCollider.disabled = true
 		slidingMesh.visible = false
-		print("DASH END")
 	
 	curDashTransitionTimer -= delta
 	if(curDashTransitionTimer > 0 and !isDashing):
-		print("DASH TRANSITION")
 		curSpeed = lerpf(dashSpeed, sprintSpeed, curDashTransitionTimer / dashTransitionTimer)
 	
 	# Cam Dip

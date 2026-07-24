@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://wxdr8jqglnre" path="res://Nodes/Objects/Boss.tscn" id="7_v1h2x"]
 [ext_resource type="PackedScene" uid="uid://ddx0a67g2f1lt" path="res://Nodes/Objects/static_box.tscn" id="8_xn8ur"]
 [ext_resource type="Texture2D" uid="uid://blehx2colo1qj" path="res://Assets/2D/EmptyCharge.png" id="9_81glq"]
+[ext_resource type="Texture2D" uid="uid://c2osueug7m8ao" path="res://Assets/2D/EmptyOverheatCharge.png" id="9_vrnwp"]
+[ext_resource type="Texture2D" uid="uid://hlnkogeklxke" path="res://Assets/2D/FilledOverheatCharge.png" id="10_40oos"]
 [ext_resource type="Texture2D" uid="uid://o2rj0dfw6mxv" path="res://Assets/2D/FilledCharge.png" id="10_b0wg4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v1h2x"]
@@ -40,18 +42,6 @@ radius = 100.0
 
 [node name="Player" parent="." unique_id=1191405411 instance=ExtResource("2_k4g51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.266053, 2.5188031, 1.1690521)
-NumberOfJumps = 2
-jumpBuffer = 0.05
-dashBuffer = 0.05
-dashCooldown = 0.5
-dashTransitionTimer = 0.1
-bulletsPerBurst = 3
-burstSpeed = 0.05
-chargeSpeed = 0.15
-dischargeSpeed = 0.3
-overChargeThreshhold = 10.0
-mainChargeDischargeSpeed = 0.1
-fireLength = 10.0
 
 [node name="SceneManager" type="Node3D" parent="." unique_id=1758454766 node_paths=PackedStringArray("pauseMenu")]
 script = ExtResource("4_4ys6t")
@@ -134,14 +124,25 @@ size = Vector3(1.2071052, 13.669592, 11.718562)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.88147, 14.0932255, -2.6369565)
 size = Vector3(1.2071052, 13.669592, 11.718562)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1949058835]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1886491923]
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer" unique_id=1548183956]
+[node name="OverheatCharge" type="TextureProgressBar" parent="UI" unique_id=1421066584]
 anchors_preset = -1
-anchor_left = 0.052951388
-anchor_top = 0.91512346
-anchor_right = 0.9471851
-anchor_bottom = 0.97530866
+anchor_left = 0.4157986
+anchor_top = 0.89506173
+anchor_right = 0.5985638
+anchor_bottom = 0.93209875
+nine_patch_stretch = true
+texture_under = ExtResource("9_vrnwp")
+texture_progress = ExtResource("10_40oos")
+metadata/_edit_use_anchors_ = true
+
+[node name="UltimateCharge" type="TextureProgressBar" parent="UI" unique_id=153671744]
+anchors_preset = -1
+anchor_left = 0.07204861
+anchor_top = 0.9444444
+anchor_right = 0.94752204
+anchor_bottom = 0.9814815
 grow_horizontal = 2
 grow_vertical = 0
 nine_patch_stretch = true

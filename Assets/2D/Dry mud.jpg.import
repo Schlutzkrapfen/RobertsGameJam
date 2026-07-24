@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://1iq22dtghpaj"
-path.etc2="res://.godot/imported/Dry mud.jpg-6cea3ad852e66b6cf24ed92d8f5a6371.etc2.ctex"
+path.s3tc="res://.godot/imported/Dry mud.jpg-6cea3ad852e66b6cf24ed92d8f5a6371.s3tc.ctex"
 metadata={
-"imported_formats": ["etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/2D/Dry mud.jpg"
-dest_files=["res://.godot/imported/Dry mud.jpg-6cea3ad852e66b6cf24ed92d8f5a6371.etc2.ctex"]
+dest_files=["res://.godot/imported/Dry mud.jpg-6cea3ad852e66b6cf24ed92d8f5a6371.s3tc.ctex"]
 
 [params]
 
