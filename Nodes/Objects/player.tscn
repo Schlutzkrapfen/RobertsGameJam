@@ -38,6 +38,7 @@ tracerSpeed = 100.0
 shape = SubResource("CapsuleShape3D_nacyp")
 
 [node name="NormalMesh" type="MeshInstance3D" parent="NormalCollider" unique_id=940959782]
+cast_shadow = 3
 mesh = SubResource("CapsuleMesh_uagv5")
 
 [node name="SlidingCollider" type="CollisionShape3D" parent="." unique_id=1053953505]
@@ -45,6 +46,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("CapsuleShape3D_mq0dr")
 
 [node name="SlidingMesh" type="MeshInstance3D" parent="SlidingCollider" unique_id=1972150689]
+cast_shadow = 3
 mesh = SubResource("CapsuleMesh_p3wno")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=485772221]
