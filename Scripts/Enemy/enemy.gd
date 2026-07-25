@@ -6,6 +6,7 @@ const JUMP_VELOCITY = 4.5
 
 @export var target: Node3D  # assign the player (or any node) in the Inspector
 @export var stop_distance: float = 0.5  # how close before it stops
+@export var hp: int = 10
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -32,3 +33,9 @@ func move_to_point(point: Vector3, _delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+
+func take_damage(damage: int):
+	hp -= damage
+	if(hp <= 0):
+		print("DEATH")
+		queue_free()

@@ -11,6 +11,7 @@ emission = Color(1, 0, 0, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_nacyp"]
 
 [node name="Enemy" type="CharacterBody3D" unique_id=969598575 groups=["Enemie"]]
+collision_layer = 5
 script = ExtResource("1_hbvj2")
 stop_distance = 5.0
 

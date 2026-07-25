@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b1jvi2178nvmg"]
 
-[ext_resource type="ArrayMesh" uid="uid://dd35l8u8wpb7w" path="res://Assets/3D/InnerBeam.tres" id="1_gyix5"]
+[ext_resource type="ArrayMesh" uid="uid://e2d42qa0hj6" path="res://Assets/3D/InnerBeam.tres" id="1_gyix5"]
 [ext_resource type="Shader" uid="uid://88dd0bx52wrp" path="res://Assets/Shader/s_InnerBeam.tres" id="1_qgbpu"]
 [ext_resource type="Texture2D" uid="uid://c4hmo0u2fjkdv" path="res://Assets/Textures/T_VFX_Noise_4.PNG" id="2_26p7i"]
 [ext_resource type="ArrayMesh" uid="uid://cdm6j0ui1vr8c" path="res://Assets/3D/OuterBeam.tres" id="4_0avsh"]
@@ -24,8 +24,8 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_4ltxa"]
-_limits = [0.0, 8.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.013468012, 8), 0.0, 0.0, 0, 0, Vector2(0.986532, 8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_limits = [0.0, 50.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.030303031, 50), 0.0, 0.0, 0, 0, Vector2(0.993266, 50), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_gyix5"]
@@ -104,9 +104,6 @@ alpha_curve = SubResource("CurveTexture_xb5n7")
 [sub_resource type="QuadMesh" id="QuadMesh_p3wno"]
 size = Vector2(0.1, 0.1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mq0dr"]
-height = 16.039307
-
 [node name="DeathBeam" type="Node3D" unique_id=1480504779]
 
 [node name="MainEnergyCylinder" type="GPUParticles3D" parent="." unique_id=1786671165]
@@ -151,7 +148,3 @@ one_shot = true
 explosiveness = 0.2
 process_material = SubResource("ParticleProcessMaterial_uagv5")
 draw_pass_1 = SubResource("QuadMesh_p3wno")
-
-[node name="DeathZone" type="CollisionShape3D" parent="." unique_id=1613445814]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -3.0612378e-07, 8.003296)
-shape = SubResource("CapsuleShape3D_mq0dr")

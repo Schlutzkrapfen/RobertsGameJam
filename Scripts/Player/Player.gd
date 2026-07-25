@@ -83,13 +83,16 @@ var ultChargeUI : TextureProgressBar
 # @export var overChargeThreshhold : float = 10
 @export var ultChargeSpeed : float = 3
 @export var ultDischargeSpeed : float = 2
-@export var ultFireSpeed : float = 10
+@export var ultFireDischargeSpeed : float = 10
+@export var ultDamageTickDuration : float = 0.3
+@export var ultDamagePerTick : float = 10
 var isChargingUlt : bool = false
 var ultimateReady : bool = false
 var isUlting : bool = false
-#var curOverheatCharge : float = 0
 var curUltimateCharge : float = 0
 var deathBeam : Node3D
+var deathRay : ShapeCast3D
+var curUltTick : float = 0
 
 # player components
 var camera : Camera3D
@@ -108,6 +111,7 @@ func _enter_tree() -> void:
 	overchargeUI = get_node("/root/Level/UI/OverheatCharge")
 	ultChargeUI = get_node("/root/Level/UI/UltimateCharge")
 	deathBeam = get_node("Camera3D/DeathBeam")
+	deathRay = get_node("Camera3D/DeathRay")
 
 func _process(delta):
 	controll_camera(delta)
@@ -118,7 +122,23 @@ func _process(delta):
 	
 	# Ultimate
 	if (isUlting):
-		curUltimateCharge -= ultFireSpeed * delta;
+		curUltimateCharge -= ultFireDischargeSpeed * delta;
+		curUltTick -= delta
+		if(curUltTick <= 0):
+			# DAMAGE ENEMY
+			curUltTick = ultDamageTickDuration
+			deathRay.force_shapecast_update()
+			print(deathRay.target_position)
+			print("hits:", deathRay.get_collision_count())
+			print("safe fraction: ", deathRay.get_closest_collision_safe_fraction())
+			print("world endpoint: ", deathRay.global_transform * deathRay.target_position)
+			print("origin: ", deathRay.global_position)
+			if(deathRay.is_colliding()):
+				for i in range(deathRay.get_collision_count()):
+					var hit = deathRay.get_collider(i)
+					print("hit collider: ", hit, " at ", hit.global_position, " distance from origin: ", deathRay.global_position.distance_to(hit.global_position))
+					if (hit.has_method("take_damage")):
+						hit.take_damage(ultDamagePerTick)
 	else:
 		if(isChargingUlt):
 			curUltimateCharge += ultChargeSpeed * delta
