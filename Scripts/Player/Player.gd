@@ -178,7 +178,6 @@ func _physics_process(delta: float) -> void:
 	
 	# Handle Speed
 	curSpeed = moveSpeed
-	
 	# Handle Sprinting
 	if(Input.is_action_pressed("sprint")):
 		curSpeed = sprintSpeed
@@ -293,7 +292,9 @@ func player_hit(amount:int,jump_up:bool = false):
 	emit_signal("camera_shake",0.4)
 	var i:int = 0
 	for texture in healt_texture:
-		if i < amount:
+		if i < curHp:
+			texture.visible = true
+		else:
 			texture.visible = false
 		i +=1
 	if jump_up:

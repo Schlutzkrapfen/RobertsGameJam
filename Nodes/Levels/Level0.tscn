@@ -37,7 +37,7 @@ radius = 100.0
 [node name="Level" type="Node3D" unique_id=2124627221]
 
 [node name="Player" parent="." unique_id=1191405411 instance=ExtResource("2_k4g51")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.178612, 2.810453, 28.183052)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.178612, 2.810453, 72.06836)
 shild_time = 1.0
 ultChargeSpeed = 300.0
 
