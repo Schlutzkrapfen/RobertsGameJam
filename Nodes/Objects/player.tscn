@@ -5,8 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://b7316rr1p55wc" path="res://Nodes/Objects/tracer_bullet.tscn" id="2_re438"]
 [ext_resource type="Texture2D" uid="uid://x8xjsb3m7vuw" path="res://Assets/2D/Crosshair.png" id="3_0thus"]
 [ext_resource type="PackedScene" uid="uid://b1jvi2178nvmg" path="res://Nodes/Objects/DeathBeam.tscn" id="5_a34wp"]
-[ext_resource type="Texture2D" uid="uid://c2osueug7m8ao" path="res://Assets/2D/EmptyOverheatCharge.png" id="6_7j72w"]
-[ext_resource type="Texture2D" uid="uid://hlnkogeklxke" path="res://Assets/2D/FilledOverheatCharge.png" id="7_db5y7"]
 [ext_resource type="Texture2D" uid="uid://blehx2colo1qj" path="res://Assets/2D/EmptyCharge.png" id="8_ig0md"]
 [ext_resource type="Texture2D" uid="uid://o2rj0dfw6mxv" path="res://Assets/2D/FilledCharge.png" id="9_1aj3k"]
 [ext_resource type="Texture2D" uid="uid://bo4x6jdy2ahrg" path="res://Assets/2D/andy_eneses-human-heart-9854186.jpg" id="10_db5y7"]
@@ -26,7 +24,7 @@ height = 1.0
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mq0dr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_a34wp"]
-radius = 1.0
+radius = 3.0
 
 [node name="Player" type="CharacterBody3D" unique_id=1191405411 node_paths=PackedStringArray("healt_control", "muzzle") groups=["Player"]]
 script = ExtResource("1_7mn6y")
@@ -107,17 +105,6 @@ grow_vertical = 2
 scale = Vector2(0.2, 0.2)
 pivot_offset = Vector2(50, 50)
 texture = ExtResource("3_0thus")
-
-[node name="OverheatCharge" type="TextureProgressBar" parent="UI" unique_id=1242013889]
-anchors_preset = -1
-anchor_left = 0.4157986
-anchor_top = 0.89506173
-anchor_right = 0.5985638
-anchor_bottom = 0.93209875
-nine_patch_stretch = true
-texture_under = ExtResource("6_7j72w")
-texture_progress = ExtResource("7_db5y7")
-metadata/_edit_use_anchors_ = true
 
 [node name="UltimateCharge" type="TextureProgressBar" parent="UI" unique_id=628466601]
 anchors_preset = -1
