@@ -38,7 +38,9 @@ func _ready() -> void:
 	healthBar = get_node("UI/Health")
 	healthBar.max_value = hp
 	healthBar.value = hp
-
+func _physics_process(_delta: float) -> void:
+	self.look_at(player.global_position)
+	
 func choose_state():
 	var random = randi_range(0,3)
 	match random:
