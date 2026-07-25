@@ -26,11 +26,13 @@ enum state{
 var currents_state: state = state.idle
 func _ready() -> void:
 	choose_state()
+
 	
 
 
 func choose_state():
 	var random = randi_range(0,3)
+	random =2 
 	match random:
 		0:
 			print("Idle")
@@ -45,8 +47,7 @@ func choose_state():
 			anim.play("Attack 2")
 			
 			hand_attack()
-			
-			
+
 			await anim.animation_finished
 			
 		3:
@@ -64,6 +65,8 @@ func hand_attack():
 		for hand_bool in used_hands: 
 			if hand_bool == false:
 				cur_hand = hands[i]
+				used_hands[i] = true
+				cur_id = i
 			i += 1
 	else:
 		var hand = hand_scene.instantiate()
@@ -73,10 +76,13 @@ func hand_attack():
 		cur_hand = hand
 		hand.body_entered.connect(_on_body_entered)
 		cur_id = len(hands)-1
-		
-	var tween = get_tree().create_tween()
-	tween.tween_property(cur_hand, "global_position",Vector3( player.global_position.x,20,player.global_position.z), time_tile_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(cur_hand, "global_position",Vector3( player.global_position.x,-20,player.global_position.z), time_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	
+	cur_hand.look_at(player.global_position)
+	var tween:Tween = get_tree().create_tween()
+	var cur_player_pos:Vector3 = player.global_position
+	
+	tween.tween_property(cur_hand, "global_position",Vector3(cur_player_pos.x,20,cur_player_pos.z), time_tile_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(cur_hand, "global_position",Vector3(cur_player_pos.x,-20,cur_player_pos.z), time_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(cur_hand, "global_position",self.global_position, time_reset_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
 	used_hands[cur_id] = false
