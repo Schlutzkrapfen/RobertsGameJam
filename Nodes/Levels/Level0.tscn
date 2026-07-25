@@ -38,6 +38,8 @@ radius = 100.0
 
 [node name="Player" parent="." unique_id=1191405411 instance=ExtResource("2_k4g51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.178612, 2.810453, 1.1690521)
+shild_time = 1.0
+ultChargeSpeed = 300.0
 
 [node name="SceneManager" type="Node3D" parent="." unique_id=1758454766 node_paths=PackedStringArray("pauseMenu")]
 script = ExtResource("4_4ys6t")
@@ -101,6 +103,10 @@ shape = SubResource("CylinderShape3D_nacyp")
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=307039512]
 transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 1, 0, -0.99999994, -4.371139e-08, 0, 62.257908, 0)
 shadow_enabled = true
+
+[node name="Ambient" type="DirectionalLight3D" parent="." unique_id=45299632]
+transform = Transform3D(-0.44918308, 0.8783805, 0.16334756, 0, -0.18282996, 0.9831446, 0.89343977, 0.44161192, 0.08212412, 0, 62.257904, -62.257908)
+light_energy = 0.7
 
 [node name="EnemySpawner" parent="." unique_id=1695561861 node_paths=PackedStringArray("player") instance=ExtResource("6_xn8ur")]
 player = NodePath("../Player")

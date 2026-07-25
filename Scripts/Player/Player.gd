@@ -222,7 +222,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Ult Knockback
 	if(isUlting):
-		var knockbackDir := camera.global_transform.basis.z # points away from where you're looking
+		var knockbackDir := camera.global_transform.basis.z.normalized() # points away from where you're looking
 		#Momentum Based Knockback
 		#curKnockbackVelocity += knockbackDir * ultKnockbackForce * delta
 		
@@ -231,8 +231,8 @@ func _physics_process(delta: float) -> void:
 		#curKnockbackVelocity = knockbackDir * curKnockbackStrength
 		
 		curKnockbackVelocity.x = knockbackDir.x * curKnockbackStrength
-		curKnockbackVelocity.y = knockbackDir.y * curKnockbackStrength
-		curKnockbackVelocity.z = knockbackDir.z * curKnockbackStrength * 10
+		curKnockbackVelocity.y = knockbackDir.y * curKnockbackStrength / 500
+		curKnockbackVelocity.z = knockbackDir.z * curKnockbackStrength
 		
 		if(curKnockbackVelocity.length() > ultMaxKnockbackSpeed):
 			curKnockbackVelocity = curKnockbackVelocity.normalized() * ultMaxKnockbackSpeed

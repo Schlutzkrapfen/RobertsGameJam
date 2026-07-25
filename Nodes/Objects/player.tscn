@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://hlnkogeklxke" path="res://Assets/2D/FilledOverheatCharge.png" id="7_db5y7"]
 [ext_resource type="Texture2D" uid="uid://blehx2colo1qj" path="res://Assets/2D/EmptyCharge.png" id="8_ig0md"]
 [ext_resource type="Texture2D" uid="uid://o2rj0dfw6mxv" path="res://Assets/2D/FilledCharge.png" id="9_1aj3k"]
-[ext_resource type="Texture2D" uid="uid://cacslb7r12gf2" path="res://Assets/2D/andy_eneses-human-heart-9854186.jpg" id="10_db5y7"]
+[ext_resource type="Texture2D" uid="uid://bo4x6jdy2ahrg" path="res://Assets/2D/andy_eneses-human-heart-9854186.jpg" id="10_db5y7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
 
@@ -47,6 +47,8 @@ muzzle = NodePath("Camera3D/GunMesh/Muzzle")
 burstCooldown = 0.3
 tracerSpeed = 100.0
 ultDamageTickDuration = 0.05
+ultKnockbackForce = 3.0
+ultMaxKnockbackSpeed = 8.0
 
 [node name="NormalCollider" type="CollisionShape3D" parent="." unique_id=1421454333]
 shape = SubResource("CapsuleShape3D_nacyp")
