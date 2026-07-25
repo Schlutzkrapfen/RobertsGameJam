@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://y8p1gyuac0x" path="res://Scripts/Player/CameraShaker.gd" id="2_qyaxr"]
 [ext_resource type="PackedScene" uid="uid://b7316rr1p55wc" path="res://Nodes/Objects/tracer_bullet.tscn" id="2_re438"]
 [ext_resource type="Texture2D" uid="uid://x8xjsb3m7vuw" path="res://Assets/2D/Crosshair.png" id="3_0thus"]
+[ext_resource type="PackedScene" uid="uid://b1jvi2178nvmg" path="res://Nodes/Objects/DeathBeam.tscn" id="5_a34wp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
 
@@ -25,6 +26,9 @@ moveSpeed = 10.0
 sprintSpeed = 20.0
 jumpForce = 6.0
 hyperJumpForce = 12.0
+wallCheckDistance = 1.5
+wallKickForce = 15.0
+wallKickControlTime = 1.0
 dashSpeed = 30.0
 dashDuration = 0.3
 camDipYHeight = 0.0
@@ -33,6 +37,7 @@ bullet = ExtResource("2_re438")
 muzzle = NodePath("Camera3D/GunMesh/Muzzle")
 burstCooldown = 0.3
 tracerSpeed = 100.0
+ultChargeSpeed = 30.0
 
 [node name="NormalCollider" type="CollisionShape3D" parent="." unique_id=1421454333]
 shape = SubResource("CapsuleShape3D_nacyp")
@@ -78,5 +83,8 @@ mesh = SubResource("CapsuleMesh_mq0dr")
 
 [node name="Muzzle" type="Node3D" parent="Camera3D/GunMesh" unique_id=700324548]
 transform = Transform3D(1, 0, 0, 0, 1, 1.7763568e-15, 0, 0, 1, 0, 1.1073318, 0)
+
+[node name="DeathBeam" parent="Camera3D" unique_id=1480504779 instance=ExtResource("5_a34wp")]
+transform = Transform3D(0.305, 0, 0, 0, -0.44, -5.638769e-08, 0, 5.6387695e-08, -0.85, 0, -0.5, -1)
 
 [connection signal="camera_shake" from="." to="Camera3D" method="_on_player_camera_shake"]

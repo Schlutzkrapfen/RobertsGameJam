@@ -1,0 +1,40 @@
+[gd_resource type="VisualShader" format=3 uid="uid://c32fxkprtvkag"]
+
+[ext_resource type="Texture2D" uid="uid://b4is8wuhskd6h" path="res://Assets/Textures/T_VFX_Flare_15.PNG" id="1_8wqnu"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_kduey"]
+texture = ExtResource("1_8wqnu")
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_411ya"]
+default_input_values = [0, Quaternion(0, 0, 0, 0)]
+op_type = 2
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_bgixs"]
+input_name = "color"
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_08nq4"]
+default_input_values = [0, Quaternion(0, 0, 0, 0)]
+op_type = 2
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_xln85"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeBillboard" id="VisualShaderNodeBillboard_1huqo"]
+keep_scale = true
+
+[resource]
+flags/unshaded = true
+nodes/vertex/2/node = SubResource("VisualShaderNodeBillboard_1huqo")
+nodes/vertex/2/position = Vector2(40, 420)
+nodes/vertex/connections = PackedInt32Array(2, 0, 0, 10)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_kduey")
+nodes/fragment/2/position = Vector2(-380, 320)
+nodes/fragment/3/node = SubResource("VisualShaderNodeVectorDecompose_411ya")
+nodes/fragment/3/position = Vector2(-100, 380)
+nodes/fragment/4/node = SubResource("VisualShaderNodeInput_bgixs")
+nodes/fragment/4/position = Vector2(-560, 20)
+nodes/fragment/5/node = SubResource("VisualShaderNodeVectorDecompose_08nq4")
+nodes/fragment/5/position = Vector2(-180, 0)
+nodes/fragment/6/node = SubResource("VisualShaderNodeFloatOp_xln85")
+nodes/fragment/6/position = Vector2(80, 160)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 0, 4, 0, 5, 0, 5, 3, 6, 0, 3, 0, 6, 1, 6, 0, 0, 1, 4, 0, 0, 0)

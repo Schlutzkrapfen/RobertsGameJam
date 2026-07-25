@@ -26,6 +26,17 @@ var curJumps = 0
 @export var jumpBuffer : float = 0.05
 var curJumpBuffered : float = jumpBuffer
 
+# wall kick
+@export_subgroup("Wall Kick")
+@export var wallCheckDistance: float = 1.0
+@export var wallKickForce: float = 8.0
+@export var wallKickUpForce: float = 10.0
+@export var wallRayCount: int = 16
+@export_flags_3d_physics var wallCollisionMask: int = 1 << 1
+@export var wallKickControlTime: float = 0.35
+var curWallKickTimer: float = 0.0
+var wallKickVelocity: Vector3 = Vector3.ZERO
+
 # dash
 @export_subgroup("Dash")
 @export var dashBuffer : float = 0.05
@@ -72,11 +83,13 @@ var ultChargeUI : TextureProgressBar
 # @export var overChargeThreshhold : float = 10
 @export var ultChargeSpeed : float = 3
 @export var ultDischargeSpeed : float = 2
-@export var fireLength : float = 10
+@export var ultFireSpeed : float = 10
 var isChargingUlt : bool = false
 var ultimateReady : bool = false
+var isUlting : bool = false
 #var curOverheatCharge : float = 0
 var curUltimateCharge : float = 0
+var deathBeam : Node3D
 
 # player components
 var camera : Camera3D
@@ -94,6 +107,7 @@ func _enter_tree() -> void:
 	slidingMesh = get_node("SlidingCollider/SlidingMesh")
 	overchargeUI = get_node("/root/Level/UI/OverheatCharge")
 	ultChargeUI = get_node("/root/Level/UI/UltimateCharge")
+	deathBeam = get_node("Camera3D/DeathBeam")
 
 func _process(delta):
 	controll_camera(delta)
@@ -102,29 +116,28 @@ func _process(delta):
 	if(isShooting and !isChargingUlt):
 		shoot(delta)
 	
-	#Ultimate
-	if(isChargingUlt):
-		#curOverheatCharge += chargeSpeed * delta
-		curUltimateCharge += ultChargeSpeed * delta
+	# Ultimate
+	if (isUlting):
+		curUltimateCharge -= ultFireSpeed * delta;
 	else:
-		#curOverheatCharge -= dischargeSpeed * delta
-		curUltimateCharge -= ultDischargeSpeed * delta
-		
+		if(isChargingUlt):
+			curUltimateCharge += ultChargeSpeed * delta
+		else:
+			curUltimateCharge -= ultDischargeSpeed * delta
+	
 	if(curUltimateCharge < 0):
+		isUlting = false
 		curUltimateCharge = 0
-		
-	#overchargeUI.value = curOverheatCharge
+	if(curUltimateCharge > 100):
+		ultimateReady = true
+	
 	ultChargeUI.value = curUltimateCharge
 	
 	#Jump Buffer
 	curJumpBuffered -= delta
 	if(Input.is_action_just_pressed("jump")):
 		curJumpBuffered = jumpBuffer
-	
-	#Reset Jumps
-	if(is_on_floor()):
-		curJumps = NumberOfJumps
-	
+		
 	# Dash Buffer
 	curDashBuffered -= delta
 	if(Input.is_action_just_pressed("dash")):
@@ -134,6 +147,9 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	
+	if(is_on_floor()):
+		curJumps = NumberOfJumps
 	
 	# Handle Speed
 	curSpeed = moveSpeed
@@ -182,19 +198,48 @@ func _physics_process(delta: float) -> void:
 	# Handle Movement
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * curSpeed
-		velocity.z = direction.z * curSpeed
-	else:
-		velocity.x = move_toward(velocity.x, 0, curSpeed)
-		velocity.z = move_toward(velocity.z, 0, curSpeed)
 	
-	# Handle Jump
-	if curJumpBuffered >= 0 and curJumps > 0:
+	var targetVelocity := Vector3.ZERO
+	if direction:
+		targetVelocity = direction * curSpeed
+	else:
+		targetVelocity = Vector3(move_toward(velocity.x, 0, curSpeed), 0, move_toward(velocity.z, 0, curSpeed))
+	
+	if curWallKickTimer > 0:
+		curWallKickTimer -= delta
+		var t = 1.0 - (curWallKickTimer / wallKickControlTime) # 0 right after kick -> 1 when done
+		velocity.x = lerp(wallKickVelocity.x, targetVelocity.x, t)
+		velocity.z = lerp(wallKickVelocity.z, targetVelocity.z, t)
+	else:
+		velocity.x = targetVelocity.x
+		velocity.z = targetVelocity.z
+	
+	# Wall kick
+	var wallNormal = get_wall_normal()
+	if (curJumpBuffered >= 0 and !is_on_floor() and wallNormal != Vector3.ZERO):
 		curJumpBuffered = -1
+		velocity.y = wallKickUpForce
+	
+		var incomingVelocity := Vector3(velocity.x, 0, velocity.z)
+		var reflected := incomingVelocity.bounce(wallNormal)
+		var awayFromWallSpeed := reflected.dot(wallNormal)
+		if awayFromWallSpeed < wallKickForce:
+			reflected += wallNormal * (wallKickForce - awayFromWallSpeed)
+		
+		wallKickVelocity = reflected
+		curWallKickTimer = wallKickControlTime
+		velocity.x = wallKickVelocity.x
+		velocity.z = wallKickVelocity.z
+	
+	# Jump
+	if (curJumpBuffered >= 0 and curJumps > 0):
+		curJumpBuffered = -1 #consume jump input
 		velocity.y = jumpForce
+		
+		# Hyper jump
 		if (isDashing and curJumps == NumberOfJumps):
 			velocity.y = hyperJumpForce
+		
 		curJumps -= 1
 	
 	move_and_slide()
@@ -212,6 +257,11 @@ func _input(event):
 		isChargingUlt = true
 	if event.is_action_released("ChargeUltimate"):
 		isChargingUlt = false
+		if(ultimateReady):
+			isUlting = true
+			for child in deathBeam.get_children():
+				if child is GPUParticles3D:
+					child.emitting = true
 
 func controll_camera(delta:float):
 	# rotate camera along X axis
@@ -266,3 +316,31 @@ func spawn_tracer(from: Vector3, to: Vector3):
 	var tracer = bullet.instantiate()
 	get_tree().current_scene.add_child(tracer)
 	tracer.initialize(from, to, tracerSpeed)
+
+func find_nearby_wall_normal() -> Vector3:
+	var space_state = get_world_3d().direct_space_state
+	var origin = global_transform.origin
+	origin.y = camera.global_transform.origin.y  # cast at camera's height, not the feet
+
+	var closest_normal := Vector3.ZERO
+	var closest_dist := wallCheckDistance + 1.0
+
+	for i in range(wallRayCount):
+		var angle = (TAU / wallRayCount) * i
+		var dir = Vector3(cos(angle), 0, sin(angle))
+		var to = origin + dir * wallCheckDistance
+
+		var query = PhysicsRayQueryParameters3D.create(origin, to)
+		query.collision_mask = wallCollisionMask
+		query.exclude = [get_rid()]  # don't hit your own body
+
+		var result = space_state.intersect_ray(query)
+		if result:
+			# optional: ignore shallow ramps/floors that slipped onto this layer
+			if abs(result.normal.y) < 0.3:
+				var dist = origin.distance_to(result.position)
+				if dist < closest_dist:
+					closest_dist = dist
+					closest_normal = result.normal
+
+	return closest_normal
