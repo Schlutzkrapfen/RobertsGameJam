@@ -414,3 +414,7 @@ func find_nearby_wall_normal() -> Vector3:
 					closest_normal = result.normal
 
 	return closest_normal
+
+
+func _on_death_box_area_entered(area: Area3D) -> void:
+	pass # Replace with function body.
