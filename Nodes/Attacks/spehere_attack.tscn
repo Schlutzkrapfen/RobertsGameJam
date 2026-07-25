@@ -26,6 +26,8 @@ _bundled = {
 [sub_resource type="SphereMesh" id="SphereMesh_xeka7"]
 height = 0.001
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_nacyp"]
+
 [node name="Spehere attack" type="Node3D" unique_id=1580442940]
 script = ExtResource("1_qu04t")
 sphere_attack = SubResource("PackedScene_lylff")
@@ -33,3 +35,10 @@ sphere_attack = SubResource("PackedScene_lylff")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2037751059]
 mesh = SubResource("SphereMesh_xeka7")
 surface_material_override/0 = SubResource("StandardMaterial3D_2t1ig")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D" unique_id=991982788]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D" unique_id=1849414492]
+shape = SubResource("SphereShape3D_nacyp")
+
+[connection signal="child_entered_tree" from="MeshInstance3D/Area3D/CollisionShape3D" to="." method="_on_collision_shape_3d_child_entered_tree"]
