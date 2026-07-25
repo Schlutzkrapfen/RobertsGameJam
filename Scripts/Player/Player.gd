@@ -128,15 +128,9 @@ func _process(delta):
 			# DAMAGE ENEMY
 			curUltTick = ultDamageTickDuration
 			deathRay.force_shapecast_update()
-			print(deathRay.target_position)
-			print("hits:", deathRay.get_collision_count())
-			print("safe fraction: ", deathRay.get_closest_collision_safe_fraction())
-			print("world endpoint: ", deathRay.global_transform * deathRay.target_position)
-			print("origin: ", deathRay.global_position)
 			if(deathRay.is_colliding()):
 				for i in range(deathRay.get_collision_count()):
 					var hit = deathRay.get_collider(i)
-					print("hit collider: ", hit, " at ", hit.global_position, " distance from origin: ", deathRay.global_position.distance_to(hit.global_position))
 					if (hit.has_method("take_damage")):
 						hit.take_damage(ultDamagePerTick)
 	else:
@@ -235,7 +229,7 @@ func _physics_process(delta: float) -> void:
 		velocity.z = targetVelocity.z
 	
 	# Wall kick
-	var wallNormal = get_wall_normal()
+	var wallNormal = find_nearby_wall_normal()
 	if (curJumpBuffered >= 0 and !is_on_floor() and wallNormal != Vector3.ZERO):
 		curJumpBuffered = -1
 		velocity.y = wallKickUpForce
@@ -338,6 +332,7 @@ func spawn_tracer(from: Vector3, to: Vector3):
 	tracer.initialize(from, to, tracerSpeed)
 
 func find_nearby_wall_normal() -> Vector3:
+	print("mask = ", wallCollisionMask)
 	var space_state = get_world_3d().direct_space_state
 	var origin = global_transform.origin
 	origin.y = camera.global_transform.origin.y  # cast at camera's height, not the feet
