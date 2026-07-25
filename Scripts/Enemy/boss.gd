@@ -32,7 +32,6 @@ func _ready() -> void:
 
 func choose_state():
 	var random = randi_range(0,3)
-	random =2 
 	match random:
 		0:
 			print("Idle")
