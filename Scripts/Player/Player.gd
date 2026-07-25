@@ -33,6 +33,9 @@ var curJumpBuffered : float = jumpBuffer
 @export var wallKickUpForce: float = 10.0
 @export var wallRayCount: int = 16
 @export_flags_3d_physics var wallCollisionMask: int = 1 << 1
+@export var wallKickControlTime: float = 0.35
+var curWallKickTimer: float = 0.0
+var wallKickVelocity: Vector3 = Vector3.ZERO
 
 # dash
 @export_subgroup("Dash")
@@ -156,20 +159,38 @@ func _physics_process(delta: float) -> void:
 	# Handle Movement
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	var targetVelocity := Vector3.ZERO
 	if direction:
-		velocity.x = direction.x * curSpeed
-		velocity.z = direction.z * curSpeed
+		targetVelocity = direction * curSpeed
 	else:
-		velocity.x = move_toward(velocity.x, 0, curSpeed)
-		velocity.z = move_toward(velocity.z, 0, curSpeed)
+		targetVelocity = Vector3(move_toward(velocity.x, 0, curSpeed), 0, move_toward(velocity.z, 0, curSpeed))
+	
+	if curWallKickTimer > 0:
+		curWallKickTimer -= delta
+		var t = 1.0 - (curWallKickTimer / wallKickControlTime) # 0 right after kick -> 1 when done
+		velocity.x = lerp(wallKickVelocity.x, targetVelocity.x, t)
+		velocity.z = lerp(wallKickVelocity.z, targetVelocity.z, t)
+	else:
+		velocity.x = targetVelocity.x
+		velocity.z = targetVelocity.z
 	
 	# Wall kick
 	var wallNormal = get_wall_normal()
 	if (curJumpBuffered >= 0 and !is_on_floor() and wallNormal != Vector3.ZERO):
-		curJumpBuffered = -1 #consume jump input
+		curJumpBuffered = -1
 		velocity.y = wallKickUpForce
-		velocity.x = wallNormal.x * wallKickForce
-		velocity.z = wallNormal.z * wallKickForce
+	
+		var incomingVelocity := Vector3(velocity.x, 0, velocity.z)
+		var reflected := incomingVelocity.bounce(wallNormal)
+		var awayFromWallSpeed := reflected.dot(wallNormal)
+		if awayFromWallSpeed < wallKickForce:
+			reflected += wallNormal * (wallKickForce - awayFromWallSpeed)
+		
+		wallKickVelocity = reflected
+		curWallKickTimer = wallKickControlTime
+		velocity.x = wallKickVelocity.x
+		velocity.z = wallKickVelocity.z
 	
 	# Jump
 	if (curJumpBuffered >= 0 and curJumps > 0):
