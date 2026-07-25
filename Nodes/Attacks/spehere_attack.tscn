@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c605qqb5bbuyn" path="res://Scripts/Enemy/spehere_attack.gd" id="1_qu04t"]
 [ext_resource type="Shader" uid="uid://cfmwvpmiq2dtd" path="res://Scripts/Shader/lava.gdshader" id="2_8bs04"]
+[ext_resource type="AudioStream" uid="uid://dba3cqvy1oign" path="res://Assets/Sounds/SFX_GMTK2026/SFX/Rock_Impact.wav" id="3_no41l"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_vrnwp"]
 height = 0.001
@@ -40,6 +41,12 @@ shader_parameter/emission_intensity = 0.0250000011875
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_nacyp"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xeka7"]
+random_pitch = 1.3348398
+random_volume_offset_db = 4.0
+streams_count = 1
+stream_0/stream = ExtResource("3_no41l")
+
 [node name="Spehere attack" type="Node3D" unique_id=1580442940]
 script = ExtResource("1_qu04t")
 sphere_attack = SubResource("PackedScene_lylff")
@@ -54,5 +61,8 @@ collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D" unique_id=1849414492]
 shape = SubResource("SphereShape3D_nacyp")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1618893967]
+stream = SubResource("AudioStreamRandomizer_xeka7")
 
 [connection signal="child_entered_tree" from="MeshInstance3D/Area3D/CollisionShape3D" to="." method="_on_collision_shape_3d_child_entered_tree"]

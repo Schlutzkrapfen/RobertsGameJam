@@ -58,6 +58,7 @@ func choose_state():
 		2:
 			anim.play("Attack 2")
 			hand_attack()
+			$Hands.play()
 			await anim.animation_finished
 		3:
 			print("enemies")
@@ -110,7 +111,7 @@ func take_damage(damage: int):
 	hp -= damage
 	healthBar.value = hp
 	if(hp <= 0):
-		print("DEATH")
+		get_tree().change_scene_to_file("res://Nodes/Levels/LoseScreen.tscn")
 		queue_free()
 
 func _on_body_entered(body: Node3D) -> void:
