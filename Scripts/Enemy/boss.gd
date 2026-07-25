@@ -18,6 +18,7 @@ extends CharacterBody3D
 @export var time_reset_attack_hands: float = 1
 
 @export var hp: int = 10000
+@onready var half_hp:int = hp /2
 var healthBar: TextureProgressBar
 
 signal spawn_enemies()
@@ -34,6 +35,7 @@ enum state{
 	 }
 var currents_state: state = state.idle
 func _ready() -> void:
+	
 	choose_state()
 	healthBar = get_node("UI/Health")
 	healthBar.max_value = hp
@@ -46,7 +48,8 @@ func choose_state():
 	match random:
 		0:
 			print("Idle")
-			await get_tree().create_timer(wait_idle_time).timeout 
+			if half_hp < hp:
+				await get_tree().create_timer(wait_idle_time).timeout 
 		1:
 			anim.play("Attack 1")
 			for i in spawn_spher_amount:
