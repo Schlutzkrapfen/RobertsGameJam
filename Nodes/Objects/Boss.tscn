@@ -23,6 +23,7 @@ _data = {
 [node name="Boss" type="CharacterBody3D" unique_id=419995261 node_paths=PackedStringArray("anim")]
 script = ExtResource("1_supnr")
 sphere_attack = ExtResource("2_sk1an")
+sphere_attack_size = 10.0
 anim = NodePath("AnimationPlayer")
 hand_scene = ExtResource("3_td752")
 

@@ -37,6 +37,8 @@ mesh = SubResource("SphereMesh_xeka7")
 surface_material_override/0 = SubResource("StandardMaterial3D_2t1ig")
 
 [node name="Area3D" type="Area3D" parent="MeshInstance3D" unique_id=991982788]
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D" unique_id=1849414492]
 shape = SubResource("SphereShape3D_nacyp")

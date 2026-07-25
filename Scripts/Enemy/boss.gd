@@ -110,6 +110,6 @@ func spawn_simple_attacks():
 	# And give it a random offset.
 	
 	attack.position = Vector3(randi_range(-spawn_radius_sphere_attacl,spawn_radius_sphere_attacl),2,randi_range(-spawn_radius_sphere_attacl,spawn_radius_sphere_attacl))
-	attack.attack_size = 8
+	attack.attack_size = sphere_attack_size
 	# Spawn the mob by adding it to the Main scene.
 	get_parent().add_child.call_deferred(attack)
