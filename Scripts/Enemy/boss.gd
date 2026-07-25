@@ -33,9 +33,6 @@ var currents_state: state = state.idle
 func _ready() -> void:
 	choose_state()
 
-	
-
-
 func choose_state():
 	var random = randi_range(0,3)
 	match random:
