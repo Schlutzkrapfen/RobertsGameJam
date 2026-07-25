@@ -86,6 +86,8 @@ var ultChargeUI : TextureProgressBar
 @export var ultFireDischargeSpeed : float = 10
 @export var ultDamageTickDuration : float = 0.3
 @export var ultDamagePerTick : float = 10
+@export var ultKnockbackForce : float = 6.0
+@export var ultMaxKnockbackSpeed : float = 20.0
 @export var beamShakeStrength : float = 0.1
 @export var beamSlowmoDuration : float = 0.1
 var isChargingUlt : bool = false
@@ -95,6 +97,8 @@ var curUltimateCharge : float = 0
 var deathBeam : Node3D
 var deathRay : ShapeCast3D
 var curUltTick : float = 0
+var curKnockbackVelocity : Vector3 = Vector3.ZERO
+var curKnockbackStrength : float = 0
 
 # player components
 var camera : Camera3D
@@ -213,6 +217,25 @@ func _physics_process(delta: float) -> void:
 		target_height = normalCamYHeight
 	camera.set_base_y(move_toward(camera.get_base_y(), target_height, camDipTransitionStrength * delta))
 	
+	# Ult Knockback
+	if(isUlting):
+		var knockbackDir := camera.global_transform.basis.z # points away from where you're looking
+		#Momentum Based Knockback
+		#curKnockbackVelocity += knockbackDir * ultKnockbackForce * delta
+		
+		#Strength Based Knockback
+		curKnockbackStrength += ultKnockbackForce * delta
+		#curKnockbackVelocity = knockbackDir * curKnockbackStrength
+		
+		curKnockbackVelocity.x = knockbackDir.x * curKnockbackStrength
+		curKnockbackVelocity.y = knockbackDir.y * curKnockbackStrength
+		curKnockbackVelocity.z = knockbackDir.z * curKnockbackStrength * 10
+		
+		if(curKnockbackVelocity.length() > ultMaxKnockbackSpeed):
+			curKnockbackVelocity = curKnockbackVelocity.normalized() * ultMaxKnockbackSpeed
+	else:
+		curKnockbackVelocity = Vector3.ZERO
+	
 	# Handle Movement
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -260,6 +283,7 @@ func _physics_process(delta: float) -> void:
 		
 		curJumps -= 1
 	
+	velocity += curKnockbackVelocity
 	move_and_slide()
 	
 func _input(event):
