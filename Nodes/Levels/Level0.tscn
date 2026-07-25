@@ -109,8 +109,17 @@ shadow_enabled = true
 [node name="EnemySpawner" parent="." unique_id=1695561861 node_paths=PackedStringArray("player") instance=ExtResource("6_xn8ur")]
 player = NodePath("../Player")
 
-[node name="Boss" parent="." unique_id=419995261 instance=ExtResource("7_v1h2x")]
+[node name="Boss" parent="." unique_id=419995261 node_paths=PackedStringArray("player") instance=ExtResource("7_v1h2x")]
 transform = Transform3D(32.97906, 0, 0, 0, 32.97906, 0, 0, 0, 32.97906, 0, 20, 0)
+wait_idle_time = 1.0
+wait_for_spawning = 1.0
+sphere_attack_size = 20.0
+spawn_radius_sphere_attacl = 100
+spawn_spher_amount = 15
+player = NodePath("../Player")
+time_tile_attack_hands = 2.0
+time_attack_hands = 0.2
+time_reset_attack_hands = 1.0
 
 [node name="StaticBox" parent="." unique_id=1872007656 instance=ExtResource("8_xn8ur")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.827904, 6.9566708, 0)

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ctvk3a3qb1v8w"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nacyp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_nacyp"]
+
+[node name="Hand" type="Area3D" unique_id=89426747]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=2078972892]
+shape = SubResource("SphereShape3D_nacyp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=559193672]
+mesh = SubResource("SphereMesh_nacyp")
