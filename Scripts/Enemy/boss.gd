@@ -28,8 +28,8 @@ func choose_state():
 		1:
 			anim.play("Attack 1")
 			print("Attack 1")
-			for i in 10:
-				spawn_simple_attacks()
+			#for i in 10:
+				#spawn_simple_attacks()
 			await anim.animation_finished
 			
 		2:

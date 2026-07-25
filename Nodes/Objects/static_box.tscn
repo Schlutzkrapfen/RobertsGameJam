@@ -2,15 +2,16 @@
 
 [ext_resource type="Script" uid="uid://b3kpms4g0etsd" path="res://Nodes/Objects/static_box.gd" id="1_oswtc"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_dxclx"]
+[sub_resource type="BoxMesh" id="BoxMesh_oswtc"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_7n3k6"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_qbwdr"]
 
 [node name="StaticBox" type="StaticBody3D" unique_id=1872007656]
+collision_layer = 3
 script = ExtResource("1_oswtc")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1265346999]
-mesh = SubResource("BoxMesh_dxclx")
+mesh = SubResource("BoxMesh_oswtc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=124513052]
-shape = SubResource("BoxShape3D_7n3k6")
+shape = SubResource("BoxShape3D_qbwdr")
