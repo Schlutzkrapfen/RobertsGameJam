@@ -1,17 +1,22 @@
 extends CharacterBody3D
+@export var player: CharacterBody3D
 @export var wait_idle_time: float = 1
+
 @export var wait_for_spawning:float = 1
+@export var enemies_ammount: int = 20
+
 @export var sphere_attack: PackedScene
 @export var sphere_attack_size:float = 20
 @export var anim:AnimationPlayer
 @export var spawn_radius_sphere_attacl:int = 100
 @export var spawn_spher_amount:int = 15
+
 @export var hand_scene:PackedScene
-@export var player: CharacterBody3D
-@export var enemies_ammount: int = 20
+@export var hand_damage:int = 4
 @export var time_tile_attack_hands: float = 2
 @export var time_attack_hands: float = 0.2
 @export var time_reset_attack_hands: float = 1
+
 signal spawn_enemies()
 var hands:Array[Area3D] = []
 var used_hands:Array[bool] = []
@@ -93,10 +98,9 @@ func hand_attack():
 func make_damage(thing:Node3D):
 
 		if thing.is_in_group("Player"):
-			print("Player HIT HAhAHA DER BÖSE MAN WAR HIER")
+			player.player_hit(1)
 
 		if thing.is_in_group("Enemie"):
-			print("Deleted Enemie")
 			thing.queue_free()
 
 

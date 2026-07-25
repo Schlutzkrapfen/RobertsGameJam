@@ -4,8 +4,8 @@ const SHOOT_SHAKE_AMOUNT:float = 0.05
 signal camera_shake(amount:float)
 
 # stats
-var curHp : int = 10
-var maxHp : int = 10
+var curHp : int = 3
+var maxHp : int = 3
 var score : int = 0
 
 # physics
@@ -263,7 +263,14 @@ func _physics_process(delta: float) -> void:
 		curJumps -= 1
 	
 	move_and_slide()
-	
+
+func player_hit(amount:int,jump_up:bool = false):
+	curHp -= amount
+	print(curHp)
+	if curHp <= 0:
+		print("HALLO")
+		get_tree().change_scene_to_file("res://Nodes/Levels/LoseScreen.tscn")
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		mouseDelta = event.relative
