@@ -37,17 +37,15 @@ func make_damage():
 	for thing in nodes:
 		if thing.is_in_group("Player"):
 			print("Player HIT HAhAHA DER BÖSE MAN WAR HIER")
-			return
+			continue
 		if thing.is_in_group("Enemie"):
 			print("Deleted Enemie")
 			thing.queue_free()
-			return
+			continue
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is CharacterBody3D:
 		nodes.append(body)
-		print("Player or NPC entered: ", body.name)
 func _on_body_exited(body: Node3D) -> void:
 	if body is CharacterBody3D:
 		nodes.erase(body)
-		print("Player or NPC exited: ", body.name)

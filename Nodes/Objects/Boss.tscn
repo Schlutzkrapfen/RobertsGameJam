@@ -19,6 +19,10 @@ _data = {
 &"Attack 2": SubResource("Animation_sk1an")
 }
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_nacyp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_nacyp"]
+
 [node name="Boss" type="CharacterBody3D" unique_id=419995261 node_paths=PackedStringArray("anim")]
 script = ExtResource("1_supnr")
 sphere_attack = ExtResource("2_sk1an")
@@ -32,3 +36,12 @@ mesh = SubResource("CapsuleMesh_nacyp")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1622313294]
 libraries/ = SubResource("AnimationLibrary_sk1an")
+
+[node name="Hand" type="Area3D" parent="." unique_id=272119699]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0.7933459)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Hand" unique_id=1019288379]
+shape = SubResource("SphereShape3D_nacyp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hand" unique_id=1441876358]
+mesh = SubResource("SphereMesh_nacyp")

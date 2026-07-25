@@ -5,7 +5,12 @@ extends CharacterBody3D
 @export var sphere_attack_size:float = 20
 @export var anim:AnimationPlayer
 @export var spawn_radius_sphere_attacl:int = 100
+@export var spawn_spher_amount:int = 15
+@export var Hand:PackedScene
 signal spawn_enemies()
+var hands:Array[Area3D]
+var used_hands:Array[bool] = [false]
+
 
 enum state{
 	idle = 0,
@@ -28,12 +33,13 @@ func choose_state():
 		1:
 			anim.play("Attack 1")
 			print("Attack 1")
-			for i in 10:
+			for i in spawn_spher_amount:
 				spawn_simple_attacks()
 			await anim.animation_finished
 			
 		2:
 			anim.play("Attack 2")
+			
 			print("Attack 2")
 			await anim.animation_finished
 			
@@ -43,6 +49,10 @@ func choose_state():
 			await get_tree().create_timer(wait_for_spawning).timeout 
 	choose_state()
 			
+func hand_attack():
+	if false in used_hands:
+		pass
+	
 func spawn_simple_attacks():
 	var attack = sphere_attack.instantiate()
 	# Choose a random location on the SpawnPath.
