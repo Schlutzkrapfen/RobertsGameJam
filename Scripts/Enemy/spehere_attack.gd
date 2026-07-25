@@ -1,34 +1,53 @@
 extends Node3D
 @export var attack_size:float = 4
 @export var sphere_attack: PackedScene
+@onready var area_3d: Area3D = $MeshInstance3D/Area3D
 var time_tile_attack:float = 4.0
 var time_for_attack:float = 0.2
 var time_for_reset:float = 0.2
 
-var enemies:Array[Node] 
+var nodes:Array[Node] 
 
 var attack_height:float = 200
 
+
 func _ready() -> void:
-	
+	$MeshInstance3D/Area3D/CollisionShape3D.shape.radius = attack_size
 	var unique_mesh = $MeshInstance3D.mesh.duplicate()
 	$MeshInstance3D.mesh = unique_mesh
-	var unique_collision = $MeshInstance3D/Area3D/CollisionShape3D.shape.duplicate()
-	var cur_height = $MeshInstance3D.mesh.height
-	var tween2 = get_tree().create_tween()
-	var tween = get_tree().create_tween()
-	tween2.tween_property(unique_collision, "radius", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(unique_mesh, "radius", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(unique_mesh, "height", attack_height, time_for_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(unique_mesh, "height", cur_height, time_for_reset).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	await tween.finished
-	delete()
-
-func delete():
-	visible = false
-	queue_free()
+#	var collision_shape = $MeshInstance3D/Area3D/CollisionShape3D.shape.duplicate()
+	var start_height = $MeshInstance3D.mesh.height
 	
+	var tween = get_tree().create_tween()
+	area_3d.body_entered.connect(_on_body_entered)
+	area_3d.body_exited.connect(_on_body_exited)
+	
+	#tween2.tween_property(collision_shape, "radius", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(unique_mesh, "radius", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	await tween.finished
+	make_damage()
+	var tween2 = get_tree().create_tween()
+	tween2.tween_property(unique_mesh, "height", attack_height, time_for_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween2.tween_property(unique_mesh, "height", start_height, time_for_reset).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	await tween2.finished
+	queue_free()
 
 
-func _on_collision_shape_3d_child_entered_tree(node: Node) -> void:
-	enemies.append(node)
+func make_damage():
+	for thing in nodes:
+		if thing.is_in_group("Player"):
+			print("Player HIT HAhAHA DER BÖSE MAN WAR HIER")
+			return
+		if thing.is_in_group("Enemie"):
+			print("Deleted Enemie")
+			thing.queue_free()
+			return
+
+func _on_body_entered(body: Node3D) -> void:
+	if body is CharacterBody3D:
+		nodes.append(body)
+		print("Player or NPC entered: ", body.name)
+func _on_body_exited(body: Node3D) -> void:
+	if body is CharacterBody3D:
+		nodes.erase(body)
+		print("Player or NPC exited: ", body.name)

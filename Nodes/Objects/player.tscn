@@ -20,7 +20,7 @@ height = 1.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mq0dr"]
 
-[node name="Player" type="CharacterBody3D" unique_id=1191405411 node_paths=PackedStringArray("muzzle")]
+[node name="Player" type="CharacterBody3D" unique_id=1191405411 node_paths=PackedStringArray("muzzle") groups=["Player"]]
 script = ExtResource("1_7mn6y")
 moveSpeed = 10.0
 sprintSpeed = 20.0

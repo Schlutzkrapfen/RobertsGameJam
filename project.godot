@@ -24,6 +24,11 @@ SlowMotion="*uid://dkkhuspo3vuj1"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[global_group]
+
+Player=""
+Enemie=""
+
 [input]
 
 move_forward={
