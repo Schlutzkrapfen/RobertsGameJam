@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://qjhhyf82w5n3"]
 
 [ext_resource type="Script" uid="uid://c605qqb5bbuyn" path="res://Scripts/Enemy/spehere_attack.gd" id="1_qu04t"]
+[ext_resource type="Shader" uid="uid://cfmwvpmiq2dtd" path="res://Scripts/Shader/lava.gdshader" id="2_8bs04"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_vrnwp"]
 height = 0.001
@@ -27,6 +28,16 @@ _bundled = {
 [sub_resource type="SphereMesh" id="SphereMesh_xeka7"]
 height = 0.001
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_no41l"]
+render_priority = 0
+shader = ExtResource("2_8bs04")
+shader_parameter/dark_lava_color = Color(0.76862746, 0, 0, 1)
+shader_parameter/light_lava_color = Color(1, 0.72156864, 0, 1)
+shader_parameter/speed = 0.47600002261
+shader_parameter/scale = 21.48900101746762
+shader_parameter/sharpness = 2.5410000731975
+shader_parameter/emission_intensity = 0.0250000011875
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_nacyp"]
 
 [node name="Spehere attack" type="Node3D" unique_id=1580442940]
@@ -35,7 +46,7 @@ sphere_attack = SubResource("PackedScene_lylff")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2037751059]
 mesh = SubResource("SphereMesh_xeka7")
-surface_material_override/0 = SubResource("StandardMaterial3D_2t1ig")
+surface_material_override/0 = SubResource("ShaderMaterial_no41l")
 
 [node name="Area3D" type="Area3D" parent="MeshInstance3D" unique_id=991982788]
 collision_layer = 5
