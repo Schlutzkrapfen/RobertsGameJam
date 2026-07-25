@@ -15,7 +15,8 @@ extends CharacterBody3D
 signal spawn_enemies()
 var hands:Array[Area3D] = []
 var used_hands:Array[bool] = []
-
+var k:int = 0
+var attack_start:bool = true
 
 enum state{
 	idle = 0,
@@ -81,9 +82,12 @@ func hand_attack():
 	var cur_player_pos:Vector3 = player.global_position
 	
 	tween.tween_property(cur_hand, "global_position",Vector3(cur_player_pos.x,20,cur_player_pos.z), time_tile_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(cur_hand, "global_position",Vector3(cur_player_pos.x,-20,cur_player_pos.z), time_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(cur_hand, "global_position",self.global_position, time_reset_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
+	var tween1:Tween = get_tree().create_tween()
+	attack_start = true
+	tween1.tween_property(cur_hand, "global_position",Vector3(cur_player_pos.x,-20,cur_player_pos.z), time_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween1.tween_property(cur_hand, "global_position",self.global_position, time_reset_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	await tween1.finished
 	used_hands[cur_id] = false
 
 func make_damage(thing:Node3D):
@@ -99,6 +103,10 @@ func make_damage(thing:Node3D):
 func _on_body_entered(body: Node3D) -> void:
 	if body is CharacterBody3D:
 		make_damage(body)
+	if body is StaticBody3D && attack_start:
+		attack_start = false
+		player.emit_signal("camera_shake",0.1)
+			
 func spawn_simple_attacks():
 	var attack = sphere_attack.instantiate()
 	# Choose a random location on the SpawnPath.

@@ -22,9 +22,18 @@ _data = {
 
 [node name="Boss" type="CharacterBody3D" unique_id=419995261 node_paths=PackedStringArray("anim")]
 script = ExtResource("1_supnr")
+wait_idle_time = null
+wait_for_spawning = null
 sphere_attack = ExtResource("2_sk1an")
+sphere_attack_size = null
 anim = NodePath("AnimationPlayer")
+spawn_radius_sphere_attacl = null
+spawn_spher_amount = null
 hand_scene = ExtResource("3_td752")
+enemies_ammount = null
+time_tile_attack_hands = null
+time_attack_hands = null
+time_reset_attack_hands = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=812541396]
 shape = SubResource("CapsuleShape3D_nacyp")
