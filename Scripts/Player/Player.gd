@@ -140,9 +140,9 @@ func _process(delta):
 			if(deathRay.is_colliding()):
 				for i in range(deathRay.get_collision_count()):
 					var hit = deathRay.get_collider(i)
-					if (hit.has_method("take_damage")):
+					if (hit != null and hit.has_method("take_damage")):
 						hit.take_damage(ultDamagePerTick)
-						camera_shake.emit(beamShakeStrength)
+						camera_shake.emit(beamShakeStrength, 0.1)
 						await SlowMotion.slow_motion(beamSlowmoDuration)
 	else:
 		if(isChargingUlt):
