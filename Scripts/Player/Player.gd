@@ -86,6 +86,8 @@ var ultChargeUI : TextureProgressBar
 @export var ultFireDischargeSpeed : float = 10
 @export var ultDamageTickDuration : float = 0.3
 @export var ultDamagePerTick : float = 10
+@export var beamShakeStrength : float = 0.1
+@export var beamSlowmoDuration : float = 0.1
 var isChargingUlt : bool = false
 var ultimateReady : bool = false
 var isUlting : bool = false
@@ -133,6 +135,8 @@ func _process(delta):
 					var hit = deathRay.get_collider(i)
 					if (hit.has_method("take_damage")):
 						hit.take_damage(ultDamagePerTick)
+						camera_shake.emit(beamShakeStrength)
+						await SlowMotion.slow_motion(beamSlowmoDuration)
 	else:
 		if(isChargingUlt):
 			curUltimateCharge += ultChargeSpeed * delta
@@ -275,7 +279,10 @@ func _input(event):
 			isUlting = true
 			for child in deathBeam.get_children():
 				if child is GPUParticles3D:
+					child.lifetime = curUltimateCharge / ultFireDischargeSpeed
+					child.restart()
 					child.emitting = true
+					
 
 func controll_camera(delta:float):
 	# rotate camera along X axis

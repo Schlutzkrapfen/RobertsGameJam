@@ -40,7 +40,7 @@ bullet = ExtResource("2_re438")
 muzzle = NodePath("Camera3D/GunMesh/Muzzle")
 burstCooldown = 0.3
 tracerSpeed = 100.0
-ultChargeSpeed = 300.0
+ultDamageTickDuration = 0.05
 
 [node name="NormalCollider" type="CollisionShape3D" parent="." unique_id=1421454333]
 shape = SubResource("CapsuleShape3D_nacyp")
