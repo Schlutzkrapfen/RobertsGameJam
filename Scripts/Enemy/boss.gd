@@ -17,6 +17,9 @@ extends CharacterBody3D
 @export var time_attack_hands: float = 0.2
 @export var time_reset_attack_hands: float = 1
 
+@export var hp: int = 10000
+var healthBar: TextureProgressBar
+
 signal spawn_enemies()
 var hands:Array[Area3D] = []
 var used_hands:Array[bool] = []
@@ -32,6 +35,9 @@ enum state{
 var currents_state: state = state.idle
 func _ready() -> void:
 	choose_state()
+	healthBar = get_node("UI/Health")
+	healthBar.max_value = hp
+	healthBar.value = hp
 
 func choose_state():
 	var random = randi_range(0,3)
@@ -95,6 +101,12 @@ func make_damage(thing:Node3D):
 		if thing.is_in_group("Enemie"):
 			thing.queue_free()
 
+func take_damage(damage: int):
+	hp -= damage
+	healthBar.value = hp
+	if(hp <= 0):
+		print("DEATH")
+		queue_free()
 
 func _on_body_entered(body: Node3D) -> void:
 	if body is CharacterBody3D:

@@ -383,7 +383,6 @@ func spawn_tracer(from: Vector3, to: Vector3):
 	tracer.initialize(from, to, tracerSpeed)
 
 func find_nearby_wall_normal() -> Vector3:
-	print("mask = ", wallCollisionMask)
 	var space_state = get_world_3d().direct_space_state
 	var origin = global_transform.origin
 	origin.y = camera.global_transform.origin.y  # cast at camera's height, not the feet

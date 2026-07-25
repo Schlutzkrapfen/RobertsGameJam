@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://cv5tdt6gyv4xp" path="res://Scripts/Enemy/boss.gd" id="1_supnr"]
 [ext_resource type="PackedScene" uid="uid://qjhhyf82w5n3" path="res://Nodes/Attacks/spehere_attack.tscn" id="2_sk1an"]
 [ext_resource type="PackedScene" uid="uid://ctvk3a3qb1v8w" path="res://Nodes/Attacks/hand.tscn" id="3_td752"]
+[ext_resource type="Texture2D" uid="uid://deh0a1bb4dnqu" path="res://Assets/2D/EmptyBossHealth.png" id="4_kxoym"]
+[ext_resource type="Texture2D" uid="uid://cakusqab3ks7o" path="res://Assets/2D/BossHealth.png" id="5_6uqih"]
+[ext_resource type="Texture2D" uid="uid://capkdvfbbghja" path="res://Assets/2D/Skull.png" id="6_6uqih"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
 
@@ -21,10 +24,12 @@ _data = {
 }
 
 [node name="Boss" type="CharacterBody3D" unique_id=419995261 node_paths=PackedStringArray("anim")]
+collision_layer = 5
 script = ExtResource("1_supnr")
 sphere_attack = ExtResource("2_sk1an")
 anim = NodePath("AnimationPlayer")
 hand_scene = ExtResource("3_td752")
+hp = 5000
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=812541396]
 shape = SubResource("CapsuleShape3D_nacyp")
@@ -34,3 +39,29 @@ mesh = SubResource("CapsuleMesh_nacyp")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1622313294]
 libraries/ = SubResource("AnimationLibrary_sk1an")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=360678272]
+
+[node name="Health" type="TextureProgressBar" parent="UI" unique_id=1321970645]
+anchors_preset = -1
+anchor_left = 0.15277778
+anchor_top = 0.020061728
+anchor_right = 0.84586096
+anchor_bottom = 0.049382716
+grow_horizontal = 2
+step = 0.0
+nine_patch_stretch = true
+texture_under = ExtResource("4_kxoym")
+texture_progress = ExtResource("5_6uqih")
+metadata/_edit_use_anchors_ = true
+
+[node name="Skull" type="TextureRect" parent="UI" unique_id=708593855]
+anchors_preset = -1
+anchor_left = 0.46875
+anchor_top = -0.027777778
+anchor_right = 0.5338542
+anchor_bottom = 0.08796296
+grow_horizontal = 2
+texture = ExtResource("6_6uqih")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
