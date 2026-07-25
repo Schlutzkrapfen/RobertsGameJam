@@ -72,6 +72,7 @@ var mouseDelta : Vector2 = Vector2()
 @export var burstSpeed : float = 0.05
 @export var burstCooldown : float = 0.5
 @export var tracerSpeed : float = 0.1
+@export var weaponDamage : int = 1
 var curShootTimer : float = 0
 var curBurstCountdown : int = bulletsPerBurst - 1
 var isShooting : bool = false
@@ -92,6 +93,7 @@ var ultChargeUI : TextureProgressBar
 @export var ultMaxKnockbackSpeed : float = 20.0
 @export var beamShakeStrength : float = 0.1
 @export var beamSlowmoDuration : float = 0.1
+@export_flags_3d_physics var enemyLayer: int = 1 << 2
 
 var isChargingUlt : bool = false
 var ultimateReady : bool = false
@@ -140,9 +142,9 @@ func _process(delta):
 			if(deathRay.is_colliding()):
 				for i in range(deathRay.get_collision_count()):
 					var hit = deathRay.get_collider(i)
-					if (hit.has_method("take_damage")):
+					if (hit != null and hit.has_method("take_damage")):
 						hit.take_damage(ultDamagePerTick)
-						camera_shake.emit(beamShakeStrength)
+						camera_shake.emit(beamShakeStrength, 0.1)
 						await SlowMotion.slow_motion(beamSlowmoDuration)
 	else:
 		if(isChargingUlt):
@@ -361,13 +363,15 @@ func shootProjectile():
 	var from = muzzle.global_position
 	var to = from + -camera.global_transform.basis.z * 1000.0
 
-	var query = PhysicsRayQueryParameters3D.create(from, to)
+	var query = PhysicsRayQueryParameters3D.create(from, to, enemyLayer)
 	var result = space_state.intersect_ray(query)
 
 	if !result.is_empty():
-		# Damage the target
-		if result.collider is Enemy:
-			await SlowMotion.slow_motion(0.5)
+		var collider = result["collider"]
+		if (collider != null and collider.has_method("take_damage")):
+			print(result)
+			collider.take_damage(weaponDamage)
+			await SlowMotion.slow_motion(0.03)
 		
 		spawn_tracer(from, result.position)
 	else:

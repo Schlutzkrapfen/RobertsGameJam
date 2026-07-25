@@ -23,8 +23,10 @@ func _ready():
 	noise.fractal_gain = 0.5
 	base_position = position
 
-func add_trauma(amount):
-	trauma = min(trauma + amount, 1.0)
+func add_trauma(amount: float, cap: float = 1.0) -> void:
+	if trauma < cap:
+		trauma = min(trauma + amount, cap)
+	trauma = min(trauma, 1.0)
 
 func _process(delta):
 	if target:
@@ -49,5 +51,5 @@ func set_base_y(y:float) -> void:
 func get_base_y() -> float:
 	return base_position.y
 
-func _on_player_camera_shake(amount: float) -> void:
-	add_trauma(amount)
+func _on_player_camera_shake(amount: float, cap: float) -> void:
+	add_trauma(amount, cap)
