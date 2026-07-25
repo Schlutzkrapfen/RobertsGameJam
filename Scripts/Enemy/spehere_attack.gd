@@ -26,6 +26,8 @@ func _ready() -> void:
 	tween.tween_property(unique_mesh, "radius", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
 	make_damage()
+	if not get_tree():
+		return
 	var tween2 = get_tree().create_tween()
 	tween2.tween_property(unique_mesh, "height", attack_height, time_for_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween2.tween_property(unique_mesh, "height", start_height, time_for_reset).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)

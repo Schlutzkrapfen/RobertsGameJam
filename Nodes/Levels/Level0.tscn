@@ -90,11 +90,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5536966, 4.1741714, -34.595
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.519375, 5.6100254, 35.223503)
 
 [node name="Ground" type="MeshInstance3D" parent="Arena" unique_id=232500043]
+layers = 5
 material_override = SubResource("StandardMaterial3D_v1h2x")
 mesh = SubResource("CylinderMesh_xeka7")
 surface_material_override/0 = SubResource("StandardMaterial3D_dxclx")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Arena/Ground" unique_id=681971485]
+collision_layer = 5
+collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_jn3sf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/Ground/StaticBody3D" unique_id=1807222277]

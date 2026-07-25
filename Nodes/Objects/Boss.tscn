@@ -27,6 +27,7 @@ _data = {
 collision_layer = 5
 script = ExtResource("1_supnr")
 sphere_attack = ExtResource("2_sk1an")
+sphere_attack_size = 10.0
 anim = NodePath("AnimationPlayer")
 hand_scene = ExtResource("3_td752")
 hp = 5000
