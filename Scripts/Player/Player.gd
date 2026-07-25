@@ -4,9 +4,11 @@ const SHOOT_SHAKE_AMOUNT:float = 0.05
 signal camera_shake(amount:float)
 
 # stats
-var curHp : int = 10
-var maxHp : int = 10
-var score : int = 0
+@export_subgroup("Health")
+@export var curHp : int = 3
+@export var shild_time:float = 0.5
+@export var healt_control:Control
+var shild:bool 
 
 # physics
 var gravity : float = 12.0
@@ -25,7 +27,7 @@ var curSpeed : float = moveSpeed
 var curJumps = 0
 @export var jumpBuffer : float = 0.05
 var curJumpBuffered : float = jumpBuffer
-
+@export var jump_power_when_hit:float = 24
 # wall kick
 @export_subgroup("Wall Kick")
 @export var wallCheckDistance: float = 1.0
@@ -86,8 +88,10 @@ var ultChargeUI : TextureProgressBar
 @export var ultFireDischargeSpeed : float = 10
 @export var ultDamageTickDuration : float = 0.3
 @export var ultDamagePerTick : float = 10
+
 @export var beamShakeStrength : float = 0.1
 @export var beamSlowmoDuration : float = 0.1
+
 var isChargingUlt : bool = false
 var ultimateReady : bool = false
 var isUlting : bool = false
@@ -110,8 +114,8 @@ func _enter_tree() -> void:
 	standingMesh = get_node("NormalCollider/NormalMesh")
 	slidingCollider = get_node("SlidingCollider")
 	slidingMesh = get_node("SlidingCollider/SlidingMesh")
-	overchargeUI = get_node("/root/Level/UI/OverheatCharge")
-	ultChargeUI = get_node("/root/Level/UI/UltimateCharge")
+	overchargeUI = get_node("UI/OverheatCharge")
+	ultChargeUI = get_node("UI/UltimateCharge")
 	deathBeam = get_node("Camera3D/DeathBeam")
 	deathRay = get_node("Camera3D/DeathRay")
 
@@ -261,7 +265,30 @@ func _physics_process(delta: float) -> void:
 		curJumps -= 1
 	
 	move_and_slide()
+
+func player_hit(amount:int,jump_up:bool = false):
 	
+	if shild:
+		return
+	var healt_texture = healt_control.get_children()
+	shild = true
+	curHp -= amount
+	emit_signal("camera_shake",0.4)
+	var i:int = 0
+	for texture in healt_texture:
+		if i < amount:
+			texture.visible = false
+		i +=1
+	if jump_up:
+		velocity.y = jump_power_when_hit
+		curJumps -=1
+	
+	if curHp <= 0:
+		get_tree().change_scene_to_file("res://Nodes/Levels/LoseScreen.tscn")
+		return
+	await get_tree().create_timer(shild_time).timeout 
+	shild = false
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		mouseDelta = event.relative
