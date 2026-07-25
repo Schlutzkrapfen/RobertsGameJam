@@ -86,6 +86,10 @@ var ultChargeUI : TextureProgressBar
 @export var ultFireDischargeSpeed : float = 10
 @export var ultDamageTickDuration : float = 0.3
 @export var ultDamagePerTick : float = 10
+
+@export_category("Jump")
+@export var jump_power_when_hit:float = 24
+
 var isChargingUlt : bool = false
 var ultimateReady : bool = false
 var isUlting : bool = false
@@ -266,9 +270,12 @@ func _physics_process(delta: float) -> void:
 
 func player_hit(amount:int,jump_up:bool = false):
 	curHp -= amount
-	print(curHp)
+	
+	if jump_up:
+		velocity.y = jump_power_when_hit
+		curJumps -=1
+	
 	if curHp <= 0:
-		print("HALLO")
 		get_tree().change_scene_to_file("res://Nodes/Levels/LoseScreen.tscn")
 
 func _input(event):

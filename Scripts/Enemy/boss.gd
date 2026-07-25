@@ -47,14 +47,10 @@ func choose_state():
 			for i in spawn_spher_amount:
 				spawn_simple_attacks()
 			await anim.animation_finished
-			
 		2:
 			anim.play("Attack 2")
-			
 			hand_attack()
-
 			await anim.animation_finished
-			
 		3:
 			print("enemies")
 			for i in enemies_ammount:
@@ -99,7 +95,6 @@ func make_damage(thing:Node3D):
 
 		if thing.is_in_group("Player"):
 			player.player_hit(1)
-
 		if thing.is_in_group("Enemie"):
 			thing.queue_free()
 

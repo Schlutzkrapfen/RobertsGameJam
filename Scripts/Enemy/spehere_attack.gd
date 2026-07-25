@@ -36,10 +36,9 @@ func _ready() -> void:
 func make_damage():
 	for thing in nodes:
 		if thing.is_in_group("Player"):
-			print("Player HIT HAhAHA DER BÖSE MAN WAR HIER")
+			thing.player_hit(1,true)
 			continue
 		if thing.is_in_group("Enemie"):
-			print("Deleted Enemie")
 			thing.queue_free()
 			continue
 
