@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://qjhhyf82w5n3"]
 
 [ext_resource type="Script" uid="uid://c605qqb5bbuyn" path="res://Scripts/Enemy/spehere_attack.gd" id="1_qu04t"]
+[ext_resource type="Shader" uid="uid://cfmwvpmiq2dtd" path="res://Scripts/Shader/lava.gdshader" id="2_8bs04"]
+[ext_resource type="AudioStream" uid="uid://dba3cqvy1oign" path="res://Assets/Sounds/SFX_GMTK2026/SFX/Rock_Impact.wav" id="3_no41l"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_vrnwp"]
 height = 0.001
@@ -27,7 +29,23 @@ _bundled = {
 [sub_resource type="SphereMesh" id="SphereMesh_xeka7"]
 height = 0.001
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_no41l"]
+render_priority = 0
+shader = ExtResource("2_8bs04")
+shader_parameter/dark_lava_color = Color(0.76862746, 0, 0, 1)
+shader_parameter/light_lava_color = Color(1, 0.72156864, 0, 1)
+shader_parameter/speed = 0.47600002261
+shader_parameter/scale = 21.48900101746762
+shader_parameter/sharpness = 2.5410000731975
+shader_parameter/emission_intensity = 0.0250000011875
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_nacyp"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xeka7"]
+random_pitch = 1.3348398
+random_volume_offset_db = 4.0
+streams_count = 1
+stream_0/stream = ExtResource("3_no41l")
 
 [node name="Spehere attack" type="Node3D" unique_id=1580442940]
 script = ExtResource("1_qu04t")
@@ -35,7 +53,7 @@ sphere_attack = SubResource("PackedScene_lylff")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2037751059]
 mesh = SubResource("SphereMesh_xeka7")
-surface_material_override/0 = SubResource("StandardMaterial3D_2t1ig")
+surface_material_override/0 = SubResource("ShaderMaterial_no41l")
 
 [node name="Area3D" type="Area3D" parent="MeshInstance3D" unique_id=991982788]
 collision_layer = 5
@@ -43,5 +61,8 @@ collision_mask = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D" unique_id=1849414492]
 shape = SubResource("SphereShape3D_nacyp")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1618893967]
+stream = SubResource("AudioStreamRandomizer_xeka7")
 
 [connection signal="child_entered_tree" from="MeshInstance3D/Area3D/CollisionShape3D" to="." method="_on_collision_shape_3d_child_entered_tree"]

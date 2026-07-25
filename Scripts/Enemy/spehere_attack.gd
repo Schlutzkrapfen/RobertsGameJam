@@ -25,6 +25,7 @@ func _ready() -> void:
 	#tween2.tween_property(collision_shape, "radius", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(unique_mesh, "radius", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
+	$AudioStreamPlayer3D.play()
 	make_damage()
 	if not get_tree():
 		return
