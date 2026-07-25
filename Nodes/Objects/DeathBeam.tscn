@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://ffs1ota5sgyh"]
+[gd_scene format=3 uid="uid://b1jvi2178nvmg"]
 
 [ext_resource type="ArrayMesh" uid="uid://dd35l8u8wpb7w" path="res://Assets/3D/InnerBeam.tres" id="1_gyix5"]
 [ext_resource type="Shader" uid="uid://88dd0bx52wrp" path="res://Assets/Shader/s_InnerBeam.tres" id="1_qgbpu"]
@@ -25,8 +25,8 @@ point_count = 2
 
 [sub_resource type="Curve" id="Curve_4ltxa"]
 _limits = [0.0, 8.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 8), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.013468012, 8), 0.0, 0.0, 0, 0, Vector2(0.986532, 8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_gyix5"]
 curve_x = SubResource("Curve_26p7i")
@@ -48,8 +48,8 @@ point_count = 2
 
 [sub_resource type="Curve" id="Curve_v07x3"]
 _limits = [0.0, 25.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 25), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.010101013, 25), 0.0, 0.0, 0, 0, Vector2(0.98989904, 25), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_lm0dt"]
 curve_x = SubResource("Curve_xb5n7")
@@ -104,6 +104,9 @@ alpha_curve = SubResource("CurveTexture_xb5n7")
 [sub_resource type="QuadMesh" id="QuadMesh_p3wno"]
 size = Vector2(0.1, 0.1)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mq0dr"]
+height = 16.039307
+
 [node name="DeathBeam" type="Node3D" unique_id=1480504779]
 
 [node name="MainEnergyCylinder" type="GPUParticles3D" parent="." unique_id=1786671165]
@@ -113,6 +116,7 @@ amount = 1
 lifetime = 10.0
 one_shot = true
 explosiveness = 1.0
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_qgbpu")
 draw_pass_1 = ExtResource("1_gyix5")
 
@@ -123,6 +127,7 @@ amount = 1
 lifetime = 10.0
 one_shot = true
 explosiveness = 1.0
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_xb5n7")
 draw_pass_1 = ExtResource("1_gyix5")
 
@@ -133,10 +138,11 @@ amount = 1
 lifetime = 10.0
 one_shot = true
 explosiveness = 1.0
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_mq0dr")
 draw_pass_1 = ExtResource("4_0avsh")
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1873402974]
+[node name="Sparkles" type="GPUParticles3D" parent="." unique_id=1873402974]
 material_override = SubResource("ShaderMaterial_4ltxa")
 emitting = false
 amount = 200
@@ -145,3 +151,7 @@ one_shot = true
 explosiveness = 0.2
 process_material = SubResource("ParticleProcessMaterial_uagv5")
 draw_pass_1 = SubResource("QuadMesh_p3wno")
+
+[node name="DeathZone" type="CollisionShape3D" parent="." unique_id=1613445814]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -3.0612378e-07, 8.003296)
+shape = SubResource("CapsuleShape3D_mq0dr")

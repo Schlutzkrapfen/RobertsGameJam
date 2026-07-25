@@ -83,11 +83,13 @@ var ultChargeUI : TextureProgressBar
 # @export var overChargeThreshhold : float = 10
 @export var ultChargeSpeed : float = 3
 @export var ultDischargeSpeed : float = 2
-@export var fireLength : float = 10
+@export var ultFireSpeed : float = 10
 var isChargingUlt : bool = false
 var ultimateReady : bool = false
+var isUlting : bool = false
 #var curOverheatCharge : float = 0
 var curUltimateCharge : float = 0
+var deathBeam : Node3D
 
 # player components
 var camera : Camera3D
@@ -105,6 +107,7 @@ func _enter_tree() -> void:
 	slidingMesh = get_node("SlidingCollider/SlidingMesh")
 	overchargeUI = get_node("/root/Level/UI/OverheatCharge")
 	ultChargeUI = get_node("/root/Level/UI/UltimateCharge")
+	deathBeam = get_node("Camera3D/DeathBeam")
 
 func _process(delta):
 	controll_camera(delta)
@@ -113,18 +116,21 @@ func _process(delta):
 	if(isShooting and !isChargingUlt):
 		shoot(delta)
 	
-	#Ultimate
-	if(isChargingUlt):
-		#curOverheatCharge += chargeSpeed * delta
-		curUltimateCharge += ultChargeSpeed * delta
+	# Ultimate
+	if (isUlting):
+		curUltimateCharge -= ultFireSpeed * delta;
 	else:
-		#curOverheatCharge -= dischargeSpeed * delta
-		curUltimateCharge -= ultDischargeSpeed * delta
-		
+		if(isChargingUlt):
+			curUltimateCharge += ultChargeSpeed * delta
+		else:
+			curUltimateCharge -= ultDischargeSpeed * delta
+	
 	if(curUltimateCharge < 0):
+		isUlting = false
 		curUltimateCharge = 0
-		
-	#overchargeUI.value = curOverheatCharge
+	if(curUltimateCharge > 100):
+		ultimateReady = true
+	
 	ultChargeUI.value = curUltimateCharge
 	
 	#Jump Buffer
@@ -251,6 +257,11 @@ func _input(event):
 		isChargingUlt = true
 	if event.is_action_released("ChargeUltimate"):
 		isChargingUlt = false
+		if(ultimateReady):
+			isUlting = true
+			for child in deathBeam.get_children():
+				if child is GPUParticles3D:
+					child.emitting = true
 
 func controll_camera(delta:float):
 	# rotate camera along X axis
