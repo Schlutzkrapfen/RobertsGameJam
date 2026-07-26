@@ -93,42 +93,6 @@ _data = {
 &"RESET": SubResource("Animation_ktnxt")
 }
 
-[sub_resource type="Animation" id="Animation_1aj3k"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("UI/TextureRect3:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_ig0md"]
-resource_name = "Warning"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("UI/TextureRect3:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_1aj3k"]
-_data = {
-&"RESET": SubResource("Animation_1aj3k"),
-&"Warning": SubResource("Animation_ig0md")
-}
-
 [node name="Player" type="CharacterBody3D" unique_id=1191405411 node_paths=PackedStringArray("healt_control", "muzzle") groups=["Player"]]
 script = ExtResource("1_7mn6y")
 healt_control = NodePath("UI/HBoxContainer")
@@ -284,8 +248,5 @@ bus = &"SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=495447739]
 libraries/ = SubResource("AnimationLibrary_iouoh")
-
-[node name="Warning" type="AnimationPlayer" parent="." unique_id=1697192787]
-libraries/ = SubResource("AnimationLibrary_1aj3k")
 
 [connection signal="camera_shake" from="." to="Camera3D" method="_on_player_camera_shake"]

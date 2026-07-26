@@ -98,6 +98,7 @@ func hand_attack():
 			if hand_bool == false:
 				cur_hand = hands[i]
 				used_hands[i] = true
+				hands[i].visible = true
 				cur_id = i
 			i += 1
 	else:
@@ -122,6 +123,7 @@ func hand_attack():
 	tween1.tween_property(cur_hand, "global_position",self.global_position, time_reset_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween1.finished
 	used_hands[cur_id] = false
+	hands[cur_id].visible = false
 
 func make_damage(thing:Node3D):
 
