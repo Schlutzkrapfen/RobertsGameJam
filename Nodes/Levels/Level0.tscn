@@ -51,7 +51,7 @@ shader_parameter/sharpness = 2.5410000731975
 shader_parameter/emission_intensity = 1.634000077615
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nacyp"]
-size = Vector3(1000, 1, 1000)
+size = Vector3(1000, 16.365234, 1000)
 
 [node name="Level" type="Node3D" unique_id=2124627221]
 
@@ -168,7 +168,7 @@ transform = Transform3D(0.5586892, 0, 0.8293771, 0, 1, 0, -0.8293771, 0, 0.55868
 size = Vector3(18.1649, 43.549934, 17.441755)
 
 [node name="DeathBox" type="Area3D" parent="." unique_id=1249397594]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -41.460754, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.66819, 0)
 script = ExtResource("9_akprg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="DeathBox" unique_id=1651203824]
@@ -176,6 +176,7 @@ mesh = SubResource("PlaneMesh_nacyp")
 surface_material_override/0 = SubResource("ShaderMaterial_b0wg4")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DeathBox" unique_id=668303166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.6484375, 0)
 shape = SubResource("BoxShape3D_nacyp")
 
 [connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_resume_button_pressed"]
