@@ -436,3 +436,8 @@ func find_nearby_wall_normal() -> Vector3:
 					closest_normal = result.normal
 
 	return closest_normal
+
+func attention():
+	$UI/TextureRect3.visible = true
+func no_attention():
+	$UI/TextureRect3.visible = false

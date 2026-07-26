@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://br8j4nckaa2bc"]
 
-[ext_resource type="Script" uid="uid://5ba11k5o34gd" path="res://Nodes/Levels/main_menu.gd" id="1_scanh"]
+[ext_resource type="Script" uid="uid://5ba11k5o34gd" path="res://Scripts/Enemy/main_menu.gd" id="1_scanh"]
 [ext_resource type="Texture2D" uid="uid://hbvraf1d7qgi" path="res://Assets/2D/Square.png" id="2_scanh"]
 
 [sub_resource type="SystemFont" id="SystemFont_scanh"]
