@@ -19,7 +19,8 @@ extends CharacterBody3D
 
 @export var hp: int = 10000
 @onready var half_hp:int = hp /2
-var healthBar: TextureProgressBar
+var healthBar1: TextureProgressBar
+var healthBar2: TextureProgressBar
 
 signal spawn_enemies()
 var hands:Array[Area3D] = []
@@ -37,9 +38,12 @@ var currents_state: state = state.idle
 func _ready() -> void:
 	
 	choose_state()
-	healthBar = get_node("UI/Health")
-	healthBar.max_value = hp
-	healthBar.value = hp
+	healthBar1 = get_node("UI/Health_L")
+	healthBar2 = get_node("UI/Health_R")
+	healthBar1.max_value = hp
+	healthBar1.value = hp
+	healthBar2.max_value = hp
+	healthBar2.value = hp
 func _physics_process(_delta: float) -> void:
 	self.look_at(player.global_position)
 	
@@ -109,7 +113,8 @@ func make_damage(thing:Node3D):
 
 func take_damage(damage: int):
 	hp -= damage
-	healthBar.value = hp
+	healthBar1.value = hp
+	healthBar2.value = hp
 	if(hp <= 0):
 		get_tree().change_scene_to_file("res://Nodes/Levels/Winscreen.tscn")
 		queue_free()
