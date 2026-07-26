@@ -84,7 +84,10 @@ expand_mode = 1
 
 [node name="Label" type="Label" parent="." unique_id=652088808]
 layout_mode = 0
-
+offset_left = 675.0
+offset_top = 156.0
+offset_right = 932.0
+offset_bottom = 309.0
 text = "Move = WASD
 Jump = Space
 Walljump = Space (near wall)
@@ -106,43 +109,79 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Settings" unique_id=646786292]
 layout_mode = 2
 
+[node name="Fulscreen2" type="HBoxContainer" parent="Settings/VBoxContainer" unique_id=439398088]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.32
+
+[node name="Control" type="Control" parent="Settings/VBoxContainer/Fulscreen2" unique_id=1251143629]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Close" type="Button" parent="Settings/VBoxContainer/Fulscreen2" unique_id=371662540]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+text = "Exit"
+
 [node name="Control" type="Control" parent="Settings/VBoxContainer" unique_id=40082135]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Settings/VBoxContainer" unique_id=899432177]
+[node name="Sound" type="HBoxContainer" parent="Settings/VBoxContainer" unique_id=899432177]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
 
-[node name="Control" type="Control" parent="Settings/VBoxContainer/HBoxContainer" unique_id=1238718828]
+[node name="Control" type="Control" parent="Settings/VBoxContainer/Sound" unique_id=1238718828]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Settings/VBoxContainer/HBoxContainer" unique_id=1988845760]
+[node name="Label" type="Label" parent="Settings/VBoxContainer/Sound" unique_id=1988845760]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Sound"
+text = "VFX"
 
-[node name="Control2" type="Control" parent="Settings/VBoxContainer/HBoxContainer" unique_id=1952825030]
+[node name="Sound" type="HSlider" parent="Settings/VBoxContainer/Sound" unique_id=2077311189]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.0
+
+[node name="Control3" type="Control" parent="Settings/VBoxContainer/Sound" unique_id=295997903]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HSlider" type="HSlider" parent="Settings/VBoxContainer/HBoxContainer" unique_id=2077311189]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Control3" type="Control" parent="Settings/VBoxContainer/HBoxContainer" unique_id=295997903]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Control2" type="Control" parent="Settings/VBoxContainer" unique_id=1896186101]
+[node name="Music" type="HBoxContainer" parent="Settings/VBoxContainer" unique_id=778993149]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="Control" type="Control" parent="Settings/VBoxContainer/Music" unique_id=1704776432]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Settings/VBoxContainer/Music" unique_id=6849486]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Music"
+
+[node name="Music" type="HSlider" parent="Settings/VBoxContainer/Music" unique_id=1649937310]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.0
+
+[node name="Control3" type="Control" parent="Settings/VBoxContainer/Music" unique_id=1399397504]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="MouseSensitivit" type="HBoxContainer" parent="Settings/VBoxContainer" unique_id=1083685009]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
 
 [node name="Control" type="Control" parent="Settings/VBoxContainer/MouseSensitivit" unique_id=2129080722]
 layout_mode = 2
@@ -152,48 +191,54 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Sound"
-
-[node name="Control2" type="Control" parent="Settings/VBoxContainer/MouseSensitivit" unique_id=500024060]
-layout_mode = 2
-size_flags_horizontal = 3
+text = "Mouse Sensitivity"
 
 [node name="HSlider" type="HSlider" parent="Settings/VBoxContainer/MouseSensitivit" unique_id=460449766]
 layout_mode = 2
 size_flags_horizontal = 3
+max_value = 2.0
+step = 0.0
+value = 0.5
 
 [node name="Control3" type="Control" parent="Settings/VBoxContainer/MouseSensitivit" unique_id=1438854863]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Control3" type="Control" parent="Settings/VBoxContainer" unique_id=1440113389]
+[node name="Fulscreen" type="HBoxContainer" parent="Settings/VBoxContainer" unique_id=792871254]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
 
-[node name="MouseSensitivit2" type="HBoxContainer" parent="Settings/VBoxContainer" unique_id=792871254]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Control" type="Control" parent="Settings/VBoxContainer/MouseSensitivit2" unique_id=812386503]
+[node name="Control" type="Control" parent="Settings/VBoxContainer/Fulscreen" unique_id=812386503]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Settings/VBoxContainer/MouseSensitivit2" unique_id=830774714]
+[node name="Label" type="Label" parent="Settings/VBoxContainer/Fulscreen" unique_id=830774714]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Sound"
+text = "Fullscreen"
 
-[node name="Control2" type="Control" parent="Settings/VBoxContainer/MouseSensitivit2" unique_id=1878337344]
+[node name="CheckBox" type="CheckBox" parent="Settings/VBoxContainer/Fulscreen" unique_id=210552739]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Control3" type="Control" parent="Settings/VBoxContainer/MouseSensitivit2" unique_id=1376364505]
+[node name="Control3" type="Control" parent="Settings/VBoxContainer/Fulscreen" unique_id=1376364505]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Control4" type="Control" parent="Settings/VBoxContainer" unique_id=1593334017]
+layout_mode = 2
+size_flags_vertical = 3
 
 [connection signal="button_down" from="EasyMode" to="." method="_on_easy_mode_button_down"]
 [connection signal="button_down" from="NormalMode" to="." method="_on_normal_mode_button_down"]
 [connection signal="button_down" from="HardMode" to="." method="_on_hard_mode_button_down"]
 [connection signal="button_up" from="SettingsButton" to="." method="_on_settings_button_up"]
 [connection signal="button_down" from="Quit" to="." method="_on_quit_button_down"]
+[connection signal="button_up" from="Settings/VBoxContainer/Fulscreen2/Close" to="." method="_on_close_button_up"]
+[connection signal="value_changed" from="Settings/VBoxContainer/Sound/Sound" to="." method="_on_sound_value_changed"]
+[connection signal="value_changed" from="Settings/VBoxContainer/Music/Music" to="." method="_on_music_value_changed"]
+[connection signal="value_changed" from="Settings/VBoxContainer/MouseSensitivit/HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="button_up" from="Settings/VBoxContainer/Fulscreen/CheckBox" to="." method="_on_check_box_button_up"]
+[connection signal="toggled" from="Settings/VBoxContainer/Fulscreen/CheckBox" to="." method="_on_check_box_toggled"]

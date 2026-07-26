@@ -188,6 +188,7 @@ shape = SubResource("BoxShape3D_nacyp")
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=188386408]
 stream = ExtResource("10_b0wg4")
 autoplay = true
+bus = &"Music"
 
 [connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_quit_button_pressed"]

@@ -245,3 +245,4 @@ libraries/ = SubResource("AnimationLibrary_vm32c")
 [node name="charge" type="AudioStreamPlayer3D" parent="." unique_id=1955552174]
 stream = SubResource("AudioStreamRandomizer_xeka7")
 unit_size = 40.0
+bus = &"SFX"
