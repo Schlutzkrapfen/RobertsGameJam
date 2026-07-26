@@ -53,12 +53,13 @@ func spawn_attack():
 	if self.is_queued_for_deletion():
 		return
 	var attack = sphere_attack.instantiate()
+	attack.position = Vector3(self.global_position.x,self.global_position.y-height,self.global_position.z)
+	attack.attack_size = explosion_radius
+	attack.time_tile_attack = time_tile_attack
 	get_parent().add_child(attack)
 	if not attack.is_inside_tree():
 		return 
-	attack.global_position = Vector3(self.global_position.x,self.global_position.y-height,self.global_position.z)
-	attack.attack_size = explosion_radius
-	attack.time_tile_attack = time_tile_attack
+	
 	$charge.play()
 	var tween: Tween = get_tree().create_tween()
 	var target_color = Color(1.0, 0.0, 0.0, 1.0) # Target color (e.g., Red)
