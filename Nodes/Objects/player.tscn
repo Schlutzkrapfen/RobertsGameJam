@@ -5,12 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://b7316rr1p55wc" path="res://Nodes/Objects/tracer_bullet.tscn" id="2_re438"]
 [ext_resource type="Texture2D" uid="uid://x8xjsb3m7vuw" path="res://Assets/2D/Crosshair.png" id="3_0thus"]
 [ext_resource type="PackedScene" uid="uid://b1jvi2178nvmg" path="res://Nodes/Objects/DeathBeam.tscn" id="5_a34wp"]
-[ext_resource type="Texture2D" uid="uid://b8vuy7l8npt6w" path="res://addons/controller_icons/assets/mouse/left.png" id="5_ig0md"]
-[ext_resource type="Texture2D" uid="uid://bvnl2qkyfc2m4" path="res://Assets/2D/Heart.png" id="8_f2rbm"]
+[ext_resource type="Texture2D" uid="uid://blxpc8fc2feh6" path="res://addons/controller_icons/assets/mouse/left.png" id="5_ig0md"]
+[ext_resource type="Texture2D" uid="uid://6moukc4o6siq" path="res://Assets/2D/Heart.png" id="8_f2rbm"]
 [ext_resource type="Texture2D" uid="uid://blehx2colo1qj" path="res://Assets/2D/EmptyCharge.png" id="8_ig0md"]
 [ext_resource type="Texture2D" uid="uid://o2rj0dfw6mxv" path="res://Assets/2D/FilledCharge.png" id="9_1aj3k"]
 [ext_resource type="AudioStream" uid="uid://ceif63k5iksfw" path="res://Assets/Sounds/SFX_GMTK2026/SFX/FAT_BEAM.wav" id="9_7j72w"]
-[ext_resource type="Texture2D" uid="uid://u3k75sn1tb83" path="res://addons/controller_icons/assets/mouse/simple.png" id="11_1aj3k"]
+[ext_resource type="Texture2D" uid="uid://bkybd7aeyehhh" path="res://addons/controller_icons/assets/mouse/simple.png" id="11_1aj3k"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
 
@@ -97,7 +97,7 @@ script = ExtResource("1_7mn6y")
 healt_control = NodePath("UI/HBoxContainer")
 moveSpeed = 10.0
 sprintSpeed = 20.0
-jumpForce = 6.0
+jumpForce = 8.0
 hyperJumpForce = 12.0
 wallCheckDistance = 1.5
 wallKickForce = 15.0
