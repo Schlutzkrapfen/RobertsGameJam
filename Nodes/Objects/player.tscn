@@ -257,6 +257,7 @@ pivot_offset = Vector2(50, 50)
 texture = ExtResource("3_0thus")
 
 [node name="TextureRect3" type="TextureRect" parent="UI" unique_id=181842117]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
