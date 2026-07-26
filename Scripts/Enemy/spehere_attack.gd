@@ -3,7 +3,8 @@ extends Node3D
 @export var attack_size: float = 4.0      # target scale for x/z (cone base size)
 @export var attack_height: float = 200.0  # target scale for y (spike height)
 @export var sphere_attack: PackedScene
-@export var attack_height:float = 200
+
+@onready var mesh_instance: MeshInstance3D = $MeshInstance3D
 @onready var area_3d: Area3D = $MeshInstance3D/Area3D
 
 var time_tile_attack: float = 4.0
@@ -12,6 +13,8 @@ var time_for_reset: float = 0.2
 
 var nodes: Array[Node]
 
+var base_scale_xz: float
+var base_scale_y: float
 
 
 
