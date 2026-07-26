@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b7316rr1p55wc" path="res://Nodes/Objects/tracer_bullet.tscn" id="2_re438"]
 [ext_resource type="Texture2D" uid="uid://x8xjsb3m7vuw" path="res://Assets/2D/Crosshair.png" id="3_0thus"]
 [ext_resource type="PackedScene" uid="uid://b1jvi2178nvmg" path="res://Nodes/Objects/DeathBeam.tscn" id="5_a34wp"]
+[ext_resource type="Texture2D" uid="uid://h66tx5b6a7o3" path="res://Assets/2D/Health_Brush_3_4.png" id="5_hjqjt"]
 [ext_resource type="Texture2D" uid="uid://b8vuy7l8npt6w" path="res://addons/controller_icons/assets/mouse/left.png" id="5_ig0md"]
 [ext_resource type="Texture2D" uid="uid://c4sech8j0bfqo" path="res://Assets/2D/leovinus-warning-838655.svg" id="7_1aj3k"]
 [ext_resource type="Texture2D" uid="uid://bvnl2qkyfc2m4" path="res://Assets/2D/Heart.png" id="8_f2rbm"]
@@ -93,6 +94,66 @@ _data = {
 &"RESET": SubResource("Animation_ktnxt")
 }
 
+[sub_resource type="Animation" id="Animation_1aj3k"]
+resource_name = "Damage"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/TextureRect4:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/TextureRect4:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.50980395)]
+}
+
+[sub_resource type="Animation" id="Animation_iouoh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/TextureRect4:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/TextureRect4:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hjqjt"]
+_data = {
+&"Damage": SubResource("Animation_1aj3k"),
+&"RESET": SubResource("Animation_iouoh")
+}
+
 [node name="Player" type="CharacterBody3D" unique_id=1191405411 node_paths=PackedStringArray("healt_control", "muzzle") groups=["Player"]]
 script = ExtResource("1_7mn6y")
 healt_control = NodePath("UI/HBoxContainer")
@@ -158,6 +219,18 @@ max_results = 64
 collision_mask = 4
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=258105057]
+
+[node name="TextureRect4" type="TextureRect" parent="UI" unique_id=1373000193]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_hjqjt")
+expand_mode = 1
 
 [node name="TextureRect" type="TextureRect" parent="UI" unique_id=1753327145]
 visible = false
@@ -248,5 +321,8 @@ bus = &"SFX"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=495447739]
 libraries/ = SubResource("AnimationLibrary_iouoh")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." unique_id=603304500]
+libraries/ = SubResource("AnimationLibrary_hjqjt")
 
 [connection signal="camera_shake" from="." to="Camera3D" method="_on_player_camera_shake"]
