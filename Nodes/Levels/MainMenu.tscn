@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://hbvraf1d7qgi" path="res://Assets/2D/Square.png" id="2_scanh"]
 
 [sub_resource type="SystemFont" id="SystemFont_scanh"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_o51nh"]
 font = SubResource("SystemFont_scanh")
@@ -83,10 +84,7 @@ expand_mode = 1
 
 [node name="Label" type="Label" parent="." unique_id=652088808]
 layout_mode = 0
-offset_left = 569.82294
-offset_top = 163.0
-offset_right = 1038.177
-offset_bottom = 442.0
+
 text = "Move = WASD
 Jump = Space
 Walljump = Space (near wall)
