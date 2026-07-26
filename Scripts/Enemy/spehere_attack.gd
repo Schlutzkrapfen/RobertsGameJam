@@ -26,11 +26,7 @@ func _ready() -> void:
 	# Collapse the footprint to (near) zero
 	mesh.scale.x = 0.01
 	mesh.scale.z = 0.01
-	
-	collision.scale.x = attack_size
-	collision.scale.y = attack_height
-	collision.scale.z = attack_size
-	
+
 	collision.set_deferred("disabled", true)
 	
 	ghost.scale.x = attack_size
