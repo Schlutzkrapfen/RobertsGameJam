@@ -300,6 +300,7 @@ func player_hit(amount:int,jump_up:bool = false):
 	
 	if shild or isUlting:
 		return
+	$AnimationPlayer2.play("Damage")
 	var healt_texture = healt_control.get_children()
 	shild = true
 	curHp -= amount
