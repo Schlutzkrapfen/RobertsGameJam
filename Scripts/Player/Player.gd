@@ -160,7 +160,6 @@ func _process(delta):
 		curUltimateCharge = 0
 	if(curUltimateCharge >= 100):
 		ultimateReady = true
-		isChargingUlt = false
 		curUltimateCharge = 100
 	
 	ultChargeUI.value = curUltimateCharge
