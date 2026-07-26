@@ -1,13 +1,26 @@
 [gd_scene format=3 uid="uid://ctvk3a3qb1v8w"]
 
 [ext_resource type="ArrayMesh" uid="uid://ddvsddbr7b0x6" path="res://Assets/Meshes/16834_hand_v1_NEW.obj" id="1_47l47"]
+[ext_resource type="Script" uid="uid://dkqxvq1nsudf3" path="res://Nodes/Attacks/hand.gd" id="1_ajqd2"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_nacyp"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_nacyp"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ajqd2"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xeka7"]
+material = SubResource("StandardMaterial3D_ajqd2")
+
+[sub_resource type="Curve" id="Curve_47l47"]
+_limits = [0.0, 1.0, 0.0, 148.53]
+_data = [Vector2(1.9124041, 0.36649215), 0.0, 0.0, 0, 0, Vector2(50.678696, 0.9581152), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [node name="Hand" type="Area3D" unique_id=89426747]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_ajqd2")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=2078972892]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
@@ -20,3 +33,23 @@ mesh = SubResource("SphereMesh_nacyp")
 [node name="16834HandV1New" type="MeshInstance3D" parent="." unique_id=1112739196]
 transform = Transform3D(-0.075, 0, -6.5567085e-09, 0, 0.075, 0, 6.5567085e-09, 0, -0.075, 0.094676435, 0, 0.36789745)
 mesh = ExtResource("1_47l47")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=493517459]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5905762)
+emitting = false
+amount = 50
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("SphereMesh_xeka7")
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(1.49, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 20.0
+scale_amount_min = 0.0
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_47l47")
+color = Color(0.24840015, 0.24840018, 0.24840015, 1)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
