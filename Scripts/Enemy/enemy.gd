@@ -11,7 +11,7 @@ const JUMP_VELOCITY = 4.5
 
 @export var target: Node3D  # assign the player (or any node) in the Inspector
 @export var stop_distance: float = 0.5  # how close before it stops
-@export var hp: int = 10
+@export var hp: int = 1
 
 var stop_movment:bool = false 
 func _physics_process(delta: float) -> void:
@@ -42,6 +42,9 @@ func move_to_point(point: Vector3, _delta: float) -> void:
 	
 func spawn_attack():
 	var mesh_instance = $CollisionShape3D/MeshInstance3D
+	var mesh_node = $Skeleton3D/Loon_Ghost
+	var material = mesh_node.get_active_material(0).duplicate()
+	mesh_node.set_surface_override_material(0, material)
 	if mesh_instance == null:
 		return
 	var height = mesh_instance.mesh.height /2
@@ -56,11 +59,20 @@ func spawn_attack():
 	attack.global_position = Vector3(self.global_position.x,self.global_position.y-height,self.global_position.z)
 	attack.attack_size = explosion_radius
 	attack.time_tile_attack = time_tile_attack
-	
+	$charge.play()
+	var tween: Tween = get_tree().create_tween()
+	var target_color = Color(1.0, 0.0, 0.0, 1.0) # Target color (e.g., Red)
+	var duration = 1.0 # Duration in seconds
+
+	tween.tween_property(material, "albedo_color", target_color, duration)
 	
 
 func take_damage(damage: int):
 	hp -= damage
 	if(hp <= 0):
-		print("DEATH")
+		
+		if $"Death small Sound".playing:
+			return
+		$"Death small Sound".play()
+		await $"Death small Sound".finished
 		queue_free()

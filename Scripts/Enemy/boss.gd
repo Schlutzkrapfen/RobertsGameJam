@@ -60,14 +60,15 @@ func choose_state():
 			anim.play("Attack 1")
 			for i in spawn_spher_amount:
 				spawn_simple_attacks()
+			$Sphere.play()
 			await anim.animation_finished
 		2:
 			anim.play("Attack 2")
 			hand_attack()
-			$Hands.play()
 			await anim.animation_finished
 		3:
 			print("enemies")
+			$Spawn.play()
 			for i in enemies_ammount:
 				spawn_enemies.emit()
 			await get_tree().create_timer(wait_for_spawning).timeout 
