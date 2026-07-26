@@ -99,7 +99,7 @@ func hand_attack():
 	
 	tween.tween_property(cur_hand, "global_position",Vector3(cur_player_pos.x,cur_player_pos.y+hand_raise_size,cur_player_pos.z), time_tile_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
-	var tween1:Tween = get_tree().create_tween()
+	var tween1:Tween = get_tree().create_tween() #!THIS LINE THREW AN ERROR ONCE ->createTween on empty tree?
 	attack_start = true
 	tween1.tween_property(cur_hand, "global_position",Vector3(cur_player_pos.x,cur_player_pos.y-hand_raise_size,cur_player_pos.z), time_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween1.tween_property(cur_hand, "global_position",self.global_position, time_reset_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -134,7 +134,7 @@ func spawn_simple_attacks():
 	# We store the reference to the SpawnLocation node
 	# And give it a random offset.
 	
-	attack.position = Vector3(randi_range(-spawn_radius_sphere_attacl,spawn_radius_sphere_attacl),2,randi_range(-spawn_radius_sphere_attacl,spawn_radius_sphere_attacl))
+	attack.position = Vector3(randi_range(-spawn_radius_sphere_attacl,spawn_radius_sphere_attacl),1,randi_range(-spawn_radius_sphere_attacl,spawn_radius_sphere_attacl))
 	attack.attack_size = sphere_attack_size
 	# Spawn the mob by adding it to the Main scene.
 	get_parent().add_child.call_deferred(attack)
