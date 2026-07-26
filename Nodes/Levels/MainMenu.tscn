@@ -70,11 +70,12 @@ texture = ExtResource("2_scanh")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="." unique_id=652088808]
+custom_maximum_size = Vector2(473.575, 800)
 layout_mode = 0
 offset_left = 569.82294
 offset_top = 163.0
-offset_right = 1019.0
-offset_bottom = 442.0
+offset_right = 1020.0
+offset_bottom = 438.0
 text = "Move = WASD
 Jump = Space
 Walljump = Space (near wall)
