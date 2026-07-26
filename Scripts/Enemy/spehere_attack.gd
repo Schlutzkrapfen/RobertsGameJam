@@ -1,6 +1,7 @@
 extends Node3D
 @export var attack_size:float = 4
 @export var sphere_attack: PackedScene
+@export var attack_height:float = 200
 @onready var area_3d: Area3D = $MeshInstance3D/Area3D
 var time_tile_attack:float = 4.0
 var time_for_attack:float = 0.2
@@ -8,7 +9,7 @@ var time_for_reset:float = 0.2
 
 var nodes:Array[Node] 
 
-var attack_height:float = 200
+
 
 
 func _ready() -> void:
@@ -42,7 +43,7 @@ func make_damage():
 			thing.player_hit(1,true)
 			continue
 		if thing.is_in_group("Enemie"):
-			thing.queue_free()
+			thing.take_damage(100)
 			continue
 
 func _on_body_entered(body: Node3D) -> void:

@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 const SHOOT_SHAKE_AMOUNT:float = 0.05
-signal camera_shake(amount:float)
+signal camera_shake(amount:float,cap:float)
 
 # stats
 @export_subgroup("Health")
@@ -119,7 +119,7 @@ func _enter_tree() -> void:
 	standingMesh = get_node("NormalCollider/NormalMesh")
 	slidingCollider = get_node("SlidingCollider")
 	slidingMesh = get_node("SlidingCollider/SlidingMesh")
-	overchargeUI = get_node("UI/OverheatCharge")
+	#overchargeUI = get_node("UI/OverheatCharge")
 	ultChargeUI = get_node("UI/UltimateCharge")
 	deathBeam = get_node("Camera3D/DeathBeam")
 	deathRay = get_node("Camera3D/DeathRay")
@@ -291,7 +291,7 @@ func player_hit(amount:int,jump_up:bool = false):
 	var healt_texture = healt_control.get_children()
 	shild = true
 	curHp -= amount
-	emit_signal("camera_shake",0.4)
+	emit_signal("camera_shake",0.4,1)
 	var i:int = 0
 	for texture in healt_texture:
 		if i < curHp:
@@ -377,7 +377,7 @@ func shootProjectile():
 	else:
 		spawn_tracer(from, to)
 	
-	camera_shake.emit(SHOOT_SHAKE_AMOUNT)
+	camera_shake.emit(SHOOT_SHAKE_AMOUNT,1)
 
 func spawn_tracer(from: Vector3, to: Vector3):
 	if bullet == null:
@@ -416,5 +416,5 @@ func find_nearby_wall_normal() -> Vector3:
 	return closest_normal
 
 
-func _on_death_box_area_entered(area: Area3D) -> void:
+func _on_death_box_area_entered(_area: Area3D) -> void:
 	pass # Replace with function body.
