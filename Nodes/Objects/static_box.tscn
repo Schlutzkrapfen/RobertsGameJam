@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bn6tp25yuod4"]
 
-[ext_resource type="Script" uid="uid://b3kpms4g0etsd" path="res://Nodes/Objects/static_box.gd" id="1_oswtc"]
+[ext_resource type="Script" uid="uid://b3kpms4g0etsd" path="res://Scripts/Enemy/static_box.gd" id="1_oswtc"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_oswtc"]
 

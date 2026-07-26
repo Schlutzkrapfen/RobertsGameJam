@@ -6,4 +6,7 @@ enum DifficultyOptions {
 	HARD = 2
 }
 
+
+var mouse_sensitivity: float = 1
+
 var Difficulty : DifficultyOptions = DifficultyOptions.NORMAL

@@ -58,7 +58,7 @@ var isDashing : bool = true
 # cam look
 var minLookAngle : float = -90.0
 var maxLookAngle : float = 90.0
-var lookSensitivity : float = 0.5
+@onready var lookSensitivity : float = GameManager.mouse_sensitivity
 
 # vectors
 var vel : Vector3 = Vector3()
@@ -436,3 +436,8 @@ func find_nearby_wall_normal() -> Vector3:
 					closest_normal = result.normal
 
 	return closest_normal
+
+func attention():
+	$UI/TextureRect3.visible = true
+func no_attention():
+	$UI/TextureRect3.visible = false

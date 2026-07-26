@@ -76,6 +76,7 @@ shape = SubResource("ConcavePolygonShape3D_4kkyx")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1618893967]
 stream = SubResource("AudioStreamRandomizer_xeka7")
+bus = &"Sfx"
 
 [node name="Ghost" type="MeshInstance3D" parent="." unique_id=477449420]
 transform = Transform3D(1, 0, 0, 0, 3.191815, 0, 0, 0, 1, 0, 0, 0)
