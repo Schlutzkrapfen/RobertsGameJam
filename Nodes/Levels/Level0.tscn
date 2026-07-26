@@ -2,7 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bp4a0plv22ewb" path="res://Nodes/Objects/player.tscn" id="2_k4g51"]
 [ext_resource type="Script" uid="uid://bqr8qoil4755e" path="res://Scripts/Misc/SceneManager.gd" id="4_4ys6t"]
-[ext_resource type="Texture2D" uid="uid://cqpmu6811i880" path="res://Assets/2D/ground.png" id="5_81glq"]
+[ext_resource type="Script" uid="uid://lmvd6hh13hn" path="res://Nodes/Levels/DisableGround.gd" id="4_b0wg4"]
+[ext_resource type="Texture2D" uid="uid://2r6dd4adg8k7" path="res://Assets/2D/ground.png" id="5_81glq"]
 [ext_resource type="Script" uid="uid://bfh60xxx62h60" path="res://Scripts/Misc/PauseMenu.gd" id="5_dxclx"]
 [ext_resource type="PackedScene" uid="uid://bwu3srmgjopj0" path="res://Nodes/Objects/enemy_spawner.tscn" id="6_xn8ur"]
 [ext_resource type="PackedScene" uid="uid://wxdr8jqglnre" path="res://Nodes/Objects/Boss.tscn" id="7_v1h2x"]
@@ -58,7 +59,7 @@ size = Vector3(1000, 16.365234, 1000)
 [node name="Level" type="Node3D" unique_id=2124627221]
 
 [node name="Player" parent="." unique_id=1191405411 instance=ExtResource("2_k4g51")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.178612, 2.810453, 72.06836)
+transform = Transform3D(-0.84126115, 0, -0.54062897, 0, 1, 0, 0.54062897, 0, -0.84126115, -36.302246, 17.496393, -63.274445)
 shild_time = 1.0
 
 [node name="SceneManager" type="Node3D" parent="." unique_id=1758454766 node_paths=PackedStringArray("pauseMenu")]
@@ -99,6 +100,7 @@ grow_vertical = 2
 text = "Exit"
 
 [node name="Arena" type="Node3D" parent="." unique_id=342273739]
+script = ExtResource("4_b0wg4")
 
 [node name="Ground" type="MeshInstance3D" parent="Arena" unique_id=232500043]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -74.177, 0)
