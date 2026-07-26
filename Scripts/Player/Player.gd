@@ -123,6 +123,7 @@ func _enter_tree() -> void:
 	ultChargeUI = get_node("UI/UltimateCharge")
 	deathBeam = get_node("Camera3D/DeathBeam")
 	deathRay = get_node("Camera3D/DeathRay")
+	isChargingUlt = true #NEW CHARGE
 
 func _process(delta):
 	controll_camera(delta)
@@ -154,6 +155,8 @@ func _process(delta):
 	
 	if(curUltimateCharge < 0):
 		isUlting = false
+		ultimateReady = false
+		isChargingUlt = true #NEW CHARGE
 		curUltimateCharge = 0
 	if(curUltimateCharge > 100):
 		ultimateReady = true
@@ -313,7 +316,14 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		mouseDelta = event.relative
 	if event.is_action_pressed("shoot"):
-		isShooting = true
+		if(ultimateReady): #NEW CHARGE
+			isUlting = true 
+			for child in deathBeam.get_children():
+				if child is GPUParticles3D:
+					child.lifetime = curUltimateCharge / ultFireDischargeSpeed
+					child.restart()
+					child.emitting = true
+		#isShooting = true
 	if event.is_action_released("shoot"):
 		isShooting = false
 		curShootTimer = 0
