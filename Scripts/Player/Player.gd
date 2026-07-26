@@ -298,7 +298,7 @@ func _physics_process(delta: float) -> void:
 
 func player_hit(amount:int,jump_up:bool = false):
 	
-	if shild:
+	if shild or isUlting:
 		return
 	var healt_texture = healt_control.get_children()
 	shild = true
