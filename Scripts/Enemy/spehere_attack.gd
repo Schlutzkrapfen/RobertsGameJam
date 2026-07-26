@@ -4,70 +4,67 @@ extends Node3D
 @export var attack_height: float = 200.0  # target scale for y (spike height)
 @export var sphere_attack: PackedScene
 
-@onready var mesh_instance: MeshInstance3D = $MeshInstance3D
+@onready var mesh: MeshInstance3D = $MeshInstance3D
+@onready var collision: CollisionShape3D = $MeshInstance3D/Area3D/CollisionShape3D
 @onready var area_3d: Area3D = $MeshInstance3D/Area3D
+@onready var ghost: MeshInstance3D = $Ghost
 
 var time_tile_attack: float = 4.0
 var time_for_attack: float = 0.2
 var time_for_reset: float = 0.2
 
-var nodes: Array[Node]
-
 var base_scale_xz: float
 var base_scale_y: float
 
-
+var is_attacking: bool = false
+var hit_targets: Array[Node] = []
 
 func _ready() -> void:
-	base_scale_xz = mesh_instance.scale.x
-	base_scale_y = mesh_instance.scale.y
+	base_scale_xz = mesh.scale.x
+	base_scale_y = mesh.scale.y
+	
+	# Collapse the footprint to (near) zero
+	mesh.scale.x = 0.01
+	mesh.scale.z = 0.01
 
-	# Collapse the footprint to (near) zero so the cone grows in from nothing.
-	# (Using a tiny epsilon instead of exactly 0 avoids a zero-size collision
-	# shape warning from the physics server.)
-	mesh_instance.scale.x = 0.01
-	mesh_instance.scale.z = 0.01
+	collision.set_deferred("disabled", true)
+	
+	ghost.scale.x = attack_size
+	ghost.scale.y = attack_height
+	ghost.scale.z = attack_size
 
 	area_3d.body_entered.connect(_on_body_entered)
-	area_3d.body_exited.connect(_on_body_exited)
 
-	# Grow the cone's base (x/z). Because CollisionShape3D is nested under
-	# MeshInstance3D, it inherits this scale too - mesh and collider grow
-	# together automatically.
 	var tween := get_tree().create_tween()
-	tween.tween_property(mesh_instance, "scale:x", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property(mesh_instance, "scale:z", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(mesh, "scale:x", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(mesh, "scale:z", attack_size, time_tile_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
 
-	$AudioStreamPlayer3D.play()
-	make_damage()
 	if not get_tree():
 		return
 
-	# Spike the cone upward (y), then settle back to its authored height.
-	# The collider spikes with it, since it inherits scale.y as well.
+	$AudioStreamPlayer3D.play()
+	
+	is_attacking = true
+	collision.set_deferred("disabled", false)
+	
 	var tween2 := get_tree().create_tween()
-	tween2.tween_property(mesh_instance, "scale:y", attack_height, time_for_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween2.tween_property(mesh_instance, "scale:y", base_scale_y, time_for_reset).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween2.tween_property(mesh, "scale:y", attack_height, time_for_attack).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween2.tween_property(mesh, "scale:y", base_scale_y, time_for_reset).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween2.finished
+	
 	queue_free()
 
-
-func make_damage() -> void:
-	for thing in nodes:
-		if thing.is_in_group("Player"):
-			thing.player_hit(1, true)
-			continue
-		if thing.is_in_group("Enemie"):
-			thing.take_damage(100)
-			continue
-
-
 func _on_body_entered(body: Node3D) -> void:
-	if body is CharacterBody3D:
-		nodes.append(body)
-
-
-func _on_body_exited(body: Node3D) -> void:
-	if body is CharacterBody3D:
-		nodes.erase(body)
+	if not is_attacking or body in hit_targets:
+		return
+		
+	if body.is_in_group("Player"):
+		if body.has_method("player_hit"):
+			body.player_hit(1, true)
+			hit_targets.append(body)
+			
+	elif body.is_in_group("Enemie"):
+		if body.has_method("take_damage"):
+			body.take_damage(100)
+			hit_targets.append(body)
