@@ -8,7 +8,7 @@
 [sub_resource type="Curve3D" id="Curve3D_ifpc4"]
 closed = true
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, -100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -100),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 75, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 75, 0, 0, 0, 0, 0, 0, -75, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, -75),
 "tilts": PackedFloat32Array(0, 0, 0, 0)
 }
 point_count = 4
@@ -21,4 +21,4 @@ mob_scenes = Array[PackedScene]([ExtResource("2_ra4sa"), ExtResource("2_ra4sa"),
 curve = SubResource("Curve3D_ifpc4")
 
 [node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath" unique_id=1583308996]
-transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, 100, 0, 0)
+transform = Transform3D(-0.7071067, 0, 0.70710665, 0, 1, 0, -0.7071067, 0, -0.70710665, 75, 1, 0)
