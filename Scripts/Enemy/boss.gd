@@ -1,12 +1,17 @@
 extends CharacterBody3D
 @export var player: CharacterBody3D
 @export var wait_idle_time: float = 1
+@export var wait_idle_time_ez: float = 2
+@export var wait_time_between_attacks = 0
+@export var wait_time_between_attacks_ez = 0.5
 
 @export var wait_for_spawning:float = 1
 @export var enemies_ammount: int = 20
+@export var enemies_ammount_ez: int = 10
 
 @export var sphere_attack: PackedScene
 @export var sphere_attack_size:float = 20
+@export var sphere_attack_size_ez:float = 10
 @export var anim:AnimationPlayer
 @export var spawn_radius_sphere_attacl:int = 100
 @export var spawn_spher_amount:int = 15
@@ -19,11 +24,12 @@ extends CharacterBody3D
 @export var hand_raise_size:float = 20
 
 @export var hp: int = 10000
+
 @warning_ignore("integer_division")
 @onready var half_hp:int =hp /2
 var healthBar1: TextureProgressBar
 var healthBar2: TextureProgressBar
-
+var random:int = 0
 signal spawn_enemies()
 var hands:Array[Area3D] = []
 var used_hands:Array[bool] = []
@@ -38,7 +44,14 @@ enum state{
 	 }
 var currents_state: state = state.idle
 func _ready() -> void:
-	
+	if GameManager.Difficulty == GameManager.DifficultyOptions.EASY:
+		hp = half_hp
+		@warning_ignore("integer_division")
+		half_hp = half_hp /2
+		wait_idle_time = wait_idle_time_ez
+		sphere_attack_size = sphere_attack_size_ez
+		enemies_ammount = enemies_ammount_ez
+		wait_time_between_attacks = wait_time_between_attacks_ez
 	choose_state()
 	healthBar1 = get_node("UI/Health_L")
 	healthBar2 = get_node("UI/Health_R")
@@ -50,7 +63,6 @@ func _physics_process(_delta: float) -> void:
 	self.look_at(player.global_position)
 	
 func choose_state():
-	var random = randi_range(0,3)
 	match random:
 		0:
 			print("Idle")
@@ -72,6 +84,9 @@ func choose_state():
 			for i in enemies_ammount:
 				spawn_enemies.emit()
 			await get_tree().create_timer(wait_for_spawning).timeout 
+	random = randi_range(0,3)
+	
+	await get_tree().create_timer(wait_time_between_attacks).timeout 
 	choose_state()
 			
 func hand_attack():

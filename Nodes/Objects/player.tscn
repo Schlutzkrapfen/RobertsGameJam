@@ -5,9 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://b7316rr1p55wc" path="res://Nodes/Objects/tracer_bullet.tscn" id="2_re438"]
 [ext_resource type="Texture2D" uid="uid://x8xjsb3m7vuw" path="res://Assets/2D/Crosshair.png" id="3_0thus"]
 [ext_resource type="PackedScene" uid="uid://b1jvi2178nvmg" path="res://Nodes/Objects/DeathBeam.tscn" id="5_a34wp"]
-[ext_resource type="Texture2D" uid="uid://6moukc4o6siq" path="res://Assets/2D/Heart.png" id="8_f2rbm"]
+[ext_resource type="Texture2D" uid="uid://b8vuy7l8npt6w" path="res://addons/controller_icons/assets/mouse/left.png" id="5_ig0md"]
+[ext_resource type="Texture2D" uid="uid://bvnl2qkyfc2m4" path="res://Assets/2D/Heart.png" id="8_f2rbm"]
 [ext_resource type="Texture2D" uid="uid://blehx2colo1qj" path="res://Assets/2D/EmptyCharge.png" id="8_ig0md"]
 [ext_resource type="Texture2D" uid="uid://o2rj0dfw6mxv" path="res://Assets/2D/FilledCharge.png" id="9_1aj3k"]
+[ext_resource type="AudioStream" uid="uid://ceif63k5iksfw" path="res://Assets/Sounds/SFX_GMTK2026/SFX/FAT_BEAM.wav" id="9_7j72w"]
+[ext_resource type="Texture2D" uid="uid://u3k75sn1tb83" path="res://addons/controller_icons/assets/mouse/simple.png" id="11_1aj3k"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
 
@@ -26,6 +29,68 @@ glow_bloom = 0.05
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_a34wp"]
 radius = 3.0
+
+[sub_resource type="Animation" id="Animation_hjqjt"]
+resource_name = "Blinking"
+length = 0.19999999999999998
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("5_ig0md"), ExtResource("11_1aj3k")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/UltimateCharge:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 2), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ktnxt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_ig0md")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/UltimateCharge:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iouoh"]
+_data = {
+&"Blinking": SubResource("Animation_hjqjt"),
+&"RESET": SubResource("Animation_ktnxt")
+}
 
 [node name="Player" type="CharacterBody3D" unique_id=1191405411 node_paths=PackedStringArray("healt_control", "muzzle") groups=["Player"]]
 script = ExtResource("1_7mn6y")
@@ -93,6 +158,14 @@ collision_mask = 4
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=258105057]
 
+[node name="TextureRect" type="TextureRect" parent="UI" unique_id=1753327145]
+visible = false
+offset_left = 958.0
+offset_top = 523.0
+offset_right = 1058.0
+offset_bottom = 623.0
+texture = ExtResource("5_ig0md")
+
 [node name="TextureRect2" type="TextureRect" parent="UI" unique_id=1177041639]
 anchors_preset = 8
 anchor_left = 0.5
@@ -152,5 +225,12 @@ expand_mode = 2
 layout_mode = 2
 texture = ExtResource("8_f2rbm")
 expand_mode = 2
+
+[node name="Deadly Laser" type="AudioStreamPlayer3D" parent="." unique_id=1032608365]
+stream = ExtResource("9_7j72w")
+volume_db = 30.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=495447739]
+libraries/ = SubResource("AnimationLibrary_iouoh")
 
 [connection signal="camera_shake" from="." to="Camera3D" method="_on_player_camera_shake"]

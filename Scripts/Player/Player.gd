@@ -134,6 +134,9 @@ func _process(delta):
 	
 	# Ultimate
 	if (isUlting):
+		$UI/TextureRect.visible = false
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("RESET")
 		curUltimateCharge -= ultFireDischargeSpeed * delta;
 		curUltTick -= delta
 		if(curUltTick <= 0):
@@ -155,10 +158,14 @@ func _process(delta):
 	
 	if(curUltimateCharge < 0):
 		isUlting = false
+		
+		$"Deadly Laser".stop()
 		ultimateReady = false
 		isChargingUlt = true #NEW CHARGE
 		curUltimateCharge = 0
 	if(curUltimateCharge >= 100):
+		$AnimationPlayer.play("Blinking")
+		$UI/TextureRect.visible = true
 		ultimateReady = true
 		curUltimateCharge = 100
 	
@@ -247,7 +254,7 @@ func _physics_process(delta: float) -> void:
 		targetVelocity = direction * curSpeed
 	else:
 		targetVelocity = Vector3(move_toward(velocity.x, 0, curSpeed), 0, move_toward(velocity.z, 0, curSpeed))
-	
+
 	if curWallKickTimer > 0:
 		curWallKickTimer -= delta
 		var t = 1.0 - (curWallKickTimer / wallKickControlTime) # 0 right after kick -> 1 when done
@@ -320,6 +327,9 @@ func _input(event):
 	if event.is_action_pressed("shoot"):
 		if(ultimateReady): #NEW CHARGE
 			isUlting = true 
+			if not $"Deadly Laser".playing:
+
+				$"Deadly Laser".play()
 			for child in deathBeam.get_children():
 				if child is GPUParticles3D:
 					child.lifetime = curUltimateCharge / ultFireDischargeSpeed
@@ -426,7 +436,3 @@ func find_nearby_wall_normal() -> Vector3:
 					closest_normal = result.normal
 
 	return closest_normal
-
-
-func _on_death_box_area_entered(_area: Area3D) -> void:
-	pass # Replace with function body.
