@@ -103,10 +103,11 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Main Menu"
 
-[node name="Arena" type="Node3D" parent="." unique_id=342273739 node_paths=PackedStringArray("player_node")]
+[node name="Arena" type="Node3D" parent="." unique_id=342273739 node_paths=PackedStringArray("player_node", "startingBlock")]
 script = ExtResource("4_b0wg4")
 platform_scene = ExtResource("8_xn8ur")
 player_node = NodePath("../Player")
+startingBlock = NodePath("../InitialBox")
 max_platforms = 35
 initial_spawn_count = 25
 outer_radius = 98.77

@@ -3,7 +3,8 @@ extends Node3D
 
 @export_category("Spawning Configuration")
 @export var platform_scene: PackedScene
-@export var player_node: Node3D ## Assign your Player node here to prevent overlap
+@export var player_node: Node3D
+@export var startingBlock: Node3D
 @export var max_platforms: int = 50
 @export var initial_spawn_count: int = 20
 @export var spawn_interval: float = 2.0 # How often to spawn a new platform (in seconds)
@@ -29,9 +30,13 @@ var _debug_inner: CSGCylinder3D
 var _spawn_timer: float = 0.0
 
 func _ready() -> void:
+	if(GameManager.Difficulty == GameManager.DifficultyOptions.EASY):
+		startingBlock.queue_free()
+		player_node.position.y -= 15
 	if(GameManager.Difficulty == GameManager.DifficultyOptions.HARD):
 		$Ground.visible = false
 		$StaticBody3D.collision_layer = 4
+		
 	
 	if Engine.is_editor_hint():
 		_setup_debug_visuals()
