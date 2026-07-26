@@ -6,4 +6,4 @@ enum DifficultyOptions {
 	HARD = 2
 }
 
-var Difficulty : DifficultyOptions = 1
+var Difficulty : DifficultyOptions = DifficultyOptions.NORMAL

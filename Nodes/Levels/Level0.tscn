@@ -103,9 +103,10 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Exit"
 
-[node name="Arena" type="Node3D" parent="." unique_id=342273739]
+[node name="Arena" type="Node3D" parent="." unique_id=342273739 node_paths=PackedStringArray("player_node")]
 script = ExtResource("4_b0wg4")
 platform_scene = ExtResource("8_xn8ur")
+player_node = NodePath("../Player")
 max_platforms = 35
 initial_spawn_count = 25
 outer_radius = 98.77
@@ -164,51 +165,6 @@ wait_time_between_attacks_ez = 0.1
 [node name="InitialBox" parent="." unique_id=1160941339 instance=ExtResource("8_xn8ur")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.515854, 5.0477085, -63.973396)
 size = Vector3(13.187563, 10, 12.622242)
-
-[node name="StaticBox7" parent="." unique_id=1872007656 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(0.3428887, 0, 0.93937606, 0, 1, 0, -0.93937606, 0, 0.3428887, 80.83197, 5.0477085, -2.6100006)
-visible = false
-size = Vector3(19.999987, 10, 29.999987)
-
-[node name="StaticBox4" parent="." unique_id=1615905211 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.515854, 14.350126, -16.700264)
-visible = false
-size = Vector3(9.351, 3, 24.016)
-
-[node name="StaticBox9" parent="." unique_id=873489293 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.49411, 14.350126, 37.643513)
-visible = false
-size = Vector3(9.351, 3, 24.016)
-
-[node name="StaticBox10" parent="." unique_id=1755730267 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(0.15910041, 0, 0.9872624, 0, 1, 0, -0.9872624, 0, 0.15910041, 4.577667, 14.350126, 59.82909)
-visible = false
-size = Vector3(9.3509865, 3, 24.015974)
-
-[node name="StaticBox11" parent="." unique_id=409932455 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(-0.26873583, 0, 0.9632139, 0, 1, 0, -0.9632139, 0, -0.26873583, 44.7791, 29.981947, 60.179523)
-visible = false
-size = Vector3(5.2849836, 20, 25.176935)
-
-[node name="StaticBox12" parent="." unique_id=1211824754 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(0.22542891, 0, 0.9742596, 0, 1, 0, -0.9742596, 0, 0.22542891, 36.46682, 24.749529, -72.22613)
-visible = false
-size = Vector3(5.284986, 20, 25.176937)
-
-[node name="StaticBox5" parent="." unique_id=2115095107 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(0.9798931, 0, 0.19952334, 0, 1, 0, -0.19952334, 0, 0.9798931, -68.61836, 22.36852, -16.700264)
-visible = false
-size = Vector3(9.350998, 18.567, 24.015997)
-
-[node name="StaticBox6" parent="." unique_id=1218355192 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(0.5586892, 0, 0.8293771, 0, 1, 0, -0.8293771, 0, 0.5586892, -50.28123, 20.277327, 47.83492)
-visible = false
-size = Vector3(18.1649, 43.549934, 17.441755)
-
-[node name="StaticBox8" parent="." unique_id=1799347424 instance=ExtResource("8_xn8ur")]
-transform = Transform3D(0.5586892, 0, 0.8293771, 0, 1, 0, -0.8293771, 0, 0.5586892, 71.990265, 20.277327, -36.58076)
-visible = false
-size = Vector3(18.1649, 43.549934, 17.441755)
 
 [node name="DeathBox" type="Area3D" parent="." unique_id=1249397594]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.3825626, 0)

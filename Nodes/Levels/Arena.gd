@@ -3,9 +3,11 @@ extends Node3D
 
 @export_category("Spawning Configuration")
 @export var platform_scene: PackedScene
+@export var player_node: Node3D ## Assign your Player node here to prevent overlap
 @export var max_platforms: int = 50
 @export var initial_spawn_count: int = 20
 @export var spawn_interval: float = 2.0 # How often to spawn a new platform (in seconds)
+@export var max_spawn_attempts: int = 5 ## Times it will try to find a safe spot before skipping
 
 @export_category("Cylinder Dimensions")
 @export var outer_radius: float = 30.0
@@ -24,7 +26,7 @@ var _spawned_platforms: Array[Node3D] = []
 var _debug_combiner: CSGCombiner3D
 var _debug_outer: CSGCylinder3D
 var _debug_inner: CSGCylinder3D
-var _spawn_timer: float = 0.0 # Internal timer to track spawn delays
+var _spawn_timer: float = 0.0
 
 func _ready() -> void:
 	if(GameManager.Difficulty == GameManager.DifficultyOptions.HARD):
@@ -35,7 +37,6 @@ func _ready() -> void:
 		_setup_debug_visuals()
 		return
 		
-	# Game start logic (Hides the debug volume when playing)
 	if is_instance_valid(_debug_combiner):
 		_debug_combiner.hide()
 		
@@ -47,38 +48,53 @@ func _ready() -> void:
 		spawn_platform()
 
 func _process(delta: float) -> void:
-	# This runs continuously in the editor to update the visual cylinder
 	if Engine.is_editor_hint():
 		if is_instance_valid(_debug_combiner):
 			_debug_combiner.visible = show_spawn_volume
 			_debug_outer.radius = outer_radius
 			_debug_outer.height = cylinder_height
 			_debug_inner.radius = inner_radius
-			# Make the inner cylinder slightly taller to ensure a clean cutout
 			_debug_inner.height = cylinder_height + 2.0 
 		return
 		
-	# Runtime Spawning Logic
-	# Clean up any null references (in case platforms are destroyed elsewhere)
 	_spawned_platforms = _spawned_platforms.filter(func(p): return is_instance_valid(p))
 	
-	# Only spawn if we haven't reached the max platforms limit
 	if _spawned_platforms.size() < max_platforms:
 		_spawn_timer += delta
 		if _spawn_timer >= spawn_interval:
 			spawn_platform()
-			_spawn_timer = 0.0 # Reset timer after spawning
+			_spawn_timer = 0.0 
 
 func spawn_platform() -> void:
+	var valid_spot_found = false
+	var p_pos: Vector3
+	var p_rot: Vector3
+	var p_scale: Vector3
+	
+	# Attempt to find a safe location that doesn't overlap with the player
+	for attempt in range(max_spawn_attempts):
+		p_pos = _get_random_position()
+		p_rot = _get_random_rotation()
+		p_scale = _get_random_scale()
+		
+		if _is_position_safe(p_pos, p_scale):
+			valid_spot_found = true
+			break
+			
+	# If we couldn't find a spot that wasn't on the player, abort the spawn this time
+	if not valid_spot_found:
+		return 
+
 	var platform = platform_scene.instantiate()
 	add_child(platform)
 	
-	_set_random_position(platform)
-	_set_random_rotation(platform)
-	_set_random_scale(platform)
+	platform.position = p_pos
+	platform.rotation = p_rot
+	platform.scale = p_scale
+	
 	_manage_platform_queue(platform)
 
-func _set_random_position(platform: Node3D) -> void:
+func _get_random_position() -> Vector3:
 	var r_inner_sq = inner_radius * inner_radius
 	var r_outer_sq = outer_radius * outer_radius
 	var radius = sqrt(randf_range(r_inner_sq, r_outer_sq))
@@ -89,20 +105,34 @@ func _set_random_position(platform: Node3D) -> void:
 	var x_pos = radius * cos(theta)
 	var z_pos = radius * sin(theta)
 	
-	platform.position = Vector3(x_pos, y_pos, z_pos)
+	return Vector3(x_pos, y_pos, z_pos)
 
-func _set_random_rotation(platform: Node3D) -> void:
-	# Random rotation exclusively on the Y axis
+func _get_random_rotation() -> Vector3:
 	var random_y_rot = randf_range(0.0, TAU)
-	platform.rotation = Vector3(0.0, random_y_rot, 0.0)
+	return Vector3(0.0, random_y_rot, 0.0)
 
-func _set_random_scale(platform: Node3D) -> void:
-	# Picks a random size between the min and max limits for each axis independently
+func _get_random_scale() -> Vector3:
 	var random_x = randf_range(min_scale.x, max_scale.x)
 	var random_y = randf_range(min_scale.y, max_scale.y)
 	var random_z = randf_range(min_scale.z, max_scale.z)
 	
-	platform.scale = Vector3(random_x, random_y, random_z)
+	return Vector3(random_x, random_y, random_z)
+
+func _is_position_safe(check_pos: Vector3, check_scale: Vector3) -> bool:
+	if not is_instance_valid(player_node):
+		return true # Automatically safe if there's no player assigned or alive
+		
+	# Calculate an approximate bounding radius based on the largest scale dimension
+	var max_dimension = maxf(check_scale.x, maxf(check_scale.y, check_scale.z))
+	
+	# Add a 2.0 unit buffer to account for the player's own size (tweak if necessary)
+	var safe_distance = (max_dimension / 2.0) + 2.0 
+	
+	# Convert local spawn position to global so it correctly checks against player's global position
+	var global_check_pos = to_global(check_pos)
+	var distance_to_player = global_check_pos.distance_to(player_node.global_position)
+	
+	return distance_to_player >= safe_distance
 
 func _manage_platform_queue(new_platform: Node3D) -> void:
 	_spawned_platforms.append(new_platform)
@@ -112,7 +142,6 @@ func _manage_platform_queue(new_platform: Node3D) -> void:
 		if is_instance_valid(oldest):
 			oldest.queue_free()
 
-## Automatically generates the visual nodes in the editor
 func _setup_debug_visuals() -> void:
 	if has_node("DebugVolume"):
 		_debug_combiner = get_node("DebugVolume")
