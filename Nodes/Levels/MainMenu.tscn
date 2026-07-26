@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://br8j4nckaa2bc"]
+
+[ext_resource type="Script" uid="uid://5ba11k5o34gd" path="res://Nodes/Levels/main_menu.gd" id="1_scanh"]
+[ext_resource type="Texture2D" uid="uid://hbvraf1d7qgi" path="res://Assets/2D/Square.png" id="2_scanh"]
+
+[sub_resource type="SystemFont" id="SystemFont_scanh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o51nh"]
+font = SubResource("SystemFont_scanh")
+font_color = Color(0, 0, 0, 1)
+
+[node name="Control" type="Control" unique_id=1587802851]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_scanh")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=849894445]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Tutorial" type="Button" parent="." unique_id=1019522834]
+layout_mode = 0
+offset_left = 139.0
+offset_top = 158.0
+offset_right = 378.0
+offset_bottom = 202.0
+text = "Play Tutorial"
+
+[node name="NormalMode" type="Button" parent="." unique_id=1764139769]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 248.0
+offset_right = 379.0
+offset_bottom = 292.0
+text = "Play Normal Mode"
+
+[node name="HardMode" type="Button" parent="." unique_id=1478892069]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 337.0
+offset_right = 380.0
+offset_bottom = 381.0
+text = "Play Hard Mode"
+
+[node name="Quit" type="Button" parent="." unique_id=1343435842]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 417.0
+offset_right = 380.0
+offset_bottom = 461.0
+text = "Quit"
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1648758263]
+layout_mode = 0
+offset_left = 529.0
+offset_top = 151.0
+offset_right = 1060.0
+offset_bottom = 455.0
+texture = ExtResource("2_scanh")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="." unique_id=652088808]
+layout_mode = 0
+offset_left = 569.82294
+offset_top = 163.0
+offset_right = 1038.177
+offset_bottom = 442.0
+text = "Move = WASD
+Jump = Space
+Walljump = Space (near wall)
+Dash = Shift
+Sprint = Hold Shift
+Hyperjump = Jump while Dashing"
+label_settings = SubResource("LabelSettings_o51nh")
+vertical_alignment = 1
+
+[connection signal="button_down" from="NormalMode" to="." method="_on_normal_mode_button_down"]
+[connection signal="button_down" from="HardMode" to="." method="_on_hard_mode_button_down"]
+[connection signal="button_down" from="Quit" to="." method="_on_quit_button_down"]
