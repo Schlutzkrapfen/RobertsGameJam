@@ -56,11 +56,12 @@ func spawn_attack():
 	attack.global_position = Vector3(self.global_position.x,self.global_position.y-height,self.global_position.z)
 	attack.attack_size = explosion_radius
 	attack.time_tile_attack = time_tile_attack
-	
+	$charge.play()
 	
 
 func take_damage(damage: int):
 	hp -= damage
 	if(hp <= 0):
-		print("DEATH")
+		$"Death small Sound".play()
+		await $"Death small Sound".finished
 		queue_free()
