@@ -157,8 +157,8 @@ stream_3/stream = ExtResource("8_c7lll")
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("1_hbvj2")
-min_explosion_radius = 10.0
-max_explosion_radius = 15.0
+min_explosion_radius = 8.0
+max_explosion_radius = 12.0
 explosion = ExtResource("2_vm32c")
 time_tile_attack = 1.0
 explosion_stay_time = 1.0
@@ -249,4 +249,3 @@ libraries/ = SubResource("AnimationLibrary_vm32c")
 [node name="charge" type="AudioStreamPlayer3D" parent="." unique_id=1955552174]
 stream = SubResource("AudioStreamRandomizer_xeka7")
 unit_size = 40.0
-bus = &"SFX"
