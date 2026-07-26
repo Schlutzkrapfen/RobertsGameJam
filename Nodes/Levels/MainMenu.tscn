@@ -60,7 +60,7 @@ offset_right = 380.0
 offset_bottom = 461.0
 text = "Quit"
 
-[node name="TextureRect2" type="TextureRect" parent="." unique_id=1648758263]
+[node name="Tutorial" type="TextureRect" parent="." unique_id=1648758263]
 layout_mode = 0
 offset_left = 529.0
 offset_top = 151.0

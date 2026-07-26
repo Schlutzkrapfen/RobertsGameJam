@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Der Böse Mann"
-run/main_scene="uid://2gwrmy354ye6"
+run/main_scene="uid://br8j4nckaa2bc"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
