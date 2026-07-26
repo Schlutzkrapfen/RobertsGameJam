@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b7316rr1p55wc" path="res://Nodes/Objects/tracer_bullet.tscn" id="2_re438"]
 [ext_resource type="Texture2D" uid="uid://x8xjsb3m7vuw" path="res://Assets/2D/Crosshair.png" id="3_0thus"]
 [ext_resource type="PackedScene" uid="uid://b1jvi2178nvmg" path="res://Nodes/Objects/DeathBeam.tscn" id="5_a34wp"]
-[ext_resource type="Texture2D" uid="uid://bvnl2qkyfc2m4" path="res://Assets/2D/Heart.png" id="8_f2rbm"]
+[ext_resource type="Texture2D" uid="uid://6moukc4o6siq" path="res://Assets/2D/Heart.png" id="8_f2rbm"]
 [ext_resource type="Texture2D" uid="uid://blehx2colo1qj" path="res://Assets/2D/EmptyCharge.png" id="8_ig0md"]
 [ext_resource type="Texture2D" uid="uid://o2rj0dfw6mxv" path="res://Assets/2D/FilledCharge.png" id="9_1aj3k"]
 
