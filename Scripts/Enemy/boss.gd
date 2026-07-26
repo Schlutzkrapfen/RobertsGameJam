@@ -29,7 +29,7 @@ extends CharacterBody3D
 @onready var half_hp:int =hp /2
 var healthBar1: TextureProgressBar
 var healthBar2: TextureProgressBar
-var random
+var random:int = 0
 signal spawn_enemies()
 var hands:Array[Area3D] = []
 var used_hands:Array[bool] = []
