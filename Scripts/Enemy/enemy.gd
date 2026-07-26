@@ -41,11 +41,22 @@ func move_to_point(point: Vector3, _delta: float) -> void:
 		
 	
 func spawn_attack():
+	var mesh_instance = $CollisionShape3D/MeshInstance3D
+	if mesh_instance == null:
+		return
+	var height = mesh_instance.mesh.height /2
+	if not is_inside_tree():
+		return
+	if self.is_queued_for_deletion():
+		return
 	var attack = sphere_attack.instantiate()
-	attack.global_position = Vector3(self.global_position.x,self.global_position.y-($CollisionShape3D/MeshInstance3D.mesh.height/2),self.global_position.z)
+	get_parent().add_child(attack)
+	if not attack.is_inside_tree():
+		return 
+	attack.global_position = Vector3(self.global_position.x,self.global_position.y-height,self.global_position.z)
 	attack.attack_size = explosion_radius
 	attack.time_tile_attack = time_tile_attack
-	get_parent().add_child.call_deferred(attack)
+	
 	
 
 func take_damage(damage: int):
