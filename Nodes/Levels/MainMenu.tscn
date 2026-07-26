@@ -75,20 +75,20 @@ text = "Quit"
 
 [node name="Tutorial" type="TextureRect" parent="." unique_id=1648758263]
 layout_mode = 0
-offset_left = 629.0
-offset_top = 108.0
-offset_right = 1160.0
-offset_bottom = 412.0
+offset_left = 483.0
+offset_top = 150.0
+offset_right = 1014.0
+offset_bottom = 454.0
 texture = ExtResource("2_scanh")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="." unique_id=652088808]
 custom_maximum_size = Vector2(473.575, 800)
 layout_mode = 0
-offset_left = 675.0
-offset_top = 156.0
-offset_right = 1148.0
-offset_bottom = 387.0
+offset_left = 520.0
+offset_top = 185.0
+offset_right = 993.0
+offset_bottom = 416.0
 text = "Move = WASD
 Jump = Space
 Walljump = Space (near wall)
