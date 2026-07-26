@@ -436,3 +436,6 @@ func find_nearby_wall_normal() -> Vector3:
 					closest_normal = result.normal
 
 	return closest_normal
+
+func attention():
+	$Warning.play("Warning")

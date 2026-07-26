@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bp4a0plv22ewb" path="res://Nodes/Objects/player.tscn" id="2_k4g51"]
 [ext_resource type="Script" uid="uid://bqr8qoil4755e" path="res://Scripts/Misc/SceneManager.gd" id="4_4ys6t"]
-[ext_resource type="Script" uid="uid://lmvd6hh13hn" path="res://Nodes/Levels/Arena.gd" id="4_b0wg4"]
-[ext_resource type="Texture2D" uid="uid://2r6dd4adg8k7" path="res://Assets/2D/ground.png" id="5_81glq"]
+[ext_resource type="Script" uid="uid://lmvd6hh13hn" path="res://Scripts/Map/Arena.gd" id="4_b0wg4"]
+[ext_resource type="Texture2D" uid="uid://cqpmu6811i880" path="res://Assets/2D/ground.png" id="5_81glq"]
 [ext_resource type="Script" uid="uid://bfh60xxx62h60" path="res://Scripts/Misc/PauseMenu.gd" id="5_dxclx"]
 [ext_resource type="PackedScene" uid="uid://bwu3srmgjopj0" path="res://Nodes/Objects/enemy_spawner.tscn" id="6_xn8ur"]
 [ext_resource type="PackedScene" uid="uid://wxdr8jqglnre" path="res://Nodes/Objects/Boss.tscn" id="7_v1h2x"]

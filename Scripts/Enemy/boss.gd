@@ -115,6 +115,7 @@ func hand_attack():
 	
 	tween.tween_property(cur_hand, "global_position",Vector3(cur_player_pos.x,cur_player_pos.y+hand_raise_size,cur_player_pos.z), time_tile_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
+
 	var tween1:Tween = get_tree().create_tween() #!THIS LINE THREW AN ERROR ONCE ->createTween on empty tree?
 	attack_start = true
 	tween1.tween_property(cur_hand, "global_position",Vector3(cur_player_pos.x,cur_player_pos.y-hand_raise_size,cur_player_pos.z), time_attack_hands).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
