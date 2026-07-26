@@ -3,8 +3,7 @@ extends Node3D
 @export var attack_size: float = 4.0      # target scale for x/z (cone base size)
 @export var attack_height: float = 200.0  # target scale for y (spike height)
 @export var sphere_attack: PackedScene
-
-@onready var mesh_instance: MeshInstance3D = $MeshInstance3D
+@export var attack_height:float = 200
 @onready var area_3d: Area3D = $MeshInstance3D/Area3D
 
 var time_tile_attack: float = 4.0
@@ -13,10 +12,7 @@ var time_for_reset: float = 0.2
 
 var nodes: Array[Node]
 
-# The scale values authored in the scene (usually Vector3(1,1,1)) - we tween
-# back to these instead of a hardcoded number.
-var base_scale_xz: float
-var base_scale_y: float
+
 
 
 func _ready() -> void:
@@ -60,7 +56,7 @@ func make_damage() -> void:
 			thing.player_hit(1, true)
 			continue
 		if thing.is_in_group("Enemie"):
-			thing.queue_free()
+			thing.take_damage(100)
 			continue
 
 
