@@ -3,6 +3,7 @@
 /android/
 *.import
 ~*.dll
+Builds/*
 
 # Godot 4+ specific ignores
 .godot/
