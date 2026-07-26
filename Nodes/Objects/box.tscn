@@ -5,6 +5,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_xn8ur"]
 
 [node name="Box" type="RigidBody3D" unique_id=970064558]
+gravity_scale = 0.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=318317037]
 mesh = SubResource("BoxMesh_v1h2x")
