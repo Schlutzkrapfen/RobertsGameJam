@@ -52,6 +52,18 @@ offset_right = 380.0
 offset_bottom = 295.0
 text = "Hard"
 
+[node name="SettingsButton" type="Button" parent="." unique_id=1037442488]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.046000004
+anchor_bottom = 0.029000001
+offset_left = 141.0
+offset_top = 364.0
+offset_right = 327.008
+offset_bottom = 389.208
+text = "Settings
+"
+
 [node name="Quit" type="Button" parent="." unique_id=1343435842]
 layout_mode = 0
 offset_left = 141.0
@@ -62,10 +74,10 @@ text = "Quit"
 
 [node name="TextureRect2" type="TextureRect" parent="." unique_id=1648758263]
 layout_mode = 0
-offset_left = 529.0
-offset_top = 151.0
-offset_right = 1060.0
-offset_bottom = 455.0
+offset_left = 629.0
+offset_top = 108.0
+offset_right = 1160.0
+offset_bottom = 412.0
 texture = ExtResource("2_scanh")
 expand_mode = 1
 
@@ -84,7 +96,106 @@ Hyperjump = Jump while Dashing"
 label_settings = SubResource("LabelSettings_o51nh")
 vertical_alignment = 1
 
+[node name="Settings" type="PanelContainer" parent="." unique_id=603993509]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings" unique_id=646786292]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Settings/VBoxContainer" unique_id=40082135]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/VBoxContainer" unique_id=899432177]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="Settings/VBoxContainer/HBoxContainer" unique_id=1238718828]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Settings/VBoxContainer/HBoxContainer" unique_id=1988845760]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Sound"
+
+[node name="Control2" type="Control" parent="Settings/VBoxContainer/HBoxContainer" unique_id=1952825030]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSlider" type="HSlider" parent="Settings/VBoxContainer/HBoxContainer" unique_id=2077311189]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control3" type="Control" parent="Settings/VBoxContainer/HBoxContainer" unique_id=295997903]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control2" type="Control" parent="Settings/VBoxContainer" unique_id=1896186101]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MouseSensitivit" type="HBoxContainer" parent="Settings/VBoxContainer" unique_id=1083685009]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="Settings/VBoxContainer/MouseSensitivit" unique_id=2129080722]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Settings/VBoxContainer/MouseSensitivit" unique_id=1768675934]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Sound"
+
+[node name="Control2" type="Control" parent="Settings/VBoxContainer/MouseSensitivit" unique_id=500024060]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSlider" type="HSlider" parent="Settings/VBoxContainer/MouseSensitivit" unique_id=460449766]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control3" type="Control" parent="Settings/VBoxContainer/MouseSensitivit" unique_id=1438854863]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control3" type="Control" parent="Settings/VBoxContainer" unique_id=1440113389]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MouseSensitivit2" type="HBoxContainer" parent="Settings/VBoxContainer" unique_id=792871254]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="Settings/VBoxContainer/MouseSensitivit2" unique_id=812386503]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Settings/VBoxContainer/MouseSensitivit2" unique_id=830774714]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Sound"
+
+[node name="Control2" type="Control" parent="Settings/VBoxContainer/MouseSensitivit2" unique_id=1878337344]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control3" type="Control" parent="Settings/VBoxContainer/MouseSensitivit2" unique_id=1376364505]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [connection signal="button_down" from="EasyMode" to="." method="_on_easy_mode_button_down"]
 [connection signal="button_down" from="NormalMode" to="." method="_on_normal_mode_button_down"]
 [connection signal="button_down" from="HardMode" to="." method="_on_hard_mode_button_down"]
+[connection signal="button_up" from="SettingsButton" to="." method="_on_settings_button_up"]
 [connection signal="button_down" from="Quit" to="." method="_on_quit_button_down"]

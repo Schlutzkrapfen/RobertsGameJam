@@ -7,3 +7,4 @@ enum DifficultyOptions {
 }
 
 var Difficulty : DifficultyOptions = 1
+var mouse_sensitivity: float = 1

@@ -25,3 +25,8 @@ func _on_hard_mode_button_down() -> void:
 
 func _on_quit_button_down() -> void:
 	get_tree().quit()
+
+
+func _on_settings_button_up() -> void:
+	$Settings/Popup.visible = true
+	
