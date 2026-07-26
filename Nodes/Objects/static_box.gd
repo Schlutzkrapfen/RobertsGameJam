@@ -25,3 +25,8 @@ func _update_size():
 
 	($MeshInstance3D.mesh as BoxMesh).size = size
 	($CollisionShape3D.shape as BoxShape3D).size = size
+	
+	
+func take_damage(_damage: int):
+	queue_free()
+	

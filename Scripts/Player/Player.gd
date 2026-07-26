@@ -85,7 +85,7 @@ var ultChargeUI : TextureProgressBar
 # @export var dischargeSpeed : float = 40
 # @export var overChargeThreshhold : float = 10
 @export var ultChargeSpeed : float = 3
-@export var ultDischargeSpeed : float = 2
+@export var ultDischargeSpeed : float = 2 #obsolete
 @export var ultFireDischargeSpeed : float = 10
 @export var ultDamageTickDuration : float = 0.3
 @export var ultDamagePerTick : float = 10
@@ -261,6 +261,7 @@ func _physics_process(delta: float) -> void:
 	var wallNormal = find_nearby_wall_normal()
 	if (curJumpBuffered >= 0 and !is_on_floor() and wallNormal != Vector3.ZERO):
 		curJumpBuffered = -1
+		curJumps = 1
 		velocity.y = wallKickUpForce
 	
 		var incomingVelocity := Vector3(velocity.x, 0, velocity.z)

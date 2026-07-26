@@ -34,7 +34,7 @@ offset_left = 139.0
 offset_top = 143.0
 offset_right = 378.0
 offset_bottom = 187.0
-text = "Easy"
+text = "Hard"
 
 [node name="NormalMode" type="Button" parent="." unique_id=1764139769]
 layout_mode = 0
@@ -42,7 +42,7 @@ offset_left = 140.0
 offset_top = 197.0
 offset_right = 379.0
 offset_bottom = 241.0
-text = "Normal"
+text = "Extreme"
 
 [node name="HardMode" type="Button" parent="." unique_id=1478892069]
 layout_mode = 0
@@ -50,7 +50,7 @@ offset_left = 141.0
 offset_top = 251.0
 offset_right = 380.0
 offset_bottom = 295.0
-text = "Hard"
+text = "Doom"
 
 [node name="Quit" type="Button" parent="." unique_id=1343435842]
 layout_mode = 0
@@ -73,16 +73,19 @@ expand_mode = 1
 layout_mode = 0
 offset_left = 569.82294
 offset_top = 163.0
-offset_right = 1038.177
+offset_right = 1019.0
 offset_bottom = 442.0
 text = "Move = WASD
 Jump = Space
 Walljump = Space (near wall)
 Dash = Shift
 Sprint = Hold Shift
-Hyperjump = Jump while Dashing"
+Hyperjump = Jump while Dashing
+
+Survive until your Ultimate Weapon has charged up and then release its power with Left Click"
 label_settings = SubResource("LabelSettings_o51nh")
 vertical_alignment = 1
+autowrap_mode = 3
 
 [connection signal="button_down" from="EasyMode" to="." method="_on_easy_mode_button_down"]
 [connection signal="button_down" from="NormalMode" to="." method="_on_normal_mode_button_down"]
