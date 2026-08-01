@@ -1,0 +1,183 @@
+[gd_scene format=3 uid="uid://b13tt4hpovda0"]
+
+[ext_resource type="PackedScene" uid="uid://bp4a0plv22ewb" path="res://Nodes/Objects/player.tscn" id="1_66bxv"]
+[ext_resource type="Script" uid="uid://bqr8qoil4755e" path="res://Scripts/Misc/SceneManager.gd" id="2_hkjxt"]
+[ext_resource type="Script" uid="uid://bfh60xxx62h60" path="res://Scripts/Misc/PauseMenu.gd" id="3_lw62e"]
+[ext_resource type="Script" uid="uid://lmvd6hh13hn" path="res://Scripts/Map/Arena.gd" id="4_qpwgq"]
+[ext_resource type="PackedScene" uid="uid://bn6tp25yuod4" path="res://Nodes/Objects/static_box.tscn" id="5_mu2eo"]
+[ext_resource type="Texture2D" uid="uid://cqpmu6811i880" path="res://Assets/2D/ground.png" id="6_ckdoe"]
+[ext_resource type="PackedScene" uid="uid://bwu3srmgjopj0" path="res://Nodes/Objects/enemy_spawner.tscn" id="7_jpg01"]
+[ext_resource type="Script" uid="uid://kw2w7hhhuxx1" path="res://Scripts/Map/death_box.gd" id="9_p61wr"]
+[ext_resource type="Shader" uid="uid://cfmwvpmiq2dtd" path="res://Scripts/Shader/lava.gdshader" id="10_bxsnq"]
+[ext_resource type="AudioStream" uid="uid://dk0b83bgycbfl" path="res://Assets/Sounds/Music/Soundtrack_GMTK2026.ogg" id="11_2rxqs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0wg4"]
+shading_mode = 0
+albedo_color = Color(1.8247963, 1.8247963, 1.8247963, 1)
+albedo_texture = ExtResource("6_ckdoe")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xeka7"]
+top_radius = 100.0
+bottom_radius = 100.0
+height = 150.354
+
+[sub_resource type="Gradient" id="Gradient_4ys6t"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.42741936, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.6259403, 0.5782508, 0.38447848, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7n3k6"]
+gradient = SubResource("Gradient_4ys6t")
+fill_from = Vector2(0.25531915, 0.3856383)
+fill_to = Vector2(0.75, 0.74734044)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dxclx"]
+albedo_texture = SubResource("GradientTexture2D_7n3k6")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jn3sf"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nacyp"]
+radius = 100.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vrnwp"]
+transparency = 1
+albedo_color = Color(1, 0.14901961, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nacyp"]
+size = Vector2(10000, 10000)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b0wg4"]
+render_priority = 0
+shader = ExtResource("10_bxsnq")
+shader_parameter/dark_lava_color = Color(1, 0, 0, 1)
+shader_parameter/light_lava_color = Color(1, 0.9411765, 0, 1)
+shader_parameter/speed = 0.47600002261
+shader_parameter/scale = 21.49800101789512
+shader_parameter/sharpness = 2.5410000731975
+shader_parameter/emission_intensity = 1.634000077615
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nacyp"]
+size = Vector3(1000, 16.365234, 1000)
+
+[node name="Level" type="Node3D" unique_id=2124627221]
+
+[node name="Player" parent="." unique_id=1191405411 instance=ExtResource("1_66bxv")]
+transform = Transform3D(-0.84126115, 0, -0.54062897, 0, 1, 0, 0.54062897, 0, -0.84126115, -36.302246, 17.496393, -63.274445)
+shild_time = 1.0
+
+[node name="SceneManager" type="Node3D" parent="." unique_id=1758454766 node_paths=PackedStringArray("pauseMenu")]
+script = ExtResource("2_hkjxt")
+pauseMenu = NodePath("../PauseMenu")
+
+[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=2084743366]
+process_mode = 2
+visible = false
+script = ExtResource("3_lw62e")
+
+[node name="Resume" type="Button" parent="PauseMenu" unique_id=768062116]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -116.5
+offset_top = -108.0
+offset_right = 116.5
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Resume"
+
+[node name="Exit" type="Button" parent="PauseMenu" unique_id=902489934]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = 24.0
+offset_right = 118.0
+offset_bottom = 116.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Main Menu"
+
+[node name="Arena" type="Node3D" parent="." unique_id=342273739 node_paths=PackedStringArray("player_node", "startingBlock")]
+script = ExtResource("4_qpwgq")
+platform_scene = ExtResource("5_mu2eo")
+player_node = NodePath("../Player")
+startingBlock = NodePath("../InitialBox")
+max_platforms = 35
+initial_spawn_count = 25
+outer_radius = 98.77
+inner_radius = 25.355
+cylinder_height = 75.955
+min_scale = Vector3(5, 5, 5)
+max_scale = Vector3(30, 30, 30)
+show_spawn_volume = false
+
+[node name="Ground" type="MeshInstance3D" parent="Arena" unique_id=232500043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -74.177, 0)
+layers = 5
+material_override = SubResource("StandardMaterial3D_b0wg4")
+mesh = SubResource("CylinderMesh_xeka7")
+surface_material_override/0 = SubResource("StandardMaterial3D_dxclx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Arena" unique_id=681971485]
+collision_layer = 7
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_jn3sf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/StaticBody3D" unique_id=1807222277]
+shape = SubResource("CylinderShape3D_nacyp")
+
+[node name="DebugVolume" type="CSGCombiner3D" parent="Arena" unique_id=1785928887]
+visible = false
+
+[node name="Outer" type="CSGCylinder3D" parent="Arena/DebugVolume" unique_id=161010039]
+radius = 98.77
+height = 75.955
+sides = 32
+material = SubResource("StandardMaterial3D_vrnwp")
+
+[node name="Inner" type="CSGCylinder3D" parent="Arena/DebugVolume/Outer" unique_id=104812563]
+operation = 2
+radius = 25.355
+height = 77.955
+sides = 32
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=307039512]
+transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 1, 0, -0.99999994, -4.371139e-08, 0, 62.257908, 0)
+shadow_enabled = true
+
+[node name="Ambient" type="DirectionalLight3D" parent="." unique_id=45299632]
+transform = Transform3D(-0.44918308, 0.8783805, 0.16334756, 0, -0.18282996, 0.9831446, 0.89343977, 0.44161192, 0.08212412, 0, 62.257904, -62.257908)
+light_energy = 0.7
+
+[node name="EnemySpawner" parent="." unique_id=1695561861 node_paths=PackedStringArray("player") instance=ExtResource("7_jpg01")]
+player = NodePath("../Player")
+
+[node name="InitialBox" parent="." unique_id=1160941339 instance=ExtResource("5_mu2eo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.515854, 5.0477085, -63.973396)
+size = Vector3(13.187563, 10, 12.622242)
+
+[node name="DeathBox" type="Area3D" parent="." unique_id=1249397594]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.3825626, 0)
+script = ExtResource("9_p61wr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DeathBox" unique_id=1651203824]
+mesh = SubResource("PlaneMesh_nacyp")
+surface_material_override/0 = SubResource("ShaderMaterial_b0wg4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DeathBox" unique_id=668303166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.6484375, 0)
+shape = SubResource("BoxShape3D_nacyp")
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=188386408]
+stream = ExtResource("11_2rxqs")
+autoplay = true
+bus = &"Music"
+
+[connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_quit_button_pressed"]
+[connection signal="body_entered" from="DeathBox" to="DeathBox" method="_on_body_entered"]

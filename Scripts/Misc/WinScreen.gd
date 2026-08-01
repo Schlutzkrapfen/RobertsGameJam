@@ -2,11 +2,10 @@ extends Control
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	if GameManager.Difficulty != GameManager.DifficultyOptions.EASY:
-		$MainMenu.text = "Make it Easier?"
+	if GameManager.Difficulty != GameManager.DifficultyOptions.HARD:
+		$MainMenu.text = "Make it Harder?"
 	else:
-		$MainMenu.text = "Maybe the Tutorial?"
-	
+		$MainMenu.text = "Make it Easier?"
 
 func _on_quit_button_up() -> void:
 	get_tree().quit()
