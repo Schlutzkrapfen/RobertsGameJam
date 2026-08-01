@@ -29,7 +29,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="EasyMode" type="Button" parent="." unique_id=1019522834]
+[node name="TutorialButton" type="Button" parent="." unique_id=1019522834]
+layout_mode = 0
+offset_left = 139.0
+offset_top = 88.0
+offset_right = 378.0
+offset_bottom = 132.0
+text = "Tutorial
+"
+
+[node name="EasyMode" type="Button" parent="." unique_id=515156381]
 layout_mode = 0
 offset_left = 139.0
 offset_top = 143.0
@@ -235,6 +244,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_vertical = 3
 
+[connection signal="button_down" from="TutorialButton" to="." method="_on_tutorial_button_button_down"]
 [connection signal="button_down" from="EasyMode" to="." method="_on_easy_mode_button_down"]
 [connection signal="button_down" from="NormalMode" to="." method="_on_normal_mode_button_down"]
 [connection signal="button_down" from="HardMode" to="." method="_on_hard_mode_button_down"]

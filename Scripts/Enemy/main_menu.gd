@@ -58,3 +58,7 @@ func _input(event: InputEvent) -> void:
 
 func _on_close_button_up() -> void:
 	$Settings.visible = false
+
+
+func _on_tutorial_button_button_down() -> void:
+	get_tree().change_scene_to_file("res://Nodes/Levels/tutorial.tscn")
