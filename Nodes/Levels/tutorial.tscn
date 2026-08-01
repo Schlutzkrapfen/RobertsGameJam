@@ -22,6 +22,7 @@
 [ext_resource type="AudioStream" uid="uid://ceif63k5iksfw" path="res://Assets/Sounds/SFX_GMTK2026/SFX/FAT_BEAM.wav" id="13_pekdm"]
 [ext_resource type="Texture2D" uid="uid://u3k75sn1tb83" path="res://addons/controller_icons/assets/mouse/simple.png" id="14_okp12"]
 [ext_resource type="PackedScene" uid="uid://omwuaftt1f5y" path="res://Nodes/Objects/tutorial_platform.tscn" id="22_8xcoy"]
+[ext_resource type="PackedScene" uid="uid://wxdr8jqglnre" path="res://Nodes/Objects/Boss.tscn" id="23_xat8r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
 
@@ -182,7 +183,7 @@ size = Vector3(1000, 16.365234, 1000)
 [node name="Level" type="Node3D" unique_id=2124627221]
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=1191405411 node_paths=PackedStringArray("healt_control", "muzzle") groups=["Player"]]
-transform = Transform3D(-0.84126115, 0, -0.54062897, 0, 1, 0, 0.54062897, 0, -0.84126115, 32.010315, 80.057976, -63.274445)
+transform = Transform3D(-0.84126115, 0, -0.54062897, 0, 1, 0, 0.54062897, 0, -0.84126115, -38.756218, 11.422346, -64.1895)
 script = ExtResource("1_2rxqs")
 shild_time = 1.0
 healt_control = NodePath("UI/HBoxContainer")
@@ -201,7 +202,9 @@ bullet = ExtResource("2_8xcoy")
 muzzle = NodePath("Camera3D/GunMesh/Muzzle")
 burstCooldown = 0.3
 tracerSpeed = 100.0
-ultFireDischargeSpeed = 50.0
+ultChargeSpeed = 0.0
+ultDischargeSpeed = 4.0
+ultFireDischargeSpeed = 70.0
 ultDamageTickDuration = 0.05
 ultDamagePerTick = 65.0
 ultKnockbackForce = 25.0
@@ -471,13 +474,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.65404, 61.830986, -64.0415
 [node name="Tutorial_platform5" parent="Respawn" unique_id=1003720139 instance=ExtResource("22_8xcoy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 156.30717, 61.830986, -64.041565)
 
+[node name="Boss" parent="Respawn" unique_id=419995261 node_paths=PackedStringArray("player") instance=ExtResource("23_xat8r")]
+transform = Transform3D(-1.441558e-06, 0, 32.979004, 0, 32.979004, 0, -32.979004, 0, -1.441558e-06, 249.60864, 92.55782, -76.33441)
+visible = false
+player = NodePath("../../Player")
+hp = 1000
+
 [connection signal="camera_shake" from="Player" to="Player/Camera3D" method="_on_player_camera_shake"]
+[connection signal="value_changed" from="Player/UI/UltimateCharge" to="Player/UI/TutorialText" method="_on_ultimate_charge_value_changed"]
 [connection signal="first_tutorial_part_done" from="Player/UI/TutorialText" to="Respawn/Tutorial_platform" method="start"]
 [connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_quit_button_pressed"]
 [connection signal="body_entered" from="DeathBox" to="DeathBox" method="_on_body_entered"]
 [connection signal="next_phase" from="Respawn/Tutorial_platform" to="Player/UI/TutorialText" method="start_double_jump"]
 [connection signal="next_phase" from="Respawn/Tutorial_platform" to="Respawn/Tutorial_platform2" method="start"]
+[connection signal="next_phase" from="Respawn/Tutorial_platform2" to="Player/UI/TutorialText" method="wall_jumps"]
 [connection signal="next_phase" from="Respawn/Tutorial_platform2" to="Respawn/Tutorial_platform3" method="start"]
+[connection signal="next_phase" from="Respawn/Tutorial_platform3" to="Player/UI/TutorialText" method="far_jump"]
+[connection signal="next_phase" from="Respawn/Tutorial_platform3" to="Respawn/Tutorial_platform4" method="start"]
+[connection signal="next_phase" from="Respawn/Tutorial_platform4" to="Player/UI/TutorialText" method="far_space_jump"]
+[connection signal="next_phase" from="Respawn/Tutorial_platform4" to="Respawn/Tutorial_platform5" method="start"]
+[connection signal="next_phase" from="Respawn/Tutorial_platform5" to="Player/UI/TutorialText" method="wait"]
+[connection signal="next_phase" from="Respawn/Tutorial_platform5" to="Respawn/Boss" method="tutorial_attack"]
 
 [editable path="Respawn/Tutorial_platform3"]

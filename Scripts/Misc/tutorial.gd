@@ -8,6 +8,7 @@ var already_played:bool = false
 func _ready() -> void:
 	if GameManager.Difficulty == GameManager.DifficultyOptions.Tutorial:
 		self.visible = true
+		$"../UltimateCharge".visible = false
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("move_backward"):
@@ -26,12 +27,26 @@ func _input(event: InputEvent) -> void:
 	
 func start_double_jump():
 	self.text = "Use [b][i]Space [/i][/b] again to double Jump"
+
 func wall_jumps():
 	self.text = "Use [b][i]Space [/i][/b] near walls to Wall Jump"
+func far_jump():
+	self.text = "Use [b][i]shift [/i][/b] to dash"
+func wait():
+	$"../..".ultChargeSpeed = 10
+	$"../UltimateCharge".visible = true
+	self.text = "[b][i]Wait [/i][/b] until ray is is charged\n do not get hit ;) "
 
+func far_space_jump():
+	self.text = "Use [b][i]shift [/i][/b] than [b][i]space[/i][/b] still on the ground to make a far jump"
 func check_if_tutorial_finished():
 	if not array_input.has(false) and not already_played :
 		already_played = true
 		self.text = "Use [b][i]Space [/i][/b]to Jump"
 		
 		emit_signal("first_tutorial_part_done")
+
+
+func _on_ultimate_charge_value_changed(value: float) -> void:
+	if value == 100:
+		self.text = "Use [b][i]left mouse [/i][/b] to shoot \"böse Mann\""

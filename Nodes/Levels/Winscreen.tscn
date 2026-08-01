@@ -40,7 +40,7 @@ offset_right = 32.5
 offset_bottom = 107.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Again?
+text = "Again!
 "
 
 [node name="MainMenu" type="Button" parent="." unique_id=990525158]
