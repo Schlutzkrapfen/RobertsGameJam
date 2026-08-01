@@ -38,7 +38,8 @@ func _ready() -> void:
 		$MainMenu.text = "Maybe the Tutorial?"
 	elif GameManager.Difficulty == GameManager.DifficultyOptions.Tutorial:
 		$MainMenu.visible = false
-		$Restart.text = "Really in the tutorial"
+		GameManager.deaths = 0
+		$Restart.text = "Really? In the tutorial?"
 	else:
 		$MainMenu.text = "Make it Easier?"
 		
