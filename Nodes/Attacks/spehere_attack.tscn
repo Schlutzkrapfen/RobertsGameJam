@@ -50,6 +50,7 @@ shader_parameter/wave_amplitude = 0.006
 shader_parameter/wave_frequency = 19.397
 shader_parameter/wave_speed = 3.618
 shader_parameter/chroma_amount = 1.0
+shader_parameter/min_alpha = 0.08
 shader_parameter/points_enabled = true
 shader_parameter/point_field_scale = 4.377
 shader_parameter/point_size = 0.008
@@ -61,6 +62,8 @@ shader_parameter/point_color = Color(1, 1, 1, 1)
 [node name="Spehere attack" type="Node3D" unique_id=1580442940]
 script = ExtResource("1_qu04t")
 sphere_attack = SubResource("PackedScene_lylff")
+min_alpha_peak = 1.0
+alpha_pop_time = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2037751059]
 transform = Transform3D(1, 0, 0, 0, 0.01, 0, 0, 0, 1, 0, 0, 0)
@@ -76,9 +79,8 @@ shape = SubResource("ConcavePolygonShape3D_4kkyx")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1618893967]
 stream = SubResource("AudioStreamRandomizer_xeka7")
-bus = &"Sfx"
 
 [node name="Ghost" type="MeshInstance3D" parent="." unique_id=477449420]
-transform = Transform3D(1, 0, 0, 0, 3.191815, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 3.191815, 0, 0, 0, 1, 0, -0.01, 0)
 mesh = ExtResource("2_4kkyx")
 surface_material_override/0 = SubResource("ShaderMaterial_k453t")
