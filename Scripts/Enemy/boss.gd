@@ -2,6 +2,7 @@ extends CharacterBody3D
 @export var player: CharacterBody3D
 @export var wait_idle_time: float = 1
 @export var wait_idle_time_ez: float = 2
+@export var wait_time_between_attacks_tutorial: float = 5
 @export var wait_time_between_attacks = 0
 @export var wait_time_between_attacks_ez = 0.5
 
@@ -27,6 +28,7 @@ extends CharacterBody3D
 
 @warning_ignore("integer_division")
 @onready var half_hp:int =hp /2
+var tutorial_attack_bool:bool = false
 var healthBar1: TextureProgressBar
 var healthBar2: TextureProgressBar
 var random:int = 0
@@ -52,7 +54,8 @@ func _ready() -> void:
 		sphere_attack_size = sphere_attack_size_ez
 		enemies_ammount = enemies_ammount_ez
 		wait_time_between_attacks = wait_time_between_attacks_ez
-	choose_state()
+	if GameManager.Difficulty != GameManager.DifficultyOptions.Tutorial:
+		choose_state()
 	healthBar1 = get_node("UI/Health_L")
 	healthBar2 = get_node("UI/Health_R")
 	healthBar1.max_value = hp
@@ -157,3 +160,16 @@ func spawn_simple_attacks():
 	attack.attack_size = sphere_attack_size
 	# Spawn the mob by adding it to the Main scene.
 	get_parent().add_child.call_deferred(attack)
+
+func tutorial_attack():
+	if tutorial_attack_bool:
+		return
+	tutorial_attack_bool =true
+	self.visible = true
+	await get_tree().create_timer(wait_time_between_attacks_tutorial).timeout 
+	anim.play("Attack 2")
+	hand_attack()
+	tutorial_attack_bool =false
+	tutorial_attack()
+	
+	

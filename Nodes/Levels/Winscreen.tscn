@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bmst8g3kx867q"]
 
-[ext_resource type="Script" uid="uid://bv3catpl8wnvg" path="res://Scripts/Misc/LoseScreen.gd" id="1_febec"]
+[ext_resource type="Script" uid="uid://b70xvma5ti6g3" path="res://Scripts/Misc/WinScreen.gd" id="1_7s1jr"]
 [ext_resource type="AudioStream" uid="uid://c7fwa8u0iadey" path="res://Assets/Sounds/SFX_GMTK2026/SFX/Boss_Death.wav" id="2_7s1jr"]
 
 [node name="WinScreen" type="Control" unique_id=1326728759]
@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_febec")
+script = ExtResource("1_7s1jr")
 
 [node name="Label" type="Label" parent="." unique_id=1059161333]
 layout_mode = 1
@@ -40,7 +40,7 @@ offset_right = 32.5
 offset_bottom = 107.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Restart
+text = "Again!
 "
 
 [node name="MainMenu" type="Button" parent="." unique_id=990525158]
