@@ -1,22 +1,167 @@
 [gd_scene format=3 uid="uid://b13tt4hpovda0"]
 
-[ext_resource type="PackedScene" uid="uid://bp4a0plv22ewb" path="res://Nodes/Objects/player.tscn" id="1_66bxv"]
+[ext_resource type="Script" uid="uid://c821w5ibwm2dl" path="res://Scripts/Player/Player.gd" id="1_2rxqs"]
+[ext_resource type="PackedScene" uid="uid://b7316rr1p55wc" path="res://Nodes/Objects/tracer_bullet.tscn" id="2_8xcoy"]
 [ext_resource type="Script" uid="uid://bqr8qoil4755e" path="res://Scripts/Misc/SceneManager.gd" id="2_hkjxt"]
 [ext_resource type="Script" uid="uid://bfh60xxx62h60" path="res://Scripts/Misc/PauseMenu.gd" id="3_lw62e"]
-[ext_resource type="Script" uid="uid://lmvd6hh13hn" path="res://Scripts/Map/Arena.gd" id="4_qpwgq"]
+[ext_resource type="Script" uid="uid://y8p1gyuac0x" path="res://Scripts/Player/CameraShaker.gd" id="3_xat8r"]
+[ext_resource type="PackedScene" uid="uid://b1jvi2178nvmg" path="res://Nodes/Objects/DeathBeam.tscn" id="4_i41aw"]
+[ext_resource type="Texture2D" uid="uid://h66tx5b6a7o3" path="res://Assets/2D/Health_Brush_3_4.png" id="5_6jxpj"]
 [ext_resource type="PackedScene" uid="uid://bn6tp25yuod4" path="res://Nodes/Objects/static_box.tscn" id="5_mu2eo"]
+[ext_resource type="Texture2D" uid="uid://b8vuy7l8npt6w" path="res://addons/controller_icons/assets/mouse/left.png" id="6_pnhf4"]
+[ext_resource type="Texture2D" uid="uid://x8xjsb3m7vuw" path="res://Assets/2D/Crosshair.png" id="7_a1whi"]
 [ext_resource type="PackedScene" uid="uid://bwu3srmgjopj0" path="res://Nodes/Objects/enemy_spawner.tscn" id="7_jpg01"]
+[ext_resource type="Texture2D" uid="uid://bdh8f320kw8mg" path="res://Assets/2D/HandWarning.png" id="8_47xk8"]
+[ext_resource type="Texture2D" uid="uid://blehx2colo1qj" path="res://Assets/2D/EmptyCharge.png" id="9_8vgha"]
 [ext_resource type="Script" uid="uid://kw2w7hhhuxx1" path="res://Scripts/Map/death_box.gd" id="9_p61wr"]
 [ext_resource type="Shader" uid="uid://cfmwvpmiq2dtd" path="res://Scripts/Shader/lava.gdshader" id="10_bxsnq"]
+[ext_resource type="Texture2D" uid="uid://o2rj0dfw6mxv" path="res://Assets/2D/FilledCharge.png" id="10_ljs6n"]
 [ext_resource type="AudioStream" uid="uid://dk0b83bgycbfl" path="res://Assets/Sounds/Music/Soundtrack_GMTK2026.ogg" id="11_2rxqs"]
+[ext_resource type="Texture2D" uid="uid://bvnl2qkyfc2m4" path="res://Assets/2D/Heart.png" id="11_x6jgh"]
+[ext_resource type="Script" uid="uid://vnyqrbp78528" path="res://Scripts/Misc/tutorial.gd" id="12_8mdwn"]
+[ext_resource type="AudioStream" uid="uid://ceif63k5iksfw" path="res://Assets/Sounds/SFX_GMTK2026/SFX/FAT_BEAM.wav" id="13_pekdm"]
+[ext_resource type="Texture2D" uid="uid://u3k75sn1tb83" path="res://addons/controller_icons/assets/mouse/simple.png" id="14_okp12"]
+[ext_resource type="PackedScene" uid="uid://omwuaftt1f5y" path="res://Nodes/Objects/tutorial_platform.tscn" id="22_8xcoy"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jn3sf"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nacyp"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_u1pkq"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uagv5"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vrnwp"]
-transparency = 1
-albedo_color = Color(1, 0.14901961, 1, 1)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mq0dr"]
+height = 1.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_p3wno"]
+height = 1.0
+
+[sub_resource type="Environment" id="Environment_81glq"]
+background_mode = 1
+glow_enabled = true
+glow_bloom = 0.05
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_a34wp"]
+radius = 3.0
+
+[sub_resource type="Animation" id="Animation_hjqjt"]
+resource_name = "Blinking"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("6_pnhf4"), ExtResource("14_okp12")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/UltimateCharge:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 2), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ktnxt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_pnhf4")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/UltimateCharge:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iouoh"]
+_data = {
+&"Blinking": SubResource("Animation_hjqjt"),
+&"RESET": SubResource("Animation_ktnxt")
+}
+
+[sub_resource type="Animation" id="Animation_1aj3k"]
+resource_name = "Damage"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/TextureRect4:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/TextureRect4:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.50980395)]
+}
+
+[sub_resource type="Animation" id="Animation_iouoh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/TextureRect4:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/TextureRect4:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hjqjt"]
+_data = {
+&"Damage": SubResource("Animation_1aj3k"),
+&"RESET": SubResource("Animation_iouoh")
+}
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_nacyp"]
 size = Vector2(10000, 10000)
@@ -36,9 +181,198 @@ size = Vector3(1000, 16.365234, 1000)
 
 [node name="Level" type="Node3D" unique_id=2124627221]
 
-[node name="Player" parent="." unique_id=1191405411 instance=ExtResource("1_66bxv")]
-transform = Transform3D(-0.84126115, 0, -0.54062897, 0, 1, 0, 0.54062897, 0, -0.84126115, -36.302246, 17.496393, -63.274445)
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1191405411 node_paths=PackedStringArray("healt_control", "muzzle") groups=["Player"]]
+transform = Transform3D(-0.84126115, 0, -0.54062897, 0, 1, 0, 0.54062897, 0, -0.84126115, 32.010315, 80.057976, -63.274445)
+script = ExtResource("1_2rxqs")
 shild_time = 1.0
+healt_control = NodePath("UI/HBoxContainer")
+moveSpeed = 10.0
+sprintSpeed = 20.0
+jumpForce = 8.0
+hyperJumpForce = 12.0
+wallCheckDistance = 1.5
+wallKickForce = 15.0
+wallKickControlTime = 1.0
+dashSpeed = 30.0
+dashDuration = 0.3
+camDipYHeight = 0.0
+camDipTransitionStrength = 10.0
+bullet = ExtResource("2_8xcoy")
+muzzle = NodePath("Camera3D/GunMesh/Muzzle")
+burstCooldown = 0.3
+tracerSpeed = 100.0
+ultFireDischargeSpeed = 50.0
+ultDamageTickDuration = 0.05
+ultDamagePerTick = 65.0
+ultKnockbackForce = 25.0
+ultMaxKnockbackSpeed = 30.0
+beamShakeStrength = 0.4
+
+[node name="NormalCollider" type="CollisionShape3D" parent="Player" unique_id=1421454333]
+shape = SubResource("CapsuleShape3D_nacyp")
+
+[node name="NormalMesh" type="MeshInstance3D" parent="Player/NormalCollider" unique_id=940959782]
+cast_shadow = 3
+mesh = SubResource("CapsuleMesh_uagv5")
+
+[node name="SlidingCollider" type="CollisionShape3D" parent="Player" unique_id=1053953505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("CapsuleShape3D_mq0dr")
+
+[node name="SlidingMesh" type="MeshInstance3D" parent="Player/SlidingCollider" unique_id=1972150689]
+cast_shadow = 3
+mesh = SubResource("CapsuleMesh_p3wno")
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=485772221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.83300936, 0)
+environment = SubResource("Environment_81glq")
+current = true
+script = ExtResource("3_xat8r")
+target = NodePath("..")
+
+[node name="GunMesh" type="MeshInstance3D" parent="Player/Camera3D" unique_id=50607513]
+transform = Transform3D(0.061, 0, 0, 0, -7.430936e-09, 0.088, 0, -0.17, -3.846602e-09, 0.08360793, -0.09697482, -0.09798241)
+
+[node name="Muzzle" type="Node3D" parent="Player/Camera3D/GunMesh" unique_id=700324548]
+transform = Transform3D(1, 0, 0, 0, 1, 1.7763568e-15, 0, 0, 1, 0, 1.1073318, 0)
+
+[node name="DeathBeam" parent="Player/Camera3D" unique_id=1480504779 instance=ExtResource("4_i41aw")]
+transform = Transform3D(1, 0, 0, 0, -1, -1.509958e-07, 0, 1.509958e-07, -1, 0, -1.032, -2)
+
+[node name="DeathRay" type="ShapeCast3D" parent="Player/Camera3D" unique_id=269391588]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0)
+enabled = false
+shape = SubResource("SphereShape3D_a34wp")
+target_position = Vector3(0, 0, 8000)
+max_results = 64
+collision_mask = 4
+
+[node name="UI" type="CanvasLayer" parent="Player" unique_id=258105057]
+
+[node name="TextureRect4" type="TextureRect" parent="Player/UI" unique_id=1373000193]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_6jxpj")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="Player/UI" unique_id=1753327145]
+visible = false
+offset_left = 958.0
+offset_top = 523.0
+offset_right = 1058.0
+offset_bottom = 623.0
+texture = ExtResource("6_pnhf4")
+
+[node name="TextureRect2" type="TextureRect" parent="Player/UI" unique_id=1177041639]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("7_a1whi")
+
+[node name="TextureRect3" type="TextureRect" parent="Player/UI" unique_id=181842117]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -78.99994
+offset_top = -22.000002
+offset_right = 321.00006
+offset_bottom = 308.0
+grow_horizontal = 2
+scale = Vector2(0.2, 0.2)
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("8_47xk8")
+expand_mode = 1
+
+[node name="UltimateCharge" type="TextureProgressBar" parent="Player/UI" unique_id=628466601]
+anchors_preset = -1
+anchor_left = -0.21807925
+anchor_top = 0.95679015
+anchor_right = 0.6187263
+anchor_bottom = 0.977709
+offset_left = 346.2273
+offset_top = 7.0
+offset_right = 346.2273
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 0
+step = 0.0
+nine_patch_stretch = true
+texture_under = ExtResource("9_8vgha")
+texture_progress = ExtResource("10_ljs6n")
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Player/UI" unique_id=1513518296]
+anchors_preset = -1
+anchor_left = 0.0026041667
+anchor_top = 0.8765432
+anchor_right = 0.9965278
+anchor_bottom = 0.94135803
+offset_top = 13.0
+offset_bottom = 13.0
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Player/UI/HBoxContainer" unique_id=704201613]
+layout_mode = 2
+texture = ExtResource("11_x6jgh")
+expand_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="Player/UI/HBoxContainer" unique_id=323755409]
+layout_mode = 2
+texture = ExtResource("11_x6jgh")
+expand_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="Player/UI/HBoxContainer" unique_id=1210261277]
+layout_mode = 2
+texture = ExtResource("11_x6jgh")
+expand_mode = 2
+
+[node name="TutorialText" type="RichTextLabel" parent="Player/UI" unique_id=1963809094]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -116.0
+offset_top = -53.0
+offset_right = 116.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "Use [b][i]WASD [/i][/b]to Walk"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+script = ExtResource("12_8mdwn")
+
+[node name="Deadly Laser" type="AudioStreamPlayer3D" parent="Player" unique_id=1032608365]
+stream = ExtResource("13_pekdm")
+volume_db = 30.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player" unique_id=495447739]
+libraries/ = SubResource("AnimationLibrary_iouoh")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Player" unique_id=603304500]
+libraries/ = SubResource("AnimationLibrary_hjqjt")
 
 [node name="SceneManager" type="Node3D" parent="." unique_id=1758454766 node_paths=PackedStringArray("pauseMenu")]
 script = ExtResource("2_hkjxt")
@@ -77,43 +411,6 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Main Menu"
 
-[node name="Arena" type="Node3D" parent="." unique_id=342273739 node_paths=PackedStringArray("player_node", "startingBlock")]
-script = ExtResource("4_qpwgq")
-platform_scene = ExtResource("5_mu2eo")
-player_node = NodePath("../Player")
-startingBlock = NodePath("../InitialBox")
-max_platforms = 35
-initial_spawn_count = 25
-outer_radius = 98.77
-inner_radius = 25.355
-cylinder_height = 75.955
-min_scale = Vector3(5, 5, 5)
-max_scale = Vector3(30, 30, 30)
-show_spawn_volume = false
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Arena" unique_id=681971485]
-collision_layer = 7
-collision_mask = 5
-physics_material_override = SubResource("PhysicsMaterial_jn3sf")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Arena/StaticBody3D" unique_id=1807222277]
-shape = SubResource("BoxShape3D_u1pkq")
-
-[node name="DebugVolume" type="CSGCombiner3D" parent="Arena" unique_id=1785928887]
-visible = false
-
-[node name="Outer" type="CSGCylinder3D" parent="Arena/DebugVolume" unique_id=161010039]
-radius = 98.77
-height = 75.955
-sides = 32
-material = SubResource("StandardMaterial3D_vrnwp")
-
-[node name="Inner" type="CSGCylinder3D" parent="Arena/DebugVolume/Outer" unique_id=104812563]
-operation = 2
-radius = 25.355
-height = 77.955
-sides = 32
-
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=307039512]
 transform = Transform3D(1, 0, 0, 0, -4.3711385e-08, 1, 0, -0.99999994, -4.371139e-08, 0, 62.257908, 0)
 shadow_enabled = true
@@ -125,13 +422,10 @@ light_energy = 0.7
 [node name="EnemySpawner" parent="." unique_id=1695561861 node_paths=PackedStringArray("player") instance=ExtResource("7_jpg01")]
 player = NodePath("../Player")
 
-[node name="InitialBox" parent="." unique_id=1160941339 instance=ExtResource("5_mu2eo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.515854, 5.0477085, -63.973396)
-size = Vector3(13.187563, 10, 12.622242)
-
-[node name="DeathBox" type="Area3D" parent="." unique_id=1249397594]
+[node name="DeathBox" type="Area3D" parent="." unique_id=1249397594 node_paths=PackedStringArray("respawn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.3825626, 0)
 script = ExtResource("9_p61wr")
+respawn = NodePath("../Respawn")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="DeathBox" unique_id=1651203824]
 mesh = SubResource("PlaneMesh_nacyp")
@@ -148,6 +442,42 @@ pitch_scale = 0.01
 autoplay = true
 bus = &"Music"
 
+[node name="Respawn" type="Node" parent="." unique_id=2092566714]
+
+[node name="InitialBox" parent="Respawn" unique_id=1160941339 instance=ExtResource("5_mu2eo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.515854, 5.0477085, -63.973396)
+size = Vector3(13.187563, 10, 12.622242)
+
+[node name="Tutorial_platform" parent="Respawn" unique_id=1919156962 instance=ExtResource("22_8xcoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.39325, 9.565903, -64.041565)
+
+[node name="Tutorial_platform2" parent="Respawn" unique_id=503828270 instance=ExtResource("22_8xcoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.427841, 15.353996, -64.041565)
+
+[node name="Tutorial_platform3" parent="Respawn" unique_id=32555810 instance=ExtResource("22_8xcoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.45671, 59.963707, -64.041565)
+
+[node name="StaticBox" parent="Respawn/Tutorial_platform3" unique_id=1872007656 instance=ExtResource("5_mu2eo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -25, -4)
+size = Vector3(20, 60, 1)
+
+[node name="StaticBox2" parent="Respawn/Tutorial_platform3" unique_id=686674445 instance=ExtResource("5_mu2eo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, -25, 5)
+size = Vector3(20, 60, 1)
+
+[node name="Tutorial_platform4" parent="Respawn" unique_id=529811843 instance=ExtResource("22_8xcoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.65404, 61.830986, -64.041565)
+
+[node name="Tutorial_platform5" parent="Respawn" unique_id=1003720139 instance=ExtResource("22_8xcoy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 156.30717, 61.830986, -64.041565)
+
+[connection signal="camera_shake" from="Player" to="Player/Camera3D" method="_on_player_camera_shake"]
+[connection signal="first_tutorial_part_done" from="Player/UI/TutorialText" to="Respawn/Tutorial_platform" method="start"]
 [connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_quit_button_pressed"]
 [connection signal="body_entered" from="DeathBox" to="DeathBox" method="_on_body_entered"]
+[connection signal="next_phase" from="Respawn/Tutorial_platform" to="Player/UI/TutorialText" method="start_double_jump"]
+[connection signal="next_phase" from="Respawn/Tutorial_platform" to="Respawn/Tutorial_platform2" method="start"]
+[connection signal="next_phase" from="Respawn/Tutorial_platform2" to="Respawn/Tutorial_platform3" method="start"]
+
+[editable path="Respawn/Tutorial_platform3"]

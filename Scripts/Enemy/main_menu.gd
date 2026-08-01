@@ -9,17 +9,20 @@ func _ready() -> void:
 
 
 func _on_easy_mode_button_down() -> void:
-	get_tree().change_scene_to_file("res://Nodes/Levels/Level0.tscn")
 	GameManager.Difficulty = GameManager.DifficultyOptions.EASY
+	get_tree().change_scene_to_file("res://Nodes/Levels/Level0.tscn")
+	
 
 func _on_normal_mode_button_down() -> void:
-	get_tree().change_scene_to_file("res://Nodes/Levels/Level0.tscn")
 	GameManager.Difficulty = GameManager.DifficultyOptions.NORMAL
+	get_tree().change_scene_to_file("res://Nodes/Levels/Level0.tscn")
+	
 
 
 func _on_hard_mode_button_down() -> void:
-	get_tree().change_scene_to_file("res://Nodes/Levels/Level0.tscn")
 	GameManager.Difficulty = GameManager.DifficultyOptions.HARD
+	get_tree().change_scene_to_file("res://Nodes/Levels/Level0.tscn")
+	
 
 
 func _on_quit_button_down() -> void:
@@ -61,4 +64,6 @@ func _on_close_button_up() -> void:
 
 
 func _on_tutorial_button_button_down() -> void:
+	GameManager.Difficulty = GameManager.DifficultyOptions.Tutorial
 	get_tree().change_scene_to_file("res://Nodes/Levels/tutorial.tscn")
+	
