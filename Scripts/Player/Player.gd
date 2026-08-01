@@ -328,6 +328,7 @@ func _input(event):
 	if event.is_action_pressed("shoot"):
 		if(ultimateReady): #NEW CHARGE
 			isUlting = true 
+			velocity.y = jump_power_when_hit
 			if not $"Deadly Laser".playing:
 
 				$"Deadly Laser".play()
