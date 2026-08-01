@@ -412,8 +412,9 @@ func spawn_tracer(from: Vector3, to: Vector3):
 
 func find_nearby_wall_normal() -> Vector3:
 	var space_state = get_world_3d().direct_space_state
-	var origin = global_transform.origin
-	origin.y = camera.global_transform.origin.y  # cast at camera's height, not the feet
+	var feet_origin = global_transform.origin
+	var camera_origin = feet_origin
+	camera_origin.y = camera.global_transform.origin.y
 
 	var closest_normal := Vector3.ZERO
 	var closest_dist := wallCheckDistance + 1.0
@@ -421,20 +422,21 @@ func find_nearby_wall_normal() -> Vector3:
 	for i in range(wallRayCount):
 		var angle = (TAU / wallRayCount) * i
 		var dir = Vector3(cos(angle), 0, sin(angle))
-		var to = origin + dir * wallCheckDistance
+		var to_dir = dir * wallCheckDistance
 
-		var query = PhysicsRayQueryParameters3D.create(origin, to)
-		query.collision_mask = wallCollisionMask
-		query.exclude = [get_rid()]  # don't hit your own body
-
-		var result = space_state.intersect_ray(query)
-		if result:
-			# optional: ignore shallow ramps/floors that slipped onto this layer
-			if abs(result.normal.y) < 0.3:
-				var dist = origin.distance_to(result.position)
-				if dist < closest_dist:
-					closest_dist = dist
-					closest_normal = result.normal
+		for origin in [camera_origin, feet_origin]:
+			var to = origin + to_dir
+			var query = PhysicsRayQueryParameters3D.create(origin, to)
+			query.collision_mask = wallCollisionMask
+			query.exclude = [get_rid()]  # don't hit your own body
+			var result = space_state.intersect_ray(query)
+			if result:
+				# optional: ignore shallow ramps/floors that slipped onto this layer
+				if abs(result.normal.y) < 0.3:
+					var dist = origin.distance_to(result.position)
+					if dist < closest_dist:
+						closest_dist = dist
+						closest_normal = result.normal
 
 	return closest_normal
 
